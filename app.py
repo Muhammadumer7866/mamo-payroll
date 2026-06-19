@@ -52,9 +52,7 @@ if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
 
 if not st.session_state['logged_in']:
-    # Center the login panel beautifully
     col1, col2, col3 = st.columns([1, 2, 1])
-    
     with col2:
         st.markdown('<div class="login-box">', unsafe_allow_html=True)
         st.markdown('<h2 style="text-align: center; color: #00E5FF; margin-bottom: 5px;">Al-Rimal & Rubhan</h2>', unsafe_allow_html=True)
@@ -73,6 +71,15 @@ if not st.session_state['logged_in']:
         st.markdown('</div>', unsafe_allow_html=True)
     st.stop()
 
+# --- HARDCODED LABOR DATA (Aapka Asal Data Back!) ---
+labor_data = [
+    {"Employee ID": "92476849", "Name": "Mohammad Shahid", "Company": "Rubhan. T"},
+    {"Employee ID": "109748895", "Name": "M.Usman", "Company": "Rubhan. T"},
+    {"Employee ID": "136299814", "Name": "Jahanzeb Afzal", "Company": "Rubhan. T"},
+    {"Employee ID": "79705332", "Name": "Abdul khaliq", "Company": "Rimal. AL"},
+]
+df_labor = pd.DataFrame(labor_data)
+
 # --- MAIN PREMIUM PORTAL CONTENT ---
 st.markdown('<h1 class="main-title">💼 OVERSEAS WORKFORCE & LIVE PAYROLL SYSTEM</h1>', unsafe_allow_html=True)
 
@@ -82,8 +89,31 @@ tab1, tab2, tab3 = st.tabs(["📝 Daily Attendance Entry", "📊 Executive Analy
 with tab1:
     st.subheader("Enter Attendance From Group Sheets")
     sheet_date = st.date_input("Select Sheet Date", datetime.now())
+    
     st.markdown('### Active Labor Roster')
-    st.info("Labor list data stream is operational.")
+    
+    # Loop to generate dynamic attendance checkboxes with data back
+    attendance_results = []
+    for index, row in df_labor.iterrows():
+        col_id, col_name, col_comp, col_status, col_rem = st.columns([1, 2, 1.5, 1, 2.5])
+        with col_id:
+            st.write(row["Employee ID"])
+        with col_name:
+            st.write(row["Name"])
+        with col_comp:
+            st.write(row["Company"])
+        with col_status:
+            status = st.checkbox("Present", key=f"status_{row['Employee ID']}", value=True)
+        with col_rem:
+            remarks = st.text_input("", key=f"rem_{row['Employee ID']}", placeholder="Remarks (Optional)")
+            
+        attendance_results.append({
+            "Employee ID": row["Employee ID"],
+            "Name": row["Name"],
+            "Company": row["Company"],
+            "Status": "Present" if status else "Absent",
+            "Remarks": remarks
+        })
 
 with tab2:
     st.subheader("Oman Operations Overview")
