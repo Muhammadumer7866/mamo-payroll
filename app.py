@@ -13,7 +13,7 @@ if not st.session_state['logged_in']:
     
     if st.button("Login"):
         # Yahan aap apna pasandeda username aur password rakh sakte hain
-        if username == "maadmin@construction.om" and password == "Mufms6858@#":
+        if username == "admin@construction.om" and password == "Mufms6858@#":
             st.session_state['logged_in'] = True
             st.rerun()
         else:
