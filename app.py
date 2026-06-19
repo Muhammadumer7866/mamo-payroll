@@ -1,4 +1,31 @@
 import streamlit as st
+
+# --- LOGIN SYSTEM ---
+if 'logged_in' not in st.session_state:
+    st.session_state['logged_in'] = False
+
+if not st.session_state['logged_in']:
+    st.title("🔒 Secure Partner Portal")
+    st.subheader("Mamo Construction Firm - Oman")
+    
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
+    
+    if st.button("Login"):
+        # Yahan aap apna pasandeda username aur password rakh sakte hain
+        if username == "maadmin@construction.om" and password == "Mufms6858@#":
+            st.session_state['logged_in'] = True
+            st.rerun()
+        else:
+            st.error("Ghalat Username ya Password! Dobara koshish karein.")
+    st.stop() # Agar login nahi hua toh baqi niche wala code nahi chalega
+
+# -------------------------------------------------------------
+# AAPKA PURANA CODE IS LINE KE NICHE AISE HI REHNA CHAHIYE:
+# -------------------------------------------------------------
+st.title("💼 Workforce Management & Live Payroll System")
+# ... baqi sara code niche chalne do
+import streamlit as st
 import pandas as pd
 import os
 from datetime import datetime
