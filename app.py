@@ -45,7 +45,7 @@ st.markdown("""
         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
     </style>
-""", unsafe_gradient=True)
+""", unsafe_allow_html=True)
 
 # --- SECURE LOGIN SYSTEM ---
 if 'logged_in' not in st.session_state:
@@ -65,7 +65,6 @@ if not st.session_state['logged_in']:
         
         st.markdown('<br>', unsafe_allow_html=True)
         if st.button("Secure Login", use_container_width=True):
-            # Perfected Username & Password without any typos
             if username == "admin@construction.om" and password == "Oman#Secure2026":
                 st.session_state['logged_in'] = True
                 st.rerun()
@@ -75,8 +74,6 @@ if not st.session_state['logged_in']:
     st.stop()
 
 # --- MAIN PREMIUM PORTAL CONTENT ---
-# (Yeh tabhi khulega jab login kamyabi se ho jayega)
-
 st.markdown('<h1 class="main-title">💼 OVERSEAS WORKFORCE & LIVE PAYROLL SYSTEM</h1>', unsafe_allow_html=True)
 
 # Top Row: Navigation / Tabs
@@ -85,14 +82,11 @@ tab1, tab2, tab3 = st.tabs(["📝 Daily Attendance Entry", "📊 Executive Analy
 with tab1:
     st.subheader("Enter Attendance From Group Sheets")
     sheet_date = st.date_input("Select Sheet Date", datetime.now())
-    
     st.markdown('### Active Labor Roster')
-    # Yahan niche aapka purana table/dataframe aur input widgets jo pehle chal rahe the chalte rahenge...
     st.info("Labor list data stream is operational.")
 
 with tab2:
     st.subheader("Oman Operations Overview")
-    # Custom KPI Cards for executive look
     c1, c2, c3 = st.columns(3)
     with c1:
         st.markdown('<div class="metric-card"><h4 style="color:#8a99ad;margin:0;">Total Strength</h4><h2 style="color:#fff;margin:5px 0;">148 Crew Members</h2></div>', unsafe_allow_html=True)
