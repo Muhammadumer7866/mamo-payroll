@@ -3,9 +3,9 @@ import pandas as pd
 from datetime import datetime
 
 # Page Configuration
-st.set_page_config(page_title="Workforce & Payroll Portal", layout="wide")
+st.set_page_config(page_title="Workforce Tracking Portal", layout="wide")
 
-# --- CUSTOM SECURITY & CORPORATE THEME (CSS) ---
+# --- CUSTOM CORPORATE THEME (CSS) ---
 st.markdown("""
     <style>
     .stApp {
@@ -70,7 +70,7 @@ if not st.session_state['logged_in']:
         st.markdown('</div>', unsafe_allow_html=True)
     st.stop()
 
-# --- MASTER DATABASE (Humesha Ka Previous Record) ---
+# --- DATABASE PERSISTENCE INITIALIZATION ---
 if 'master_labor_pool' not in st.session_state:
     st.session_state['master_labor_pool'] = [
         {"Employee ID": "92476849", "Name": "Mohammad Shahid", "Company": "Rubhan. T"},
@@ -79,112 +79,96 @@ if 'master_labor_pool' not in st.session_state:
         {"Employee ID": "79705332", "Name": "Abdul khaliq", "Company": "Rimal. AL"},
     ]
 
-# Aaj ki temporary active list (Roz subah/fresh khalne par empty hogi)
+# Historical saved database entries
+if 'attendance_database' not in st.session_state:
+    st.session_state['attendance_database'] = []
+
+# Current session workspace
 if 'daily_active_roster' not in st.session_state:
     st.session_state['daily_active_roster'] = []
 
-if 'dashboard_presents' not in st.session_state:
-    st.session_state['dashboard_presents'] = 0
+# --- MAIN APP INTERFACE ---
+st.markdown('<h1 class="main-title">💼 OVERSEAS WORKFORCE & TRACKING SYSTEM</h1>', unsafe_allow_html=True)
 
-# --- MAIN PREMIUM PORTAL CONTENT ---
-st.markdown('<h1 class="main-title">💼 OVERSEAS WORKFORCE & LIVE PAYROLL SYSTEM</h1>', unsafe_allow_html=True)
-
-tab1, tab2, tab3 = st.tabs(["📝 Daily Attendance Entry", "📊 Executive Analytics Dashboard", "💰 Month-End Payroll"])
+tab1, tab2, tab3 = st.tabs(["📝 Daily Attendance Entry", "📊 Executive Analytics Dashboard", "📅 Month-End Attendance Report"])
 
 with tab1:
-    st.subheader("Daily Sheet Configuration")
+    st.subheader("Daily Roster Management")
     sheet_date = st.date_input("Select Sheet Date", datetime.now())
     
-    if st.button("🔄 Start New Clean Sheet (Reset Today's List)"):
-        st.session_state['daily_active_roster'] = []
-        st.rerun()
-
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    # Do columns banaye hain: Ek purane worker ko dhoodhne ke liye, ek bilkul naye ke liye
     col_left, col_right = st.columns(2)
     
-    # -------------------------------------------------------------
-    # PANEL 1: 🔍 PURANI LABOR KO ADDD KARNE KE LIYE (SEARCH & ADD)
-    # -------------------------------------------------------------
+    # PANEL 1: SEARCH & AUTO-FILL PREVIOUS LABOR
     with col_left:
         st.markdown('<div class="section-box">', unsafe_allow_html=True)
-        st.markdown("<h4 style='color: #00E5FF; margin-top:0;'>🔍 Add Existing Worker (Previous Record)</h4>", unsafe_allow_html=True)
-        st.markdown("<p style='color: #8a99ad; font-size:13px;'>Kal ya pichle dino aaye hue worker ko select karein:</p>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #00E5FF; margin-top:0;'>🔍 Add Worker from Previous Records</h4>", unsafe_allow_html=True)
         
-        # Dropdown with all registered workers
-        pool_df = pd.DataFrame(st.session_state['master_labor_pool'])
-        options_list = [f"{row['Name']} (ID: {row['Employee ID']}) - {row['Company']}" for _, row in pool_df.iterrows()]
+        search_query = st.text_input("Search by Name or ID Number", placeholder="Type name or ID and hit Enter...")
         
-        selected_existing = st.selectbox("Search by Name or ID number:", options_list, key="search_exist")
-        
-        if st.button("✅ Add to Today's Sheet", use_container_width=True):
-            # Extract ID from text string safely
-            extracted_id = selected_existing.split("(ID: ")[1].split(")")[0]
-            worker_details = next(w for w in st.session_state['master_labor_pool'] if w["Employee ID"] == extracted_id)
+        if search_query:
+            # Filter master database matching criteria
+            matches = [w for w in st.session_state['master_labor_pool'] if search_query.lower() in w['Name'].lower() or search_query in w['Employee ID']]
             
-            # Check duplicate entry for today
-            if any(w['Employee ID'] == extracted_id for w in st.session_state['daily_active_roster']):
-                st.warning("⚠️ Yeh worker pehle se aaj ki sheet me add ho chuka hai!")
+            if matches:
+                st.markdown("<p style='color: #2ecc71; font-size: 13px;'>Matches found:</p>", unsafe_allow_html=True)
+                for matched_worker in matches:
+                    if st.button(f"Add {matched_worker['Name']} ({matched_worker['Employee ID']})", key=f"match_{matched_worker['Employee ID']}"):
+                        if any(w['Employee ID'] == matched_worker['Employee ID'] for w in st.session_state['daily_active_roster']):
+                            st.warning("Worker is already added to today's active roster list.")
+                        else:
+                            st.session_state['daily_active_roster'].append({
+                                "Employee ID": matched_worker["Employee ID"],
+                                "Name": matched_worker["Name"],
+                                "Company": matched_worker["Company"],
+                                "Remarks": ""
+                            })
+                            st.success(f"Added {matched_worker['Name']} to today's list.")
+                            st.rerun()
             else:
-                st.session_state['daily_active_roster'].append({
-                    "Employee ID": worker_details["Employee ID"],
-                    "Name": worker_details["Name"],
-                    "Company": worker_details["Company"],
-                    "Remarks": ""
-                })
-                st.success(f"✔ {worker_details['Name']} aaj ki list me add ho gaye.")
-                st.rerun()
+                st.error("No worker matching this criteria found in historical records.")
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # -------------------------------------------------------------
-    # PANEL 2: ➕ NAYI LABOR REGISTER KARNE KE LIYE (+ NEW LABOR)
-    # -------------------------------------------------------------
+    # PANEL 2: ADD BRAND NEW LABOR
     with col_right:
         st.markdown('<div class="section-box">', unsafe_allow_html=True)
-        st.markdown("<h4 style='color: #2ecc71; margin-top:0;'>➕ Register & Add Brand New Labor</h4>", unsafe_allow_html=True)
-        st.markdown("<p style='color: #8a99ad; font-size:13px;'>Agar koi naya banda pehli dafa site par aaya hai:</p>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #2ecc71; margin-top:0;'>➕ Register Brand New Labor</h4>", unsafe_allow_html=True)
         
-        new_id = st.text_input("Enter New Employee ID", placeholder="e.g. 123456")
-        new_name = st.text_input("Enter Full Name", placeholder="e.g. Imran Khan")
-        new_comp = st.text_input("Enter Company Name", placeholder="e.g. Rubhan. T")
+        new_id = st.text_input("New Employee ID", placeholder="e.g. 55667788")
+        new_name = st.text_input("Full Name", placeholder="e.g. Zahid Ahmed")
+        new_comp = st.text_input("Company Name", placeholder="e.g. Rubhan. T")
         
-        if st.button("➕ Register & Add to Today's Sheet", use_container_width=True):
+        if st.button("Register & Add to Sheet", use_container_width=True):
             if new_id and new_name and new_comp:
-                # Check duplicate in master pool
-                id_exists = any(w['Employee ID'] == new_id for w in st.session_state['master_labor_pool'])
-                if id_exists:
-                    st.error("❌ Yeh ID pehle se registered hai! Left side wale box se search karein.")
+                if any(w['Employee ID'] == new_id for w in st.session_state['master_labor_pool']):
+                    st.error("Registration failed. This Employee ID already exists in the system database.")
                 else:
-                    # 1. Master database me hamesha ke liye save karo
                     st.session_state['master_labor_pool'].append({"Employee ID": new_id, "Name": new_name, "Company": new_comp})
-                    # 2. Aaj ki active roster list me bhi dalo
                     st.session_state['daily_active_roster'].append({"Employee ID": new_id, "Name": new_name, "Company": new_comp, "Remarks": ""})
-                    st.success(f"🚀 {new_name} register bhi ho gaye aur aaj ki list me bhi add ho gaye!")
+                    st.success("New worker successfully registered and deployed to active roster.")
                     st.rerun()
             else:
-                st.warning("⚠️ Meharbani karke naye worker ki saari details fill karein!")
+                st.warning("Please fill out all missing worker validation data blocks.")
         st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown("<hr style='border: 1px solid #2d3545;'>", unsafe_allow_html=True)
     
-    # -------------------------------------------------------------
-    # 📋 TODAY'S ACTIVE PRESENT SHEET (DISPLAY AREA)
-    # -------------------------------------------------------------
-    st.markdown('### 📋 Today\'s Active Attendance List')
+    # DISPLAY AREA WITH REMOVE OPTION
+    st.markdown('### 📋 Current Active Roster List')
     
     if not st.session_state['daily_active_roster']:
-        st.info("ℹ Aaj ki sheet khali hai. Jo jo labor aaj kaam par aayi hai, unhe upar se add karein.")
+        st.info("Today's roster sheet is empty. Add active field labor using the search or registration blocks above.")
     else:
-        h_id, h_name, h_comp, h_status, h_rem = st.columns([1, 2, 1.5, 1, 2.5])
+        h_id, h_name, h_comp, h_status, h_rem, h_action = st.columns([1, 2, 1.5, 1, 2, 1])
         h_id.markdown("**ID**")
         h_name.markdown("**Name**")
         h_comp.markdown("**Company**")
         h_status.markdown("**Status**")
         h_rem.markdown("**Remarks**")
+        h_action.markdown("**Action**")
         
+        to_remove = None
         for idx, worker in enumerate(st.session_state['daily_active_roster']):
-            col_id, col_name, col_comp, col_status, col_rem = st.columns([1, 2, 1.5, 1, 2.5])
+            col_id, col_name, col_comp, col_status, col_rem, col_action = st.columns([1, 2, 1.5, 1, 2, 1])
             with col_id:
                 st.write(worker["Employee ID"])
             with col_name:
@@ -198,22 +182,58 @@ with tab1:
                     "", key=f"rem_{worker['Employee ID']}_{idx}", 
                     value=worker["Remarks"], placeholder="Remarks (Optional)", label_visibility="collapsed"
                 )
+            with col_action:
+                if st.button("❌ Remove", key=f"del_{worker['Employee ID']}_{idx}"):
+                    to_remove = idx
+                    
+        if to_remove is not None:
+            st.session_state['daily_active_roster'].pop(to_remove)
+            st.rerun()
                 
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("💾 Lock & Save Today's Report", type="primary", use_container_width=True):
-            st.session_state['dashboard_presents'] = len(st.session_state['daily_active_roster'])
-            st.success(f"🎉 Live Database Updated! Total {st.session_state['dashboard_presents']} active workers saved for {sheet_date}.")
+        if st.button("💾 Finalize & Lock Daily Attendance Report", type="primary", use_container_width=True):
+            # Save the currently prepared roster to persistent history log
+            for item in st.session_state['daily_active_roster']:
+                st.session_state['attendance_database'].append({
+                    "Date": str(sheet_date),
+                    "Employee ID": item["Employee ID"],
+                    "Name": item["Name"],
+                    "Company": item["Company"],
+                    "Status": "Present",
+                    "Remarks": item["Remarks"]
+                })
+            st.success(f"Successfully committed logs for {sheet_date}. Data flushed to database registries.")
+            st.session_state['daily_active_roster'] = []  # Clear workspace for next data session
+            st.rerun()
 
 with tab2:
     st.subheader("Oman Operations Overview")
-    c1, c2, c3 = st.columns(3)
+    
+    # Filter today's entry out of database log for display metrics
+    today_str = str(sheet_date)
+    today_records = [r for r in st.session_state['attendance_database'] if r["Date"] == today_str]
+    
+    c1, c2 = st.columns(2)
     with c1:
-        st.markdown(f'<div class="metric-card"><h4 style="color:#8a99ad;margin:0;">Master Pool (Total Registered)</h4><h2 style="color:#fff;margin:5px 0;">{len(st.session_state["master_labor_pool"])} Workers</h2></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="metric-card"><h4 style="color:#8a99ad;margin:0;">Master Pool Size</h4><h2 style="color:#fff;margin:5px 0;">{len(st.session_state["master_labor_pool"])} Registered Workers</h2></div>', unsafe_allow_html=True)
     with c2:
-        st.markdown(f'<div class="metric-card" style="border-left-color:#2ecc71;"><h4 style="color:#8a99ad;margin:0;">Present Today</h4><h2 style="color:#2ecc71;margin:5px 0;">{st.session_state["dashboard_presents"]} Active</h2></div>', unsafe_allow_html=True)
-    with c3:
-        st.markdown(f'<div class="metric-card" style="border-left-color:#e74c3c;"><h4 style="color:#8a99ad;margin:0;">Roster Status</h4><h2 style="color:#e74c3c;margin:5px 0;">Clean Slate Operational</h2></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="metric-card" style="border-left-color:#2ecc71;"><h4 style="color:#8a99ad;margin:0;">Workers Present on {today_str}</h4><h2 style="color:#2ecc71;margin:5px 0;">{len(today_records)} Active Personnel</h2></div>', unsafe_allow_html=True)
+        
+    st.markdown("<br>### 📅 Daily Historical Attendance Logs", unsafe_allow_html=True)
+    if st.session_state['attendance_database']:
+        df_logs = pd.DataFrame(st.session_state['attendance_database'])
+        st.dataframe(df_logs, use_container_width=True)
+    else:
+        st.info("No saved data streams found in the historical system registries.")
 
 with tab3:
-    st.subheader("Payroll Summary Generation")
-    st.write("Automated Omani Rial (OMR) currency conversions and bank transfer sheets.")
+    st.subheader("Monthly Attendance Aggregation Report")
+    st.write("Aggregated calculation showing total shift metrics for individual employees inside the active operational period:")
+    
+    if st.session_state['attendance_database']:
+        df_all = pd.DataFrame(st.session_state['attendance_database'])
+        # Group data to count total work days for each person
+        summary_df = df_all.groupby(["Employee ID", "Name", "Company"]).size().reset_index(name="Total Days Worked")
+        st.dataframe(summary_df, use_container_width=True)
+    else:
+        st.info("System aggregation matrices are blank. Total day tallies will populate as soon as records are submitted.")
