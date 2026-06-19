@@ -88,7 +88,7 @@ if 'daily_active_roster' not in st.session_state:
     st.session_state['daily_active_roster'] = []
 
 # --- MAIN APP INTERFACE ---
-st.markdown('<h1 class="main-title">💼 OVERSEAS WORKFORCE & TRACKING SYSTEM</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="main-title">💼 Workers Attendance Report & TRACKING SYSTEM</h1>', unsafe_allow_html=True)
 
 tab1, tab2, tab3 = st.tabs(["📝 Daily Attendance Entry", "📊 Executive Analytics Dashboard", "📅 Month-End Attendance Report"])
 
