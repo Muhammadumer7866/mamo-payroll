@@ -62,7 +62,7 @@ if not st.session_state['logged_in']:
         
         st.markdown('<br>', unsafe_allow_html=True)
         if st.button("Secure Login", use_container_width=True):
-            if username == "admin@construction.om" and password == "Oman#Secure2026":
+            if username == "admin@construction.om" and password == "Mufms6858@#":
                 st.session_state['logged_in'] = True
                 st.rerun()
             else:
