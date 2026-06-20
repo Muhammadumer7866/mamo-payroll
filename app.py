@@ -3,15 +3,15 @@ import pandas as pd
 from datetime import datetime
 import io
 
-# --- ULTIMATE CORE CONFIGURATION ---
+# --- CORE SYSTEM CONFIGURATION ---
 st.set_page_config(page_title="Al Rabhan Trading - Corporate Portal", layout="wide", initial_sidebar_state="collapsed")
 
-# --- CLEAN EXECUTIVE STYLING ENGINE ---
+# --- CLEAN EXECUTIVE CSS ENGINE ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
     
-    /* Application Canvas Base */
+    /* Global Base Core */
     .stApp {
         background-color: #f8fafc;
         font-family: 'Plus Jakarta Sans', sans-serif;
@@ -27,50 +27,26 @@ st.markdown("""
         50% { border-color: #eab308; }
     }
 
-    /* Left Panel Container styling */
-    .left-panel-brand {
-        padding: 20px 10px;
-    }
-
-    .logo-text-title-custom {
-        font-size: 36px;
-        font-weight: 800;
-        color: #0f172a;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        margin: 0;
-        line-height: 1.1;
-    }
-    
-    .logo-text-subtitle-custom {
-        font-size: 18px;
-        font-weight: 600;
-        color: #ca8a04;
-        letter-spacing: 9px;
-        text-transform: uppercase;
-        margin: 4px 0 15px 0;
-    }
-
-    /* Right Panel Container styling */
-    .right-panel-brand {
+    /* Right Side Banner Block styling */
+    .premium-right-banner {
         background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-        padding: 50px;
-        border-radius: 24px;
+        padding: 45px;
+        border-radius: 20px;
         color: #ffffff;
-        min-height: 75vh;
+        min-height: 520px;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     }
     
-    /* Typing dynamic lines */
-    .typing-container-custom {
-        max-width: 500px;
-        margin-bottom: 20px;
+    /* Typing text blocks architecture */
+    .typing-container-node {
+        margin-bottom: 15px;
     }
 
     .typing-line-prime {
-        font-size: 36px;
+        font-size: 34px;
         font-weight: 800;
         line-height: 1.3;
         color: #ffffff;
@@ -95,22 +71,21 @@ st.markdown("""
         border-right: none;
     }
 
-    /* Clean generic wrappers */
-    .gold-brand-line-custom {
-        width: 70px;
+    .gold-brand-line-node {
+        width: 60px;
         height: 4px;
         background: linear-gradient(90deg, #eab308 0%, #ca8a04 100%);
         border-radius: 2px;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
     }
 
-    /* Overrides for Streamlit fields to look premium */
+    /* Overrides for Streamlit form inputs to fit modern UI */
     div.stTextInput > div > div > input {
         background-color: #ffffff !important;
         border: 1px solid #cbd5e1 !important;
         color: #0f172a !important;
-        border-radius: 10px !important;
-        padding: 12px 16px !important;
+        border-radius: 8px !important;
+        padding: 10px 14px !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -127,66 +102,63 @@ if 'daily_active_roster' not in st.session_state:
 if 'invoice_database' not in st.session_state:
     st.session_state['invoice_database'] = []
 
-# --- MULTI-TENANT SECURE GATEWAY ---
+# --- SECURE GATEWAY HUB ---
 if not st.session_state['logged_in']:
-    st.markdown('<div style="padding: 20px 0;">', unsafe_allow_html=True)
+    st.markdown('<div style="margin-top: 40px;">', unsafe_allow_html=True)
     
-    # 2-Column Split Interface without complex absolute positioning hacks
-    main_left_col, main_right_col = st.columns([1, 1.2], gap="large")
+    # 2-Column Split Interface built natively
+    col_left_form, col_right_banner = st.columns([1.1, 1], gap="large")
     
-    with main_left_col:
-        st.markdown('<div class="left-panel-brand">', unsafe_allow_html=True)
-        
-        # Big Bold Graphic Logo Layout
+    with col_left_form:
+        # Vector Graphic Logo Structure Layout
         st.markdown("""
-            <div style="display: flex; align-items: flex-end; gap: 6px; height: 75px; margin-bottom: 10px;">
-                <div style="width: 18px; height: 45px; background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); clip-path: polygon(100% 0, 0 40%, 0 100%, 100% 100%); border-radius: 2px;"></div>
-                <div style="width: 22px; height: 70px; background: linear-gradient(135deg, #475569 0%, #0f172a 100%); clip-path: polygon(50% 0, 0 15%, 0 100%, 100% 100%, 100% 15%); border-radius: 2px;"></div>
-                <div style="width: 16px; height: 55px; background: linear-gradient(135deg, #fef08a 0%, #eab308 100%); clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%); border-radius: 2px;"></div>
+            <div style="display: flex; align-items: flex-end; gap: 6px; height: 70px; margin-bottom: 8px;">
+                <div style="width: 16px; height: 42px; background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); clip-path: polygon(100% 0, 0 40%, 0 100%, 100% 100%); border-radius: 2px;"></div>
+                <div style="width: 20px; height: 65px; background: linear-gradient(135deg, #475569 0%, #0f172a 100%); clip-path: polygon(50% 0, 0 15%, 0 100%, 100% 100%, 100% 15%); border-radius: 2px;"></div>
+                <div style="width: 14px; height: 50px; background: linear-gradient(135deg, #fef08a 0%, #eab308 100%); clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%); border-radius: 2px;"></div>
             </div>
-            <div class="logo-text-title-custom">Al Rabhan</div>
-            <div class="logo-text-subtitle-custom">Trading</div>
-            <div style="font-size: 11px; font-weight: 600; color: #64748b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; border-top: 1px solid #e2e8f0; padding-top: 8px;">CONSTRUCTION | QUALITY | TRUST</div>
+            <div style="font-size: 34px; font-weight: 800; color: #0f172a; letter-spacing: 2px; text-transform: uppercase; margin: 0; line-height: 1.1;">Al Rabhan</div>
+            <div style="font-size: 16px; font-weight: 600; color: #ca8a04; letter-spacing: 8px; text-transform: uppercase; margin: 4px 0 12px 0;">Trading</div>
+            <div style="font-size: 10px; font-weight: 600; color: #64748b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; border-top: 1px solid #e2e8f0; padding-top: 6px;">CONSTRUCTION | QUALITY | TRUST</div>
+            
+            <h2 style='color: #0f172a; font-weight: 800; font-size: 26px; margin: 0 0 4px 0;'>Welcome Back</h2>
+            <p style='color: #64748b; font-size: 13px; margin: 0 0 25px 0;'>Please authenticate administrative level keys to open the operations panel.</p>
         """, unsafe_allow_html=True)
         
-        # Form Header
-        st.markdown("<h2 style='color: #0f172a; font-weight: 800; font-size: 28px; margin: 0 0 5px 0;'>Welcome Back</h2>", unsafe_allow_html=True)
-        st.markdown("<p style='color: #64748b; font-size: 14px; margin: 0 0 25px 0;'>Please authenticate administrative level keys to open the operations panel.</p>", unsafe_allow_html=True)
-        
-        # Direct Inputs placement right where they belong
+        # Interface Inputs
         gate_id = st.text_input("Corporate ID / Email Address", placeholder="e.g. admin@construction.om")
         gate_key = st.text_input("Security Access Key", type="password", placeholder="••••••••••••")
         
-        st.markdown('<div style="margin-top: 25px;">', unsafe_allow_html=True)
+        st.markdown('<div style="margin-top: 20px;">', unsafe_allow_html=True)
         if st.button("Log In to System", type="primary", use_container_width=True):
             if gate_id == "admin@construction.om" and gate_key == "Oman#Secure2026":
                 st.session_state['logged_in'] = True
                 st.rerun()
             else:
                 st.error("Access Refused. Security parameters failed evaluation.")
-        st.markdown('</div></div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
         
-    with main_right_col:
-        # Beautiful dark blue brand side container
-        st.markdown('<div class="right-panel-brand">', unsafe_allow_html=True)
-        st.markdown('<div style="background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.3); color: #fef08a; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; display: inline-block; margin-bottom: 25px; width: fit-content;">Oman Enterprise Infrastructure</div>', unsafe_allow_html=True)
+    with col_right_banner:
+        # Pure isolated CSS wrapper block
+        st.markdown('<div class="premium-right-banner">', unsafe_allow_html=True)
+        st.markdown('<div style="background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.3); color: #fef08a; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 20px; width: fit-content;">Oman Enterprise Infrastructure</div>', unsafe_allow_html=True)
         
-        # The Live Sequential Typing Text Blocks
+        # Safe Sequential Typing Blocks inside banner container
         st.markdown("""
-            <div class="typing-container-custom">
+            <div class="typing-container-node">
                 <span class="typing-line-prime tpl-1">Effortlessly manage</span>
                 <span class="typing-line-prime tpl-2">your workforce and</span>
                 <span class="typing-line-prime tpl-3">corporate financials.</span>
             </div>
-            <div class="gold-brand-line-custom"></div>
+            <div class="gold-brand-line-node"></div>
         """, unsafe_allow_html=True)
         
-        st.markdown("<p style='color: #cbd5e1; font-size: 15px; line-height: 1.6; margin-bottom: 35px; max-width: 480px;'>Consolidated cloud tracking console custom engineered for real-time field operations, active shift logs control, and Omani Tax Invoice registry archiving.</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #cbd5e1; font-size: 14px; line-height: 1.5; margin-bottom: 25px; max-width: 440px;'>Consolidated cloud tracking console custom engineered for real-time field operations, active shift logs control, and Omani Tax Invoice registry archiving.</p>", unsafe_allow_html=True)
         
         st.markdown("""
-            <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 14px; max-width: 480px;">
-                <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #eab308; letter-spacing: 1px;">CONSTRUCTION | QUALITY | TRUST</span>
-                <p style="margin: 6px 0 0 0; font-size: 13px; color: #94a3b8; line-height: 1.5;">Automated analytical report structuring engine compiles binary Excel ledgers instantaneously for internal validation.</p>
+            <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 16px; border-radius: 12px; max-width: 440px;">
+                <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #eab308; letter-spacing: 1px;">CONSTRUCTION | QUALITY | TRUST</span>
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #94a3b8; line-height: 1.4;">Automated analytical report structuring engine compiles binary Excel ledgers instantaneously for internal validation.</p>
             </div>
         """, unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
@@ -194,7 +166,7 @@ if not st.session_state['logged_in']:
     st.markdown('</div>', unsafe_allow_html=True)
     st.stop()
 
-# --- MAIN POST-LOGIN PANEL ---
+# --- MAIN INDUSTRIAL SYSTEM VIEWPORT ---
 st.markdown("""
     <div style="background: #ffffff; padding: 20px 40px; border-bottom: 1px solid #e2e8f0; margin: -50px -50px 35px -50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
         <div style="display:flex; align-items:center; gap:12px;">
@@ -210,14 +182,13 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# --- BINARY FILE COMPILE PIPELINE ---
 def generate_excel_stream(target_df):
     mem_buffer = io.BytesIO()
     with pd.ExcelWriter(mem_buffer, engine='xlsxwriter') as b_writer:
         target_df.to_excel(b_writer, index=False, sheet_name='Operations_Export')
     return mem_buffer.getvalue()
 
-# --- INTERFACE TABS CONTROL MATRIX ---
+# INTERFACE DASHBOARD LOGS
 t_overview, t_attendance, t_invoices, t_reporting = st.tabs([
     "🏠 Corporate Overview", 
     "📝 Daily Attendance Matrix", 
@@ -225,7 +196,7 @@ t_overview, t_attendance, t_invoices, t_reporting = st.tabs([
     "📊 Chronological Reports Export"
 ])
 
-# 1. MANAGEMENT OVERVIEW
+# 1. OVERVIEW NODE
 with t_overview:
     st.markdown("<h3 style='color: #0f172a; font-weight: 800; margin-top:10px;'>Command Operations Matrix</h3>", unsafe_allow_html=True)
     st.write("Real-time aggregated corporate performance indicators tracking cross-border human capital alongside archived transactions.")
@@ -239,7 +210,7 @@ with t_overview:
         gross_sum_value = sum(float(i['Total Amount']) for i in st.session_state['invoice_database']) if st.session_state['invoice_database'] else 0.0
         st.metric(label="Gross Value Transacted (OMR)", value=f"{gross_sum_value:.3f} OMR")
 
-# 2. DAILY ATTENDANCE MATRIX
+# 2. LABOUR ATTENDANCE MANAGEMENT
 with t_attendance:
     st.subheader("Field Deployment Roster Logs")
     target_date_context = st.date_input("Target Calendar Date Focus Frame", datetime.now(), key="work_date_context")
@@ -316,7 +287,7 @@ with t_attendance:
             st.session_state['daily_active_roster'] = []
             st.rerun()
 
-# 3. TAX INVOICES REGISTRY
+# 3. FINANCIAL TAX REGISTRY
 with t_invoices:
     st.subheader("Commercial Transaction & Invoice Audit Controls")
     
@@ -349,7 +320,7 @@ with t_invoices:
     else:
         st.info("System ledger arrays hold zero commercial transaction files currently.")
 
-# 4. CHRONOLOGICAL REPORTS EXPORT
+# 4. DATA EXPORTS & REPORT COMPILES
 with t_reporting:
     st.subheader("Chronological Filter Systems & Binary Ledger Compilation Panels")
     
