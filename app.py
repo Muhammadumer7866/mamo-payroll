@@ -28,11 +28,6 @@ st.markdown("""
         50% { transform: translate(-50%, -50%) scale(1.03); opacity: 0.05; }
         100% { transform: translate(-50%, -50%) scale(1); opacity: 0.02; }
     }
-    @keyframes subtleFloatingEffect {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-8px); }
-        100% { transform: translateY(0px); }
-    }
 
     /* Giant Background Brand Watermark Overlay */
     .premium-watermark-bg {
@@ -53,7 +48,7 @@ st.markdown("""
         animation: persistentPulseLogo 10s ease-in-out infinite;
     }
 
-    /* --- PREMIUM SPLIT INTERFACE FRAMEWORK (Matches image layout perfectly) --- */
+    /* --- PREMIUM SPLIT INTERFACE FRAMEWORK --- */
     .ultimate-split-wrapper {
         display: flex;
         min-height: 85vh;
@@ -69,7 +64,7 @@ st.markdown("""
     /* Left Corporate Interaction Form Panel */
     .split-panel-left {
         flex: 1;
-        padding: 80px 60px;
+        padding: 60px 60px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -87,6 +82,79 @@ st.markdown("""
         color: #ffffff;
         position: relative;
         border-left: 1px solid #e2e8f0;
+    }
+    
+    /* --- REALISTIC BRAND LOGO SHAPES (Inspired by ChatGPT Image Jun 20, 2026, 02_56_40 PM.png) --- */
+    .logo-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 25px;
+    }
+    
+    /* Dynamic Vector Towers Construction */
+    .logo-graphic-box {
+        display: flex;
+        align-items: flex-end;
+        gap: 4px;
+        height: 65px;
+        margin-bottom: 12px;
+        padding-left: 10px;
+    }
+    
+    .tower-gold-left {
+        width: 14px;
+        height: 35px;
+        background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+        clip-path: polygon(100% 0, 0 40%, 0 100%, 100% 100%);
+        border-radius: 1px;
+    }
+    
+    .tower-dark-center {
+        width: 16px;
+        height: 60px;
+        background: linear-gradient(135deg, #334155 0%, #0f172a 100%);
+        clip-path: polygon(50% 0, 0 15%, 0 100%, 100% 100%, 100% 15%);
+        border-radius: 1px;
+    }
+    
+    .tower-gold-right {
+        width: 12px;
+        height: 45px;
+        background: linear-gradient(135deg, #fef08a 0%, #eab308 100%);
+        clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%);
+        border-radius: 1px;
+    }
+
+    .logo-text-title {
+        font-size: 24px;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: 2px;
+        margin: 0;
+        text-transform: uppercase;
+    }
+    
+    .logo-text-subtitle {
+        font-size: 13px;
+        font-weight: 600;
+        color: #ca8a04;
+        letter-spacing: 6px;
+        margin: 2px 0 0 0;
+        text-transform: uppercase;
+    }
+    
+    .logo-tagline {
+        font-size: 7px;
+        font-weight: 500;
+        color: #64748b;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-top: 5px;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 4px;
+        width: 100%;
+        max-width: 220px;
     }
     
     /* Branding Gold Accent Elements */
@@ -136,7 +204,6 @@ st.markdown("""
         letter-spacing: -1px;
     }
     
-    /* Streamlit Components Visual Fixes */
     div[data-testid="stForm"] {
         border: none !important;
         padding: 0 !important;
@@ -158,17 +225,22 @@ if 'invoice_database' not in st.session_state:
 
 # --- MULTI-TENANT SPLIT SECURE GATEWAY ---
 if not st.session_state['logged_in']:
-    # Injecting clean structure that maps to image layouts directly without overlapping elements
     st.markdown("""
         <div class="ultimate-split-wrapper">
-            <!-- Left Wing -->
+            <!-- Left Wing (Now features the corporate logo matching the image blueprint) -->
             <div class="split-panel-left">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 30px;">
-                    <span style="font-weight: 800; font-size: 24px; color: #0f172a; letter-spacing: -0.5px;">AL RABHAN</span>
-                    <span style="font-weight: 400; font-size: 24px; color: #ca8a04; letter-spacing: -0.5px;">TRADING</span>
+                <div class="logo-container">
+                    <div class="logo-graphic-box">
+                        <div class="tower-gold-left"></div>
+                        <div class="tower-dark-center"></div>
+                        <div class="tower-gold-right"></div>
+                    </div>
+                    <div class="logo-text-title">Al Rabhan</div>
+                    <div class="logo-text-subtitle">Trading</div>
+                    <div class="logo-tagline">Construction | Quality | Trust</div>
                 </div>
-                <h2 style="color: #0f172a; font-weight: 800; font-size: 34px; margin-bottom: 6px; letter-spacing: -0.5px;">Welcome Back</h2>
-                <p style="color: #64748b; font-size: 14px; margin-bottom: 40px;">Please authenticate administrative level keys to open the operations panel.</p>
+                <h2 style="color: #0f172a; font-weight: 800; font-size: 28px; margin-bottom: 6px; letter-spacing: -0.5px;">Welcome Back</h2>
+                <p style="color: #64748b; font-size: 13px; margin-bottom: 35px;">Please authenticate administrative level keys to open the operations panel.</p>
             </div>
             <!-- Right Wing -->
             <div class="split-panel-right">
@@ -190,20 +262,20 @@ if not st.session_state['logged_in']:
         </div>
     """, unsafe_allow_html=True)
 
-    # Dynamic structural injection of actual processing inputs over left panel real-estate
+    # Inputs Overlay perfectly positioned under the graphic logo block
     with st.container():
         col_form_landing, col_void_space = st.columns([1, 1.1])
         with col_form_landing:
-            st.markdown('<div style="position: relative; margin-top: -490px; padding: 0 60px; max-width: 500px;">', unsafe_allow_html=True)
+            st.markdown('<div style="position: relative; margin-top: -460px; padding: 0 60px; max-width: 500px;">', unsafe_allow_html=True)
             gate_id = st.text_input("Corporate ID / Email Address", placeholder="e.g. admin@construction.om")
             gate_key = st.text_input("Security Access Key", type="password", placeholder="••••••••••••")
-            st.markdown('<div style="margin-top: 30px;">', unsafe_allow_html=True)
+            st.markdown('<div style="margin-top: 25px;">', unsafe_allow_html=True)
             if st.button("Log In to System", type="primary", use_container_width=True):
                 if gate_id == "admin@construction.om" and gate_key == "Oman#Secure2026":
                     st.session_state['logged_in'] = True
                     st.rerun()
                 else:
-                    st.error("Access Refused. Security cryptographic hash parameters failed evaluation.")
+                    st.error("Access Refused. Security parameters failed evaluation.")
             st.markdown('</div></div>', unsafe_allow_html=True)
     st.stop()
 
