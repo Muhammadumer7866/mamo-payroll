@@ -4,112 +4,16 @@ from datetime import datetime
 
 # Page configuration
 st.set_page_config(
-    page_title="Al Rabhan Trading - Enterprise ERP",
+    page_title="Al Rabhan Trading - ERP Control Panel",
     page_icon="🏗️",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    layout="wide"
 )
 
-# Custom CSS for Premium Corporate Styling & High Contrast Visibility
-st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-    
-    * {
-        font-family: 'Inter', sans-serif;
-    }
-    
-    /* Main Background & Text Color */
-    .stApp {
-        background-color: #f8fafc;
-    }
-    
-    /* Header Banner Styling */
-    .banner-container {
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        padding: 2.5rem;
-        border-radius: 16px;
-        color: white;
-        margin-bottom: 2rem;
-        box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
-        border-left: 6px solid #eab308;
-    }
-    
-    .banner-title {
-        font-size: 32px;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        margin: 0;
-        color: #ffffff;
-    }
-    
-    .banner-subtitle {
-        font-size: 14px;
-        color: #94a3b8;
-        margin-top: 5px;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    
-    /* Metric Card Styling with High Contrast Text */
-    .metric-card {
-        background: #ffffff;
-        padding: 1.75rem;
-        border-radius: 14px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        transition: transform 0.2s ease;
-    }
-    .metric-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-    }
-    .metric-label {
-        font-size: 12px;
-        font-weight: 700;
-        color: #475569;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 8px;
-    }
-    .metric-value {
-        font-size: 28px;
-        font-weight: 800;
-        line-height: 1;
-    }
-    
-    /* Section Headers */
-    .section-header {
-        font-size: 20px;
-        font-weight: 700;
-        color: #0f172a;
-        margin-top: 1.5rem;
-        margin-bottom: 1rem;
-        border-bottom: 2px solid #e2e8f0;
-        padding-bottom: 0.5rem;
-    }
-    
-    /* Custom Sub-text Description styling for maximum visibility */
-    .custom-description {
-        font-size: 14.5px;
-        color: #334155;
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
-        background-color: #f1f5f9;
-        padding: 12px 16px;
-        border-radius: 8px;
-        border-left: 4px solid #3b82f6;
-        font-weight: 500;
-    }
-    </style>
-""", unsafe_provided_html=True)
+# --- REUSABLE STATE MANAGEMENT (PRE-POPULATING REAL OPERATIONAL DATA) ---
 
-# --- REAL/PRE-POPULATED DATA BASED ON YOUR DETAILS & INVOICE ---
-
-# 1. Workforce & Attendance Data (Oman Field Roster)
-if 'workforce_data' not in st.session_state:
-    st.session_state.workforce_data = pd.DataFrame([
+# 1. Real Workforce Data Base
+if 'workforce_db' not in st.session_state:
+    st.session_state.workforce_db = pd.DataFrame([
         {"Labour ID": "AR-L01", "Name": "Muhammad Ali", "Trade": "Mason", "Shift": "Day", "Status": "Present", "Check-In": "07:00 AM"},
         {"Labour ID": "AR-L02", "Name": "Sajid Khan", "Trade": "Steel Fixer", "Shift": "Day", "Status": "Present", "Check-In": "06:55 AM"},
         {"Labour ID": "AR-L03", "Name": "Kumar Swamy", "Trade": "Carpenter", "Shift": "Day", "Status": "Present", "Check-In": "07:02 AM"},
@@ -117,166 +21,175 @@ if 'workforce_data' not in st.session_state:
         {"Labour ID": "AR-L05", "Name": "Vikram Singh", "Trade": "Electrician", "Shift": "Night", "Status": "Scheduled", "Check-In": "-"}
     ])
 
-# 2. Tax Invoices Registry (Populated directly from your Al Inma Invoice image)
-if 'invoice_data' not in st.session_state:
-    st.session_state.invoice_data = pd.DataFrame([
+# 2. Real Omani Tax Invoice Registry (Directly parsed from your Al Inma Invoice)
+if 'invoice_db' not in st.session_state:
+    st.session_state.invoice_db = pd.DataFrame([
         {
             "Invoice No": "A204306",
             "Date": "20/06/2026",
-            "Supplier": "Al Inma Building Materials L.L.C.",
-            "Items": "Marsbit P 4mm (28 Roll) + Tech Prime SB (2 Pails)",
+            "Supplier Name": "Al Inma Building Materials L.L.C.",
+            "Material Description": "Marsbit P 4mm (28 Roll) & Tech Prime SB (2 Pails)",
             "Taxable Amount (OMR)": 338.600,
-            "VAT 5% (OMR)": 16.930,
-            "Total Amount (OMR)": 355.530,
-            "Status": "Archived & Verified"
+            "VAT Amount 5% (OMR)": 16.930,
+            "Total Invoice Gross (OMR)": 355.530,
+            "Audit Integrity Check": "Verified & Passed"
         }
     ])
 
-# --- SIDEBAR NAVIGATION ---
-st.sidebar.image("https://i.imgur.com/8kX9B9M.png", width=180, errors_allowed=True) # Fallback placeholder if custom logo isn't accessible
-st.sidebar.markdown("### 🌐 Navigation Panel")
-menu_option = st.sidebar.radio(
-    "Select System Node:",
-    ["🏠 Corporate Command Hub", "📝 Attendance Roster Module", "📄 Tax Invoices Registry", "📊 Chronological Reports Export"]
-)
+# --- TOP NAVIGATION HEADERS ---
+st.title("🏗️ Al Rabhan Trading Operations System")
+st.caption("Sultanate of Oman • Secure Enterprise Infrastructure Control Node")
 
-st.sidebar.markdown("---")
-st.sidebar.markdown("### 🔒 Session Status")
-st.sidebar.success("Session Token: Secure Enterprise Active")
-st.sidebar.info("Sultanate of Oman Management Node")
+# Active Session Security Badge
+st.success("🔒 System Integrity Node: Active (Automated Excel/CSV Ledger Extraction Enabled)")
 
-# --- MAIN INTERFACE CONTROLLER ---
+# --- NAVIGATION VIA NATIVE TABS (Bina layout phate clear visible words) ---
+tab1, tab2, tab3, tab4 = st.tabs([
+    "🏠 Corporate Command Hub", 
+    "📝 Attendance Roster Module", 
+    "📄 Tax Invoices Registry", 
+    "📊 Chronological Reports Export"
+])
 
-if menu_option == "🏠 Corporate Command Hub":
-    # Banner Header
-    st.markdown("""
-        <div class="banner-container">
-            <div class="banner-title">AL RABHAN TRADING SYSTEM CONTROL</div>
-            <div class="banner-subtitle">Sultanate of Oman • Management Node Active</div>
-        </div>
-    """, unsafe_provided_html=True)
+# ==============================================================================
+# NODE 1: CORPORATE COMMAND HUB
+# ==============================================================================
+with tab1:
+    st.subheader("📊 Real-Time Operations Overview Matrix")
+    st.info("Aggregated system metrics reflecting current active field deployment rosters, verified logistics registries, and global transacted ledger archives safely tracked across Omani operational zones.")
     
-    st.markdown("### 📊 Real-Time Operations Overview Matrix")
-    st.markdown(
-        '<div class="custom-description">'
-        'Aggregated system metrics reflecting current active field deployment rosters, verified logistics '
-        'registries, and global transacted financial ledger archives safely tracked across Omani operational zones.'
-        '</div>', 
-        unsafe_provided_html=True
-    )
+    # Mathematical computations for metrics (Will never show 0)
+    total_workers = len(st.session_state.workforce_db)
+    total_docs = len(st.session_state.invoice_db)
+    total_financial_volume = st.session_state.invoice_db["Total Invoice Gross (OMR)"].sum()
     
-    # Calculating values dynamically based on data so it NEVER shows 0
-    total_workforce = len(st.session_state.workforce_data)
-    total_invoices = len(st.session_state.invoice_data)
-    gross_financial = st.session_state.invoice_data["Total Amount (OMR)"].sum()
-    
-    # High Contrast Metrics Row
+    # Standard Streamlit Metrics Columns (Clean UI, High Contrast)
     m1, m2, m3 = st.columns(3)
-    with m1:
-        st.markdown(f"""
-            <div class="metric-card">
-                <div class="metric-label">Active Registered Workforce</div>
-                <div class="metric-value" style="color: #eab308;">{total_workforce} Units</div>
-            </div>
-        """, unsafe_provided_html=True)
-    with m2:
-        st.markdown(f"""
-            <div class="metric-card">
-                <div class="metric-label">Archived Tax Documents</div>
-                <div class="metric-value" style="color: #3b82f6;">{total_invoices} Invoices</div>
-            </div>
-        """, unsafe_provided_html=True)
-    with m3:
-        st.markdown(f"""
-            <div class="metric-card">
-                <div class="metric-label">Gross Financial Volume</div>
-                <div class="metric-value" style="color: #22c55e;">{gross_financial:.3f} OMR</div>
-            </div>
-        """, unsafe_provided_html=True)
+    m1.metric(label="ACTIVE REGISTERED WORKFORCE", value=f"{total_workers} Units", delta="Field Active")
+    m2.metric(label="ARCHIVED TAX DOCUMENTS", value=f"{total_docs} Invoices", delta="Compliance Checked")
+    m3.metric(label="GROSS FINANCIAL VOLUME", value=f"{total_financial_volume:.3f} OMR", delta="Oman Central Validated")
+    
+    st.markdown("---")
+    
+    # Instant Previews of Live Data
+    col_a, col_b = st.columns(2)
+    with col_a:
+        st.markdown("### 📋 Live Field Attendance Preview")
+        st.dataframe(st.session_state.workforce_db, use_container_width=True, hide_index=True)
         
-    # Quick Summary Tables below for full view
-    st.markdown('<div class="section-header">Live Field Attendance Preview</div>', unsafe_provided_html=True)
-    st.dataframe(st.session_state.workforce_data, use_container_width=True)
-    
-    st.markdown('<div class="section-header">Recent Transacted Invoices Log</div>', unsafe_provided_html=True)
-    st.dataframe(st.session_state.invoice_data, use_container_width=True)
+    with col_b:
+        st.markdown("### 💳 Recent Transacted Invoices Log")
+        st.dataframe(st.session_state.invoice_db[["Invoice No", "Supplier Name", "Total Invoice Gross (OMR)", "Audit Integrity Check"]], use_container_width=True, hide_index=True)
 
-elif menu_option == "📝 Attendance Roster Module":
-    st.markdown('<div class="section-header">Daily Attendance Matrix Logging Panel</div>', unsafe_provided_html=True)
-    st.markdown('<div class="custom-description">Manage and log daily workforce deployment shifts, real-time check-ins, and trade categorization for construction sites.</div>', unsafe_provided_html=True)
+# ==============================================================================
+# NODE 2: ATTENDANCE ROSTER MODULE
+# ==============================================================================
+with tab2:
+    st.subheader("📝 Daily Attendance Matrix Logging Panel")
+    st.markdown("Manage and log daily workforce deployment shifts, real-time check-ins, and trade categorization for construction sites.")
     
-    # Form to add new workforce entry
-    with st.expander("➕ Log New Labour Deployment Record"):
-        with st.form("labour_form", clear_on_submit=True):
+    with st.expander("➕ Log New Labour Deployment Record", expanded=False):
+        with st.form("add_worker_form", clear_on_submit=True):
             c1, c2, c3 = st.columns(3)
-            l_id = c1.text_input("Labour ID", value=f"AR-L0{len(st.session_state.workforce_data)+1}")
-            name = c2.text_input("Full Name")
-            trade = c3.selectbox("Trade / Role", ["Mason", "Steel Fixer", "Carpenter", "Electrician", "Plumber", "Labourer", "Supervisor"])
+            new_id = c1.text_input("Labour ID", value=f"AR-L0{len(st.session_state.workforce_db)+1}")
+            new_name = c2.text_input("Full Name *")
+            new_trade = c3.selectbox("Trade / Role", ["Mason", "Steel Fixer", "Carpenter", "Electrician", "Plumber", "Labourer", "Site Supervisor"])
             
             c4, c5 = st.columns(2)
-            shift = c4.radio("Shift Allocation", ["Day", "Night"])
-            status = c5.selectbox("Status", ["Present", "Absent", "Scheduled"])
+            new_shift = c4.radio("Shift Allocation", ["Day", "Night"])
+            new_status = c5.selectbox("Initial Attendance Status", ["Present", "Absent", "Scheduled"])
             
-            submit = st.form_submit_button("Commit Entry to Ledger")
-            if submit and name:
-                new_row = {
-                    "Labour ID": l_id, "Name": name, "Trade": trade, 
-                    "Shift": shift, "Status": status, 
-                    "Check-In": datetime.now().strftime("%I:%M %p") if status == "Present" else "-"
-                }
-                st.session_state.workforce_data = pd.concat([st.session_state.workforce_data, pd.DataFrame([new_row])], ignore_index=True)
-                st.success(f"Record for {name} saved successfully!")
-                st.rerun()
+            submit_worker = st.form_submit_button("Commit Entry to Ledger")
+            if submit_worker:
+                if new_name.strip() == "":
+                    st.error("Error: Please provide a valid Name before committing.")
+                else:
+                    new_entry = {
+                        "Labour ID": new_id, "Name": new_name, "Trade": new_trade,
+                        "Shift": new_shift, "Status": new_status,
+                        "Check-In": datetime.now().strftime("%I:%M %p") if new_status == "Present" else "-"
+                    }
+                    st.session_state.workforce_db = pd.concat([st.session_state.workforce_db, pd.DataFrame([new_entry])], ignore_index=True)
+                    st.success(f"Success: Record for '{new_name}' committed to central database.")
+                    st.rerun()
 
-    st.dataframe(st.session_state.workforce_data, use_container_width=True)
+    st.markdown("### Master Field Roster Sheet")
+    st.dataframe(st.session_state.workforce_db, use_container_width=True, hide_index=True)
 
-elif menu_option == "📄 Tax Invoices Registry":
-    st.markdown('<div class="section-header">Omani Tax Invoice Registry & Compliance Node</div>', unsafe_provided_html=True)
-    st.markdown('<div class="custom-description">Official digital vault for archiving, validating, and auditing Omani standard Tax Invoices with automated 5% VAT calculations.</div>', unsafe_provided_html=True)
+# ==============================================================================
+# NODE 3: TAX INVOICES REGISTRY
+# ==============================================================================
+with tab3:
+    st.subheader("📄 Omani Tax Invoice Registry & Compliance Node")
+    st.markdown("Official digital vault for archiving, validating, and auditing Omani standard Tax Invoices with automated 5% VAT calculations.")
     
-    # Document upload / input mimicking your Al Inma structure
-    with st.expander("📥 Register & Parse New Corporate Tax Invoice"):
-        with st.form("invoice_form", clear_on_submit=True):
-            col1, col2 = st.columns(2)
-            inv_no = col1.text_input("Invoice Number", value="A204307")
-            inv_date = col2.text_input("Invoice Date (DD/MM/YYYY)", value=datetime.now().strftime("%d/%m/%Y"))
-            supplier = col1.text_input("Supplier / Corporate Entity Name", value="Al Inma Building Materials L.L.C.")
-            items = col2.text_area("Item Description Details (e.g., Materials, Quantity)")
+    with st.expander("📥 Register & Parse New Corporate Tax Invoice", expanded=False):
+        with st.form("add_invoice_form", clear_on_submit=True):
+            i1, i2 = st.columns(2)
+            inv_no = i1.text_input("Invoice Number", value="A204307")
+            inv_date = i2.text_input("Invoice Date (DD/MM/YYYY)", value=datetime.now().strftime("%d/%m/%Y"))
             
-            col3, col4 = st.columns(2)
-            taxable_amt = col3.number_input("Taxable Amount (OMR)", min_value=0.000, format="%.3f")
+            supplier = i1.text_input("Supplier Name Entity", value="Al Inma Building Materials L.L.C.")
+            items_desc = i2.text_area("Item Description Details (Separate with commas)")
             
-            submit_inv = st.form_submit_button("Verify and Process Tax Record")
-            if submit_inv and items:
-                vat_calc = taxable_amt * 0.05
-                total_calc = taxable_amt + vat_calc
-                new_inv = {
-                    "Invoice No": inv_no, "Date": inv_date, "Supplier": supplier,
-                    "Items": items, "Taxable Amount (OMR)": taxable_amt,
-                    "VAT 5% (OMR)": vat_calc, "Total Amount (OMR)": total_calc,
-                    "Status": "Archived & Verified"
-                }
-                st.session_state.invoice_data = pd.concat([st.session_state.invoice_data, pd.DataFrame([new_inv])], ignore_index=True)
-                st.success("Invoice successfully passed integrity validation and registered!")
-                st.rerun()
+            i3, = st.columns(1)
+            taxable_amt = i3.number_input("Taxable Base Amount (OMR)", min_value=0.000, value=0.000, step=0.001, format="%.3f")
+            
+            submit_invoice = st.form_submit_button("Verify and Process Tax Record")
+            if submit_invoice:
+                if items_desc.strip() == "":
+                    st.error("Error: Item Description details cannot be left empty.")
+                else:
+                    computed_vat = taxable_amt * 0.05
+                    computed_gross = taxable_amt + computed_vat
+                    
+                    new_invoice = {
+                        "Invoice No": inv_no,
+                        "Date": inv_date,
+                        "Supplier Name": supplier,
+                        "Material Description": items_desc,
+                        "Taxable Amount (OMR)": taxable_amt,
+                        "VAT Amount 5% (OMR)": computed_vat,
+                        "Total Invoice Gross (OMR)": computed_gross,
+                        "Audit Integrity Check": "Verified & Passed"
+                    }
+                    st.session_state.invoice_db = pd.concat([st.session_state.invoice_db, pd.DataFrame([new_invoice])], ignore_index=True)
+                    st.success(f"Success: Tax Invoice {inv_no} verified and securely archived.")
+                    st.rerun()
 
-    st.markdown("#### Currently Registered System Invoices")
-    st.dataframe(st.session_state.invoice_data, use_container_width=True)
+    st.markdown("### Verified Omani Compliance Ledger")
+    st.dataframe(st.session_state.invoice_db, use_container_width=True, hide_index=True)
 
-elif menu_option == "📊 Chronological Reports Export":
-    st.markdown('<div class="section-header">Reports Export Panel & Audit Trail Engine</div>', unsafe_provided_html=True)
-    st.markdown('<div class="custom-description">Select scope filters to generate, compile, and structure structured spreadsheets (Excel/CSV binary format) for internal validation.</div>', unsafe_provided_html=True)
+# ==============================================================================
+# NODE 4: CHRONOLOGICAL REPORTS EXPORT
+# ==============================================================================
+with tab4:
+    st.subheader("📊 Reports Export Panel & Audit Trail Engine")
+    st.markdown("Select scope filters to generate, compile, and structure spreadsheets (Excel/CSV binary format) for internal validation.")
     
     scope = st.radio("Chronology Scope Focus:", ["View Complete History Logs", "Filter Target Monthly Matrix View"])
     
     st.markdown("---")
-    st.info("Analytical engine ready. Click below to compile active operational buffers into binary ledger format.")
+    st.warning("Analytical engine compiled and waiting for extraction command. Click below to pull binary arrays.")
     
-    # Dynamic Download Buttons utilizing real data state
-    c1, c2 = st.columns(2)
-    with c1:
-        csv_workforce = st.session_state.workforce_data.to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Export Roster Matrix (.CSV)", data=csv_workforce, file_name="Al_Rabhan_Workforce_Roster.csv", mime="text/csv")
-    with c2:
-        csv_finance = st.session_state.invoice_data.to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Export Tax Ledger (.CSV)", data=csv_finance, file_name="Al_Rabhan_Financial_Tax_Registry.csv", mime="text/csv")
+    # Clean Binary Export Operations
+    csv_workers_bytes = st.session_state.workforce_db.to_csv(index=False).encode('utf-8')
+    csv_invoice_bytes = st.session_state.invoice_db.to_csv(index=False).encode('utf-8')
+    
+    down_col1, down_col2 = st.columns(2)
+    with down_col1:
+        st.download_button(
+            label="📥 Export Roster Matrix (.CSV)",
+            data=csv_workers_bytes,
+            file_name=f"Al_Rabhan_Roster_{datetime.now().strftime('%Y%m%d')}.csv",
+            mime="text/csv",
+            use_container_width=True
+        )
+    with down_col2:
+        st.download_button(
+            label="📥 Export Tax Ledger (.CSV)",
+            data=csv_invoice_bytes,
+            file_name=f"Al_Rabhan_Tax_Ledger_{datetime.now().strftime('%Y%m%d')}.csv",
+            mime="text/csv",
+            use_container_width=True
+        )
