@@ -3,28 +3,21 @@ import pandas as pd
 from datetime import datetime
 import io
 
-# --- ULTRA-PREMIUM ULTIMATE CORE CONFIGURATION ---
+# --- ULTIMATE CORE CONFIGURATION ---
 st.set_page_config(page_title="Al Rabhan Trading - Corporate Portal", layout="wide", initial_sidebar_state="collapsed")
 
-# --- CUSTOM ADVANCED EXECUTIVE STYLING ENGINE (CSS) ---
+# --- CLEAN EXECUTIVE STYLING ENGINE ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
     
-    /* Global Application Canvas */
+    /* Application Canvas Base */
     .stApp {
         background-color: #f8fafc;
         font-family: 'Plus Jakarta Sans', sans-serif;
-        color: #0f172a;
     }
 
-    /* --- SYSTEM WIDE KEYFRAME ANIMATIONS --- */
-    @keyframes entranceSlideUp {
-        0% { opacity: 0; transform: translateY(30px); }
-        100% { opacity: 1; transform: translateY(0); }
-    }
-    
-    /* PROFESSIONAL REAL-TIME TYPING SIMULATION EFFECTS */
+    /* PREMIUM REAL-TIME TYPING SIMULATION EFFECTS */
     @keyframes typingSequenceLine {
         from { width: 0; }
         to { width: 100%; }
@@ -34,128 +27,53 @@ st.markdown("""
         50% { border-color: #eab308; }
     }
 
-    /* --- PREMIUM SPLIT INTERFACE FRAMEWORK --- */
-    .ultimate-split-wrapper {
-        display: flex;
-        min-height: 85vh;
-        background: #ffffff;
-        border-radius: 24px;
-        box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
-        border: 1px solid #e2e8f0;
-        overflow: hidden;
-        margin-top: 20px;
-        animation: entranceSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    /* Left Panel Container styling */
+    .left-panel-brand {
+        padding: 20px 10px;
     }
 
-    /* Left Corporate Interaction Form Panel */
-    .split-panel-left {
-        flex: 1;
-        padding: 50px 60px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        background: #ffffff;
-    }
-
-    /* Right Abstract Construction Branding Panel */
-    .split-panel-right {
-        flex: 1.1;
-        background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-        padding: 80px 60px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        color: #ffffff;
-        position: relative;
-        border-left: 1px solid #e2e8f0;
-    }
-    
-    /* --- ENHANCED BOLD BRAND LOGO GRAPHICS (PROMINENT VIEWPORT) --- */
-    .logo-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin-bottom: 35px;
-    }
-    
-    /* Dynamic Vector Towers Construction (Scaled Up) */
-    .logo-graphic-box {
-        display: flex;
-        align-items: flex-end;
-        gap: 6px;
-        height: 85px; /* Scaled up from 65px */
-        margin-bottom: 16px;
-        padding-left: 4px;
-    }
-    
-    .tower-gold-left {
-        width: 18px;
-        height: 50px;
-        background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
-        clip-path: polygon(100% 0, 0 40%, 0 100%, 100% 100%);
-        border-radius: 2px;
-    }
-    
-    .tower-dark-center {
-        width: 22px;
-        height: 80px;
-        background: linear-gradient(135deg, #475569 0%, #0f172a 100%);
-        clip-path: polygon(50% 0, 0 15%, 0 100%, 100% 100%, 100% 15%);
-        border-radius: 2px;
-    }
-    
-    .tower-gold-right {
-        width: 16px;
-        height: 62px;
-        background: linear-gradient(135deg, #fef08a 0%, #eab308 100%);
-        clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%);
-        border-radius: 2px;
-    }
-
-    .logo-text-title {
-        font-size: 34px; /* Scaled up from 24px */
+    .logo-text-title-custom {
+        font-size: 36px;
         font-weight: 800;
         color: #0f172a;
         letter-spacing: 2px;
-        margin: 0;
         text-transform: uppercase;
+        margin: 0;
         line-height: 1.1;
     }
     
-    .logo-text-subtitle {
-        font-size: 18px; /* Scaled up from 13px */
+    .logo-text-subtitle-custom {
+        font-size: 18px;
         font-weight: 600;
         color: #ca8a04;
         letter-spacing: 9px;
-        margin: 4px 0 0 0;
         text-transform: uppercase;
+        margin: 4px 0 15px 0;
+    }
+
+    /* Right Panel Container styling */
+    .right-panel-brand {
+        background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+        padding: 50px;
+        border-radius: 24px;
+        color: #ffffff;
+        min-height: 75vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
     
-    .logo-tagline {
-        font-size: 10px;
-        font-weight: 600;
-        color: #64748b;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        margin-top: 10px;
-        border-top: 2px solid #f1f5f9;
-        padding-top: 8px;
-        width: 100%;
-        max-width: 280px;
-    }
-    
-    /* --- TYPING ANIMATION CONTAINER ARCHITECTURE --- */
-    .typing-hero-container {
-        max-width: 520px;
-        margin-bottom: 25px;
+    /* Typing dynamic lines */
+    .typing-container-custom {
+        max-width: 500px;
+        margin-bottom: 20px;
     }
 
     .typing-line-prime {
-        font-size: 38px;
+        font-size: 36px;
         font-weight: 800;
         line-height: 1.3;
         color: #ffffff;
-        letter-spacing: -0.5px;
         overflow: hidden;
         white-space: nowrap;
         border-right: 3px solid #eab308;
@@ -163,84 +81,36 @@ st.markdown("""
         width: 0;
     }
 
-    /* Incremental sequential delays for natural typing feel */
     .tpl-1 {
-        animation: typingSequenceLine 1.5s steps(30, end) 0.5s forwards,
-                   blinkCursorSymbol 0.75s step-end 2 forwards;
+        animation: typingSequenceLine 1.2s steps(30, end) 0.2s forwards,
+                   blinkCursorSymbol 0.6s step-end 2 forwards;
     }
     .tpl-2 {
-        animation: typingSequenceLine 1.5s steps(30, end) 2.2s forwards,
-                   blinkCursorSymbol 0.75s step-end 2 forwards;
+        animation: typingSequenceLine 1.2s steps(30, end) 1.5s forwards,
+                   blinkCursorSymbol 0.6s step-end 2 forwards;
     }
     .tpl-3 {
-        font-size: 38px;
-        font-weight: 800;
-        color: #eab308; /* Accent color highlight line */
-        animation: typingSequenceLine 1.2s steps(25, end) 3.9s forwards;
+        color: #eab308;
+        animation: typingSequenceLine 1s steps(25, end) 2.8s forwards;
         border-right: none;
     }
 
-    /* Branding Gold Accent Elements */
-    .gold-brand-line {
+    /* Clean generic wrappers */
+    .gold-brand-line-custom {
         width: 70px;
         height: 4px;
         background: linear-gradient(90deg, #eab308 0%, #ca8a04 100%);
         border-radius: 2px;
         margin-bottom: 25px;
     }
-    
-    .gold-pill-accent {
-        background: rgba(234, 179, 8, 0.1);
-        border: 1px solid rgba(234, 179, 8, 0.2);
-        color: #fef08a;
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        display: inline-block;
-        margin-bottom: 20px;
-    }
 
-    /* Form Fields Alignment Adjustments */
-    .login-form-wrapper {
-        margin-top: 15px;
-        width: 100%;
-        max-width: 420px;
-    }
-
-    /* Dashboard Layout Tweaks */
-    .executive-card-node {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        padding: 24px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
-    }
-    
-    .giant-stat-value {
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: #0f172a;
-    }
-    
-    div[data-testid="stForm"] {
-        border: none !important;
-        padding: 0 !important;
-    }
-    
-    /* Clean custom overrides for streamlit inputs */
+    /* Overrides for Streamlit fields to look premium */
     div.stTextInput > div > div > input {
-        background-color: #f8fafc !important;
-        border: 1px solid #e2e8f0 !important;
+        background-color: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
         color: #0f172a !important;
         border-radius: 10px !important;
         padding: 12px 16px !important;
-    }
-    div.stTextInput > div > div > input:focus {
-        border-color: #ca8a04 !important;
-        box-shadow: 0 0 0 1px #ca8a04 !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -257,75 +127,74 @@ if 'daily_active_roster' not in st.session_state:
 if 'invoice_database' not in st.session_state:
     st.session_state['invoice_database'] = []
 
-# --- MULTI-TENANT SPLIT SECURE GATEWAY ---
+# --- MULTI-TENANT SECURE GATEWAY ---
 if not st.session_state['logged_in']:
-    # HTML Layout framework creates columns layout perfectly
-    st.markdown("""
-        <div class="ultimate-split-wrapper">
-            <!-- Left Wing Content (Branding Logo & Structural Form Header) -->
-            <div class="split-panel-left">
-                <div class="logo-container">
-                    <div class="logo-graphic-box">
-                        <div class="tower-gold-left"></div>
-                        <div class="tower-dark-center"></div>
-                        <div class="tower-gold-right"></div>
-                    </div>
-                    <div class="logo-text-title">Al Rabhan</div>
-                    <div class="logo-text-subtitle">Trading</div>
-                    <div class="logo-tagline">Construction | Quality | Trust</div>
-                </div>
-                
-                <h2 style="color: #0f172a; font-weight: 800; font-size: 28px; margin: 0 0 4px 0; letter-spacing: -0.5px;">Welcome Back</h2>
-                <p style="color: #64748b; font-size: 13px; margin: 0 0 25px 0;">Please authenticate administrative level keys to open the operations panel.</p>
-                
-                <!-- Placeholder container target for Streamlit Form Insertion via negative absolute positioning sandbox -->
-                <div id="form-insertion-anchor" style="min-height: 260px;"></div>
+    st.markdown('<div style="padding: 20px 0;">', unsafe_allow_html=True)
+    
+    # 2-Column Split Interface without complex absolute positioning hacks
+    main_left_col, main_right_col = st.columns([1, 1.2], gap="large")
+    
+    with main_left_col:
+        st.markdown('<div class="left-panel-brand">', unsafe_allow_html=True)
+        
+        # Big Bold Graphic Logo Layout
+        st.markdown("""
+            <div style="display: flex; align-items: flex-end; gap: 6px; height: 75px; margin-bottom: 10px;">
+                <div style="width: 18px; height: 45px; background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); clip-path: polygon(100% 0, 0 40%, 0 100%, 100% 100%); border-radius: 2px;"></div>
+                <div style="width: 22px; height: 70px; background: linear-gradient(135deg, #475569 0%, #0f172a 100%); clip-path: polygon(50% 0, 0 15%, 0 100%, 100% 100%, 100% 15%); border-radius: 2px;"></div>
+                <div style="width: 16px; height: 55px; background: linear-gradient(135deg, #fef08a 0%, #eab308 100%); clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%); border-radius: 2px;"></div>
             </div>
-            
-            <!-- Right Wing Content (With Sequential Typing Animation) -->
-            <div class="split-panel-right">
-                <div>
-                    <span class="gold-pill-accent">Oman Enterprise Infrastructure</span>
-                    
-                    <!-- Dynamic Simulated Line-By-Line Typing Engine -->
-                    <div class="typing-hero-container">
-                        <span class="typing-line-prime tpl-1">Effortlessly manage</span>
-                        <span class="typing-line-prime tpl-2">your workforce and</span>
-                        <span class="typing-line-prime tpl-3">corporate financials.</span>
-                    </div>
-                    
-                    <div class="gold-brand-line"></div>
-                    <p style="color: #94a3b8; font-size: 15px; line-height: 1.6; margin-bottom: 35px; max-width: 480px;">
-                        Consolidated cloud tracking console custom engineered for real-time field operations, active shift logs control, and Omani Tax Invoice registry archiving.
-                    </p>
-                    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 14px; max-width: 480px;">
-                        <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #eab308; letter-spacing: 1px;">CONSTRUCTION | QUALITY | TRUST</span>
-                        <p style="margin: 6px 0 0 0; font-size: 13px; color: #cbd5e1; line-height: 1.5;">Automated analytical report structuring engine compiles binary Excel ledgers instantaneously for internal validation.</p>
-                    </div>
-                </div>
+            <div class="logo-text-title-custom">Al Rabhan</div>
+            <div class="logo-text-subtitle-custom">Trading</div>
+            <div style="font-size: 11px; font-weight: 600; color: #64748b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; border-top: 1px solid #e2e8f0; padding-top: 8px;">CONSTRUCTION | QUALITY | TRUST</div>
+        """, unsafe_allow_html=True)
+        
+        # Form Header
+        st.markdown("<h2 style='color: #0f172a; font-weight: 800; font-size: 28px; margin: 0 0 5px 0;'>Welcome Back</h2>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #64748b; font-size: 14px; margin: 0 0 25px 0;'>Please authenticate administrative level keys to open the operations panel.</p>", unsafe_allow_html=True)
+        
+        # Direct Inputs placement right where they belong
+        gate_id = st.text_input("Corporate ID / Email Address", placeholder="e.g. admin@construction.om")
+        gate_key = st.text_input("Security Access Key", type="password", placeholder="••••••••••••")
+        
+        st.markdown('<div style="margin-top: 25px;">', unsafe_allow_html=True)
+        if st.button("Log In to System", type="primary", use_container_width=True):
+            if gate_id == "admin@construction.om" and gate_key == "Oman#Secure2026":
+                st.session_state['logged_in'] = True
+                st.rerun()
+            else:
+                st.error("Access Refused. Security parameters failed evaluation.")
+        st.markdown('</div></div>', unsafe_allow_html=True)
+        
+    with main_right_col:
+        # Beautiful dark blue brand side container
+        st.markdown('<div class="right-panel-brand">', unsafe_allow_html=True)
+        st.markdown('<div style="background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.3); color: #fef08a; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; display: inline-block; margin-bottom: 25px; width: fit-content;">Oman Enterprise Infrastructure</div>', unsafe_allow_html=True)
+        
+        # The Live Sequential Typing Text Blocks
+        st.markdown("""
+            <div class="typing-container-custom">
+                <span class="typing-line-prime tpl-1">Effortlessly manage</span>
+                <span class="typing-line-prime tpl-2">your workforce and</span>
+                <span class="typing-line-prime tpl-3">corporate financials.</span>
             </div>
-        </div>
-    """, unsafe_allow_html=True)
-
-    # Streamlit Inputs injected straight beneath "Welcome Back" with crisp structural orientation
-    with st.container():
-        col_form_landing, col_void_space = st.columns([1, 1.1])
-        with col_form_landing:
-            # Shift inputs layout directly overlaying inside Left Wing panel cleanly without breaking page flow
-            st.markdown('<div class="login-form-wrapper" style="position: relative; margin-top: -320px; padding-left: 60px; z-index: 999;">', unsafe_allow_html=True)
-            gate_id = st.text_input("Corporate ID / Email Address", placeholder="e.g. admin@construction.om")
-            gate_key = st.text_input("Security Access Key", type="password", placeholder="••••••••••••")
-            st.markdown('<div style="margin-top: 20px;">', unsafe_allow_html=True)
-            if st.button("Log In to System", type="primary", use_container_width=True):
-                if gate_id == "admin@construction.om" and gate_key == "Oman#Secure2026":
-                    st.session_state['logged_in'] = True
-                    st.rerun()
-                else:
-                    st.error("Access Refused. Security parameters failed evaluation.")
-            st.markdown('</div></div>', unsafe_allow_html=True)
+            <div class="gold-brand-line-custom"></div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("<p style='color: #cbd5e1; font-size: 15px; line-height: 1.6; margin-bottom: 35px; max-width: 480px;'>Consolidated cloud tracking console custom engineered for real-time field operations, active shift logs control, and Omani Tax Invoice registry archiving.</p>", unsafe_allow_html=True)
+        
+        st.markdown("""
+            <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 14px; max-width: 480px;">
+                <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #eab308; letter-spacing: 1px;">CONSTRUCTION | QUALITY | TRUST</span>
+                <p style="margin: 6px 0 0 0; font-size: 13px; color: #94a3b8; line-height: 1.5;">Automated analytical report structuring engine compiles binary Excel ledgers instantaneously for internal validation.</p>
+            </div>
+        """, unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+    st.markdown('</div>', unsafe_allow_html=True)
     st.stop()
 
-# --- MAIN POST-LOGIN INTERSIDEBAR NAVIGATION HEADER ---
+# --- MAIN POST-LOGIN PANEL ---
 st.markdown("""
     <div style="background: #ffffff; padding: 20px 40px; border-bottom: 1px solid #e2e8f0; margin: -50px -50px 35px -50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
         <div style="display:flex; align-items:center; gap:12px;">
@@ -348,7 +217,7 @@ def generate_excel_stream(target_df):
         target_df.to_excel(b_writer, index=False, sheet_name='Operations_Export')
     return mem_buffer.getvalue()
 
-# --- MANAGEMENT INTERFACE CONTROL MATRIX ---
+# --- INTERFACE TABS CONTROL MATRIX ---
 t_overview, t_attendance, t_invoices, t_reporting = st.tabs([
     "🏠 Corporate Overview", 
     "📝 Daily Attendance Matrix", 
@@ -358,28 +227,25 @@ t_overview, t_attendance, t_invoices, t_reporting = st.tabs([
 
 # 1. MANAGEMENT OVERVIEW
 with t_overview:
-    st.markdown('<div class="executive-card-node" style="margin-bottom: 25px;">', unsafe_allow_html=True)
-    st.markdown("<h3 style='color: #0f172a; font-weight: 800; margin-top:0; letter-spacing:-0.5px;'>Command Operations Matrix</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #0f172a; font-weight: 800; margin-top:10px;'>Command Operations Matrix</h3>", unsafe_allow_html=True)
     st.write("Real-time aggregated corporate performance indicators tracking cross-border human capital alongside archived transactions.")
     
     st1, st2, st3 = st.columns(3)
     with st1:
-        st.markdown(f'<div style="background:#f8fafc; padding:20px; border-radius:12px; border:1px solid #e2e8f0;"><span style="font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase;">Master Active Workforce</span><div class="giant-stat-value">{len(st.session_state["master_labor_pool"])} <span style="font-size:14px; color:#94a3b8; font-weight:400;">Units</span></div></div>', unsafe_allow_html=True)
+        st.metric(label="Master Active Workforce", value=f"{len(st.session_state['master_labor_pool'])} Units")
     with st2:
-        st.markdown(f'<div style="background:#f8fafc; padding:20px; border-radius:12px; border:1px solid #e2e8f0;"><span style="font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase;">Archived Invoices Volume</span><div class="giant-stat-value">{len(st.session_state["invoice_database"])} <span style="font-size:14px; color:#94a3b8; font-weight:400;">Records</span></div></div>', unsafe_allow_html=True)
+        st.metric(label="Archived Invoices Volume", value=f"{len(st.session_state['invoice_database'])} Records")
     with st3:
         gross_sum_value = sum(float(i['Total Amount']) for i in st.session_state['invoice_database']) if st.session_state['invoice_database'] else 0.0
-        st.markdown(f'<div style="background:rgba(234,179,8,0.02); padding:20px; border-radius:12px; border:1px solid rgba(234,179,8,0.15);"><span style="font-size:12px; font-weight:700; color:#ca8a04; text-transform:uppercase;">Gross Value Transacted</span><div class="giant-stat-value" style="color:#ca8a04;">{gross_sum_value:.3f} <span style="font-size:14px; font-weight:600;">OMR</span></div></div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+        st.metric(label="Gross Value Transacted (OMR)", value=f"{gross_sum_value:.3f} OMR")
 
 # 2. DAILY ATTENDANCE MATRIX
 with t_attendance:
     st.subheader("Field Deployment Roster Logs")
     target_date_context = st.date_input("Target Calendar Date Focus Frame", datetime.now(), key="work_date_context")
     
-    col_w_l, col_w_r = st.columns(2)
+    col_w_l, col_w_r = st.columns(2, gap="large")
     with col_w_l:
-        st.markdown('<div class="executive-card-node">', unsafe_allow_html=True)
         st.markdown("<h4>🔍 Query Master Workforce Pools</h4>", unsafe_allow_html=True)
         search_filter_string = st.text_input("Filter via Identity Code / Worker Full Name", placeholder="Scan system tracks...")
         
@@ -402,10 +268,8 @@ with t_attendance:
                                 st.rerun()
                 else:
                     st.info("No structural personnel records correlate with query filters.")
-        st.markdown('</div>', unsafe_allow_html=True)
 
     with col_w_r:
-        st.markdown('<div class="executive-card-node">', unsafe_allow_html=True)
         st.markdown("<h4>➕ First-Time Individual Registration Flow</h4>", unsafe_allow_html=True)
         sub_id = st.text_input("Assign Unique Employee ID")
         sub_name = st.text_input("Legal Individual Full Name")
@@ -422,7 +286,6 @@ with t_attendance:
                     st.rerun()
             else:
                 st.warning("Execution paused. All data parameter inputs remain mandatory.")
-        st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown("### 📋 Staged Attendance Matrix Deployment Queue")
     if not st.session_state['daily_active_roster']:
@@ -431,10 +294,10 @@ with t_attendance:
         index_drop_target = None
         for i_idx, i_worker in enumerate(st.session_state['daily_active_roster']):
             ln1, ln2, ln3, ln4, ln5 = st.columns([1.5, 2, 2, 3, 1])
-            ln1.write(f"**ID Code:** {i_worker['Employee ID']}")
+            ln1.write(f"**ID:** {i_worker['Employee ID']}")
             ln2.write(f"**Name:** {i_worker['Name']}")
             ln3.write(f"**Company:** {i_worker['Company']}")
-            st.session_state['daily_active_roster'][i_idx]["Remarks"] = ln4.text_input("Operational Notes", key=f"m_rem_{i_idx}", value=i_worker["Remarks"], label_visibility="collapsed")
+            st.session_state['daily_active_roster'][i_idx]["Remarks"] = ln4.text_input("Notes", key=f"m_rem_{i_idx}", value=i_worker["Remarks"], label_visibility="collapsed")
             if ln5.button("❌ Drop", key=f"m_drop_{i_idx}"):
                 index_drop_target = i_idx
                 
@@ -457,7 +320,6 @@ with t_attendance:
 with t_invoices:
     st.subheader("Commercial Transaction & Invoice Audit Controls")
     
-    st.markdown('<div class="executive-card-node">', unsafe_allow_html=True)
     st.markdown("<h4>📥 Archive Tax Invoice Document Parameters</h4>", unsafe_allow_html=True)
     iv_c1, iv_c2 = st.columns(2)
     with iv_c1:
@@ -476,11 +338,10 @@ with t_invoices:
                 "VAT Amount": f"{f_inv_vat:.3f}",
                 "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             })
-            st.success(f"Commercial purchase transaction line item [{f_inv_num}] logged under Al Rabhan Trading registries.")
+            st.success(f"Commercial purchase transaction line item [{f_inv_num}] logged successfully.")
             st.rerun()
         else:
             st.error("Input validation exception. Please provide valid transaction parameters.")
-    st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown("### 📋 Logged Commercial Invoices")
     if st.session_state['invoice_database']:
@@ -492,7 +353,6 @@ with t_invoices:
 with t_reporting:
     st.subheader("Chronological Filter Systems & Binary Ledger Compilation Panels")
     
-    st.markdown('<div class="executive-card-node">', unsafe_allow_html=True)
     sorting_scope = st.radio("Specify Analytical Report Target Chronology Scope Focus:", ["View Complete History Logs", "Filter Target Monthly Matrix View", "Filter Target Yearly Matrix View"], horizontal=True)
     
     var_m = datetime.now().strftime("%m")
@@ -504,9 +364,8 @@ with t_reporting:
         var_y = bx2.selectbox("Filter Target Year Focus Block", [str(y) for y in range(2025, 2032)], key="rep_m_yr")
     elif sorting_scope == "Filter Target Yearly Matrix View":
         var_y = st.selectbox("Filter Target Year Focus Block", [str(y) for y in range(2025, 2032)], key="rep_y_yr")
-    st.markdown('</div>', unsafe_allow_html=True)
 
-    col_out_l, col_out_r = st.columns(2)
+    col_out_l, col_out_r = st.columns(2, gap="large")
     
     with col_out_l:
         st.markdown("#### 📊 Filtered Workforce Shift Matrix Ledgers")
