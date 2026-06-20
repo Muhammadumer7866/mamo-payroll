@@ -17,69 +17,22 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    /* PREMIUM REAL-TIME TYPING SIMULATION EFFECTS */
-    @keyframes typingSequenceLine {
-        from { width: 0; }
-        to { width: 100%; }
-    }
-    @keyframes blinkCursorSymbol {
-        from, to { border-color: transparent; }
-        50% { border-color: #eab308; }
+    /* Style for the Left Form Side */
+    .left-side-container {
+        padding: 10px 20px;
     }
 
-    /* Right Side Banner Block styling */
-    .premium-right-banner {
+    /* Style for the Right Premium Card */
+    .premium-card-right {
         background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-        padding: 45px;
+        padding: 40px;
         border-radius: 20px;
-        color: #ffffff;
-        min-height: 520px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        color: #ffffff !important;
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    }
-    
-    /* Typing text blocks architecture */
-    .typing-container-node {
-        margin-bottom: 15px;
+        margin-top: 15px;
     }
 
-    .typing-line-prime {
-        font-size: 34px;
-        font-weight: 800;
-        line-height: 1.3;
-        color: #ffffff;
-        overflow: hidden;
-        white-space: nowrap;
-        border-right: 3px solid #eab308;
-        display: block;
-        width: 0;
-    }
-
-    .tpl-1 {
-        animation: typingSequenceLine 1.2s steps(30, end) 0.2s forwards,
-                   blinkCursorSymbol 0.6s step-end 2 forwards;
-    }
-    .tpl-2 {
-        animation: typingSequenceLine 1.2s steps(30, end) 1.5s forwards,
-                   blinkCursorSymbol 0.6s step-end 2 forwards;
-    }
-    .tpl-3 {
-        color: #eab308;
-        animation: typingSequenceLine 1s steps(25, end) 2.8s forwards;
-        border-right: none;
-    }
-
-    .gold-brand-line-node {
-        width: 60px;
-        height: 4px;
-        background: linear-gradient(90deg, #eab308 0%, #ca8a04 100%);
-        border-radius: 2px;
-        margin-bottom: 20px;
-    }
-
-    /* Overrides for Streamlit form inputs to fit modern UI */
+    /* Input Fields Styling */
     div.stTextInput > div > div > input {
         background-color: #ffffff !important;
         border: 1px solid #cbd5e1 !important;
@@ -104,12 +57,13 @@ if 'invoice_database' not in st.session_state:
 
 # --- SECURE GATEWAY HUB ---
 if not st.session_state['logged_in']:
-    st.markdown('<div style="margin-top: 40px;">', unsafe_allow_html=True)
+    st.markdown('<div style="margin-top: 30px;">', unsafe_allow_html=True)
     
-    # 2-Column Split Interface built natively
-    col_left_form, col_right_banner = st.columns([1.1, 1], gap="large")
+    # Simple and robust 2-Column layout
+    col_left, col_right = st.columns([1.1, 1], gap="large")
     
-    with col_left_form:
+    with col_left:
+        st.markdown('<div class="left-side-container">', unsafe_allow_html=True)
         # Vector Graphic Logo Structure Layout
         st.markdown("""
             <div style="display: flex; align-items: flex-end; gap: 6px; height: 70px; margin-bottom: 8px;">
@@ -136,32 +90,38 @@ if not st.session_state['logged_in']:
                 st.rerun()
             else:
                 st.error("Access Refused. Security parameters failed evaluation.")
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('</div></div>', unsafe_allow_html=True)
         
-    with col_right_banner:
-        # Pure isolated CSS wrapper block
-        st.markdown('<div class="premium-right-banner">', unsafe_allow_html=True)
-        st.markdown('<div style="background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.3); color: #fef08a; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 20px; width: fit-content;">Oman Enterprise Infrastructure</div>', unsafe_allow_html=True)
-        
-        # Safe Sequential Typing Blocks inside banner container
+    with col_right:
+        # Safe HTML block container with standard embedded clean content
         st.markdown("""
-            <div class="typing-container-node">
-                <span class="typing-line-prime tpl-1">Effortlessly manage</span>
-                <span class="typing-line-prime tpl-2">your workforce and</span>
-                <span class="typing-line-prime tpl-3">corporate financials.</span>
+            <div class="premium-card-right">
+                <div style="background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.3); color: #fef08a; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 25px; width: fit-content;">
+                    Oman Enterprise Infrastructure
+                </div>
+                <div style="font-size: 36px; font-weight: 800; line-height: 1.2; color: #ffffff; margin-bottom: 5px;">
+                    Effortlessly manage
+                </div>
+                <div style="font-size: 36px; font-weight: 800; line-height: 1.2; color: #ffffff; margin-bottom: 5px;">
+                    your workforce and
+                </div>
+                <div style="font-size: 36px; font-weight: 800; line-height: 1.2; color: #eab308; margin-bottom: 20px;">
+                    corporate financials.
+                </div>
+                <div style="width: 60px; height: 4px; background: linear-gradient(90deg, #eab308 0%, #ca8a04 100%); border-radius: 2px; margin-bottom: 25px;"></div>
+                
+                <p style='color: #cbd5e1; font-size: 14px; line-height: 1.6; margin-bottom: 30px; max-width: 460px;'>
+                    Consolidated cloud tracking console custom engineered for real-time field operations, active shift logs control, and Omani Tax Invoice registry archiving.
+                </p>
+                
+                <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 18px; border-radius: 12px; max-width: 460px;">
+                    <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #eab308; letter-spacing: 1px;">CONSTRUCTION | QUALITY | TRUST</span>
+                    <p style="margin: 6px 0 0 0; font-size: 13px; color: #94a3b8; line-height: 1.5;">
+                        Automated analytical report structuring engine compiles binary Excel ledgers instantaneously for internal validation.
+                    </p>
+                </div>
             </div>
-            <div class="gold-brand-line-node"></div>
         """, unsafe_allow_html=True)
-        
-        st.markdown("<p style='color: #cbd5e1; font-size: 14px; line-height: 1.5; margin-bottom: 25px; max-width: 440px;'>Consolidated cloud tracking console custom engineered for real-time field operations, active shift logs control, and Omani Tax Invoice registry archiving.</p>", unsafe_allow_html=True)
-        
-        st.markdown("""
-            <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 16px; border-radius: 12px; max-width: 440px;">
-                <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #eab308; letter-spacing: 1px;">CONSTRUCTION | QUALITY | TRUST</span>
-                <p style="margin: 4px 0 0 0; font-size: 12px; color: #94a3b8; line-height: 1.4;">Automated analytical report structuring engine compiles binary Excel ledgers instantaneously for internal validation.</p>
-            </div>
-        """, unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
         
     st.markdown('</div>', unsafe_allow_html=True)
     st.stop()
