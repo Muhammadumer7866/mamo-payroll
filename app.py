@@ -83,7 +83,7 @@ if not st.session_state['logged_in']:
         st.markdown('</div></div>', unsafe_allow_html=True)
         
     with col_right:
-        # Fully Unified Single Block Template for entire right card layout
+        # Fully Unified Single Block Template with correctly escaped attributes
         st.markdown("""
             <div style="background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); padding: 40px; border-radius: 20px; color: #ffffff; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); margin-top: 15px; min-height: 500px;">
                 <div style="background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.3); color: #fef08a; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 25px; width: fit-content;">
