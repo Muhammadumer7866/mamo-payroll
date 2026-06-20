@@ -3,154 +3,148 @@ import pandas as pd
 from datetime import datetime
 import io
 
-# --- ULTRA-PREMIUM EXECUTIVE CONFIGURATION ---
-st.set_page_config(page_title="Al Rabhan Trading - ERP", layout="wide", initial_sidebar_state="collapsed")
+# --- ULTRA-PREMIUM ULTIMATE CORE CONFIGURATION ---
+st.set_page_config(page_title="Al Rabhan Trading - Corporate Portal", layout="wide", initial_sidebar_state="collapsed")
 
-# --- HIGH-END CINEMATIC GRAPHICS ENGINE (CSS) ---
+# --- CUSTOM ADVANCED EXECUTIVE STYLING ENGINE (CSS) ---
 st.markdown("""
     <style>
-    /* Global smooth fonts and deep luxury corporate tone */
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
     
+    /* Global Application Canvas */
     .stApp {
-        background-color: #0b0f19;
+        background-color: #f8fafc;
         font-family: 'Plus Jakarta Sans', sans-serif;
-        color: #f1f5f9;
-        overflow-x: hidden;
+        color: #0f172a;
     }
-
-    /* --- ANIMATION KEYFRAMES (THE MOVEMENT) --- */
-    @keyframes premiumFadeUp {
-        0% { opacity: 0; transform: translateY(40px); }
+    
+    /* --- SYSTEM WIDE KEYFRAME ANIMATIONS (DYNAMIC MOVEMENT) --- */
+    @keyframes entranceSlideUp {
+        0% { opacity: 0; transform: translateY(50px); }
         100% { opacity: 1; transform: translateY(0); }
     }
-    @keyframes smoothPulse {
+    @keyframes persistentPulseLogo {
         0% { transform: translate(-50%, -50%) scale(1); opacity: 0.02; }
-        50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.05; }
+        50% { transform: translate(-50%, -50%) scale(1.03); opacity: 0.05; }
         100% { transform: translate(-50%, -50%) scale(1); opacity: 0.02; }
     }
-    @keyframes floatGraphic {
-        0% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-15px) rotate(1deg); }
-        100% { transform: translateY(0px) rotate(0deg); }
+    @keyframes subtleFloatingEffect {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
+        100% { transform: translateY(0px); }
     }
 
-    /* Dynamic Luxury Bold Watermark Logo */
-    .bold-watermark {
+    /* Giant Background Brand Watermark Overlay */
+    .premium-watermark-bg {
         position: fixed;
-        top: 55%;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        font-size: 13vw;
+        font-size: 10vw;
         font-weight: 800;
-        letter-spacing: 15px;
-        background: linear-gradient(135deg, #ca8a04 0%, #1e40af 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #ca8a04;
         opacity: 0.03;
         z-index: 0;
         pointer-events: none;
         text-align: center;
+        letter-spacing: 12px;
+        white-space: nowrap;
         user-select: none;
-        animation: smoothPulse 8s ease-in-out infinite;
+        animation: persistentPulseLogo 10s ease-in-out infinite;
     }
 
-    /* --- PREMIUM SPLIT INTERFACE SCREEN --- */
-    .luxury-login-container {
+    /* --- PREMIUM SPLIT INTERFACE FRAMEWORK (Matches image layout perfectly) --- */
+    .ultimate-split-wrapper {
         display: flex;
-        min-height: 88vh;
-        margin: 20px auto;
-        max-width: 1200px;
-        background: rgba(15, 23, 42, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 28px;
-        backdrop-filter: blur(20px);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        min-height: 85vh;
+        background: #ffffff;
+        border-radius: 24px;
+        box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
+        border: 1px solid #e2e8f0;
         overflow: hidden;
-        animation: premiumFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-
-    .panel-left {
-        flex: 1.1;
-        padding: 60px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        background: #0f172a;
-    }
-
-    .panel-right {
-        flex: 1.2;
-        background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-        padding: 60px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        border-left: 1px solid rgba(255, 255, 255, 0.05);
-        position: relative;
-    }
-
-    /* Luxury Corporate CSS Branding Logo */
-    .art-logo-box {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 30px;
-    }
-    .art-logo-icon {
-        background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 800;
-        color: #0f172a;
-        font-size: 18px;
-        box-shadow: 0 4px 14px rgba(234, 179, 8, 0.3);
-    }
-    .art-logo-text {
-        font-size: 22px;
-        font-weight: 700;
-        color: #ffffff;
-        letter-spacing: 0.5px;
-    }
-
-    /* Interactive UI Blocks for Right Sidebar Banner */
-    .premium-showcase-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        padding: 24px;
-        border-radius: 18px;
         margin-top: 30px;
-        animation: floatGraphic 6s ease-in-out infinite;
+        animation: entranceSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
-    /* Post-Login Dashboard Custom Design Elements */
-    .modern-dashboard-card {
-        background: rgba(30, 41, 59, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 18px;
+    /* Left Corporate Interaction Form Panel */
+    .split-panel-left {
+        flex: 1;
+        padding: 80px 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #ffffff;
+    }
+
+    /* Right Abstract Construction Branding Panel */
+    .split-panel-right {
+        flex: 1.1;
+        background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+        padding: 80px 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: #ffffff;
+        position: relative;
+        border-left: 1px solid #e2e8f0;
+    }
+    
+    /* Branding Gold Accent Elements */
+    .gold-brand-line {
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, #eab308 0%, #ca8a04 100%);
+        border-radius: 2px;
+        margin-bottom: 25px;
+    }
+    
+    .gold-pill-accent {
+        background: rgba(234, 179, 8, 0.1);
+        border: 1px solid rgba(234, 179, 8, 0.2);
+        color: #fef08a;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+
+    /* Modern Post-Login Dashboard Component Architecture */
+    .executive-card-node {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
         padding: 24px;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        z-index: 1;
     }
-    .modern-dashboard-card:hover {
-        transform: translateY(-5px);
-        border-color: rgba(234, 179, 8, 0.3);
+    .executive-card-node:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+        border-color: #eab308;
     }
-    .accent-number {
+    
+    .giant-stat-value {
         font-size: 2.5rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #0f172a;
+        letter-spacing: -1px;
+    }
+    
+    /* Streamlit Components Visual Fixes */
+    div[data-testid="stForm"] {
+        border: none !important;
+        padding: 0 !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- APP SYSTEM STATE RETENTION ---
+# --- APPLICATION STATE MANAGEMENT ---
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
 if 'master_labor_pool' not in st.session_state:
@@ -162,291 +156,286 @@ if 'daily_active_roster' not in st.session_state:
 if 'invoice_database' not in st.session_state:
     st.session_state['invoice_database'] = []
 
-# --- RENDER IMMERSIVE LOGGING PORTAL ---
+# --- MULTI-TENANT SPLIT SECURE GATEWAY ---
 if not st.session_state['logged_in']:
-    # Pure structured layout injection
+    # Injecting clean structure that maps to image layouts directly without overlapping elements
     st.markdown("""
-        <div class="luxury-login-container">
-            <!-- Left Interaction Form Column -->
-            <div class="panel-left">
-                <div class="art-logo-box">
-                    <div class="art-logo-icon">A</div>
-                    <div class="art-logo-text">Al Rabhan Trading</div>
+        <div class="ultimate-split-wrapper">
+            <!-- Left Wing -->
+            <div class="split-panel-left">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 30px;">
+                    <span style="font-weight: 800; font-size: 24px; color: #0f172a; letter-spacing: -0.5px;">AL RABHAN</span>
+                    <span style="font-weight: 400; font-size: 24px; color: #ca8a04; letter-spacing: -0.5px;">TRADING</span>
                 </div>
-                <h2 style="color: #ffffff; font-weight: 700; font-size: 32px; margin-bottom: 8px;">Portal Authentication</h2>
-                <p style="color: #94a3b8; font-size: 14px; margin-bottom: 40px; line-height: 1.5;">
-                    Please input your enterprise identity credentials below to request full database entry validation.
-                </p>
+                <h2 style="color: #0f172a; font-weight: 800; font-size: 34px; margin-bottom: 6px; letter-spacing: -0.5px;">Welcome Back</h2>
+                <p style="color: #64748b; font-size: 14px; margin-bottom: 40px;">Please authenticate administrative level keys to open the operations panel.</p>
             </div>
-            <!-- Right Corporate Aesthetics Banner Column -->
-            <div class="panel-right">
-                <span style="color: #eab308; text-transform: uppercase; font-size: 11px; font-weight: 700; letter-spacing: 2px;">Sultanate of Oman ERP System</span>
-                <h1 style="color: #ffffff; font-size: 38px; font-weight: 800; line-height: 1.25; margin: 15px 0 20px 0;">
-                    Optimized Control For Modern Trade & Labor Operations.
-                </h1>
-                <p style="color: #cbd5e1; font-size: 15px; line-height: 1.6; margin: 0;">
-                    A highly responsive workspace developed exclusively for Al Rabhan Trading to seamlessly map personnel deployment histories alongside real-time VAT tax invoice metrics archiving.
-                </p>
-                <div class="premium-showcase-card">
-                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-                        <span style="color:#eab308; font-weight:700; font-size:14px;">⚡ Real-time Compiled Dashboards</span>
-                    </div>
-                    <p style="color:#94a3b8; font-size:13px; margin:0; line-height:1.5;">
-                        Features single-click automated binary Excel report compiling for direct internal accounting submission and daily shift rosters analytics extraction.
+            <!-- Right Wing -->
+            <div class="split-panel-right">
+                <div>
+                    <span class="gold-pill-accent">Oman Enterprise Infrastructure</span>
+                    <h1 style="color: #ffffff; font-size: 40px; font-weight: 800; line-height: 1.2; margin-bottom: 20px; letter-spacing: -0.5px;">
+                        Effortlessly manage your workforce and corporate financials.
+                    </h1>
+                    <div class="gold-brand-line"></div>
+                    <p style="color: #94a3b8; font-size: 15px; line-height: 1.6; margin-bottom: 35px; max-width: 480px;">
+                        Consolidated cloud tracking console custom engineered for real-time field operations, active shift logs control, and Omani Tax Invoice registry archiving.
                     </p>
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 14px; max-width: 480px;">
+                        <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #eab308; letter-spacing: 1px;">CONSTRUCTION | QUALITY | TRUST</span>
+                        <p style="margin: 6px 0 0 0; font-size: 13px; color: #cbd5e1; line-height: 1.5;">Automated analytical report structuring engine compiles binary Excel ledgers instantaneously for internal validation.</p>
+                    </div>
                 </div>
             </div>
         </div>
     """, unsafe_allow_html=True)
 
-    # Injecting the input fields clean and native overlaying over panel-left perfectly 
+    # Dynamic structural injection of actual processing inputs over left panel real-estate
     with st.container():
-        c_left_form, c_right_void = st.columns([1, 1.1])
-        with c_left_form:
-            st.markdown('<div style="position: relative; margin-top: -510px; padding: 0 60px; max-width: 520px;">', unsafe_allow_html=True)
-            auth_email = st.text_input("Corporate Email Address", placeholder="e.g. admin@construction.om")
-            auth_password = st.text_input("Security Access Key", type="password", placeholder="••••••••••••")
-            
+        col_form_landing, col_void_space = st.columns([1, 1.1])
+        with col_form_landing:
+            st.markdown('<div style="position: relative; margin-top: -490px; padding: 0 60px; max-width: 500px;">', unsafe_allow_html=True)
+            gate_id = st.text_input("Corporate ID / Email Address", placeholder="e.g. admin@construction.om")
+            gate_key = st.text_input("Security Access Key", type="password", placeholder="••••••••••••")
             st.markdown('<div style="margin-top: 30px;">', unsafe_allow_html=True)
-            if st.button("Verify & Authenticate Node Connection", type="primary", use_container_width=True):
-                if auth_email == "admin@construction.om" and auth_password == "Oman#Secure2026":
+            if st.button("Log In to System", type="primary", use_container_width=True):
+                if gate_id == "admin@construction.om" and gate_key == "Oman#Secure2026":
                     st.session_state['logged_in'] = True
                     st.rerun()
                 else:
-                    st.error("Access Refused. Security string parameters failed validation protocols.")
+                    st.error("Access Refused. Security cryptographic hash parameters failed evaluation.")
             st.markdown('</div></div>', unsafe_allow_html=True)
     st.stop()
 
-# --- BACKDROP DYNAMIC MOTION WATERMARK ---
-st.markdown('<div class="bold-watermark">AL RABHAN</div>', unsafe_allow_html=True)
+# --- ACTIVE PERSISTENT BACKGROUND WATERMARK ---
+st.markdown('<div class="premium-watermark-bg">AL RABHAN TRADING</div>', unsafe_allow_html=True)
 
-# --- INTERNAL SECURE SYSTEM HEADER DISPLAY ---
+# --- MAIN POST-LOGIN INTERSIDEBAR NAVIGATION HEADER ---
 st.markdown("""
-    <div style="background: rgba(15,23,42,0.8); backdrop-filter:blur(10px); padding: 20px 40px; border-bottom: 1px solid rgba(255,255,255,0.06); margin: -50px -50px 35px -50px; display: flex; justify-content: space-between; align-items: center; animation: premiumFadeUp 0.8s ease out;">
-        <div style="display:flex; align-items:center; gap:15px;">
-            <div style="background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:800; color:#0f172a; font-size:16px;">A</div>
+    <div style="background: #ffffff; padding: 20px 40px; border-bottom: 1px solid #e2e8f0; margin: -50px -50px 35px -50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+        <div style="display:flex; align-items:center; gap:12px;">
+            <div style="width: 4px; height: 28px; background: #ca8a04; border-radius: 2px;"></div>
             <div>
-                <h1 style="font-size: 22px; font-weight: 700; color: #ffffff; margin: 0; letter-spacing:-0.5px;">Al Rabhan Trading</h1>
-                <p style="font-size: 11px; color: #94a3b8; margin: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;">Corporate Core ERP Operations Node</p>
+                <h1 style="font-size: 20px; font-weight: 800; color: #0f172a; margin: 0; letter-spacing:-0.5px;">AL RABHAN TRADING OPERATIONS SYSTEM</h1>
+                <p style="font-size: 11px; color: #64748b; margin: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Sultanate of Oman • Enterprise Control Node</p>
             </div>
         </div>
-        <div style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); padding: 6px 14px; border-radius: 20px; display:flex; align-items:center; gap:8px;">
-            <div style="width:8px; height:8px; background:#22c55e; border-radius:50%;"></div>
-            <span style="font-size: 12px; font-weight: 600; color: #4ade80; letter-spacing:0.5px;">SYSTEM LIVE</span>
+        <div style="background: #f1f5f9; padding: 6px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <span style="font-size: 12px; font-weight: 600; color: #334155;">🔒 Security Token Verified</span>
         </div>
     </div>
 """, unsafe_allow_html=True)
 
-# --- GENERAL EXCEL LEDGER COMPILER UNIT ---
-def compile_excel_ledger(target_dataframe):
-    io_stream = io.BytesIO()
-    with pd.ExcelWriter(io_stream, engine='xlsxwriter') as workbook_writer:
-        target_dataframe.to_excel(workbook_writer, index=False, sheet_name='ERP_Export_Master')
-    return io_stream.getvalue()
+# --- BINARY FILE COMPILE PIPELINE ---
+def generate_excel_stream(target_df):
+    mem_buffer = io.BytesIO()
+    with pd.ExcelWriter(mem_buffer, engine='xlsxwriter') as b_writer:
+        target_df.to_excel(b_writer, index=False, sheet_name='Operations_Export')
+    return mem_buffer.getvalue()
 
-# --- WORKSPACE TABS INITIALIZATION ---
-tab_home, tab_workforce, tab_invoices, tab_reports = st.tabs([
-    "🏠 Management Overview", 
+# --- MANAGEMENT INTERFACE CONTROL MATRIX ---
+t_overview, t_attendance, t_invoices, t_reporting = st.tabs([
+    "🏠 Corporate Overview", 
     "📝 Daily Attendance Matrix", 
     "🧾 Tax Invoices Registry", 
-    "📊 Granular Report Compilers"
+    "📊 Chronological Reports Export"
 ])
 
-# --- 1. CORPORATE SUMMARY PANEL ---
-with tab_home:
-    st.markdown('<div class="modern-dashboard-card" style="margin-bottom: 25px;">', unsafe_allow_html=True)
-    st.markdown("<h3 style='color: #ffffff; font-weight: 700; margin-top:0;'>Operational Command Console</h3>", unsafe_allow_html=True)
-    st.write("Central tracking arrays mapping cross-border field operations, logistics workforces shift logs, and commercial sales invoice records.")
+# 1. MANAGEMENT OVERVIEW
+with t_overview:
+    st.markdown('<div class="executive-card-node" style="margin-bottom: 25px;">', unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #0f172a; font-weight: 800; margin-top:0; letter-spacing:-0.5px;'>Command Operations Matrix</h3>", unsafe_allow_html=True)
+    st.write("Real-time aggregated corporate performance indicators tracking cross-border human capital alongside archived transactions.")
     
-    col_d1, col_d2, col_d3 = st.columns(3)
-    with col_d1:
-        st.markdown(f'<div style="background:rgba(255,255,255,0.02); padding:20px; border-radius:14px; border:1px solid rgba(255,255,255,0.05);"><h5>Active Master Personnel</h5><div class="accent-number">{len(st.session_state["master_labor_pool"])} <span style="font-size:14px; color:#64748b;">Registered</span></div></div>', unsafe_allow_html=True)
-    with col_d2:
-        st.markdown(f'<div style="background:rgba(255,255,255,0.02); padding:20px; border-radius:14px; border:1px solid rgba(255,255,255,0.05);"><h5>Logged Commercial Invoices</h5><div class="accent-number">{len(st.session_state["invoice_database"])} <span style="font-size:14px; color:#64748b;">Records</span></div></div>', unsafe_allow_html=True)
-    with col_d3:
-        gross_volume_calc = sum(float(v['Total Amount']) for v in st.session_state['invoice_database']) if st.session_state['invoice_database'] else 0.0
-        st.markdown(f'<div style="background:rgba(234,179,8,0.02); padding:20px; border-radius:14px; border:1px solid rgba(234,179,8,0.1);"><h5>Gross Audited Revenue</h5><div class="accent-number" style="background:linear-gradient(135deg, #fef08a 0%, #eab308 100%); -webkit-background-clip: text;">{gross_volume_calc:.3f} <span style="font-size:16px; color:#eab308; font-weight:600;">OMR</span></div></div>', unsafe_allow_html=True)
+    st1, st2, st3 = st.columns(3)
+    with st1:
+        st.markdown(f'<div style="background:#f8fafc; padding:20px; border-radius:12px; border:1px solid #e2e8f0;"><span style="font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase;">Master Active Workforce</span><div class="giant-stat-value">{len(st.session_state["master_labor_pool"])} <span style="font-size:14px; color:#94a3b8; font-weight:400;">Units</span></div></div>', unsafe_allow_html=True)
+    with st2:
+        st.markdown(f'<div style="background:#f8fafc; padding:20px; border-radius:12px; border:1px solid #e2e8f0;"><span style="font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase;">Archived Invoices Volume</span><div class="giant-stat-value">{len(st.session_state["invoice_database"])} <span style="font-size:14px; color:#94a3b8; font-weight:400;">Records</span></div></div>', unsafe_allow_html=True)
+    with st3:
+        gross_sum_value = sum(float(i['Total Amount']) for i in st.session_state['invoice_database']) if st.session_state['invoice_database'] else 0.0
+        st.markdown(f'<div style="background:rgba(234,179,8,0.02); padding:20px; border-radius:12px; border:1px solid rgba(234,179,8,0.15);"><span style="font-size:12px; font-weight:700; color:#ca8a04; text-transform:uppercase;">Gross Value Transacted</span><div class="giant-stat-value" style="color:#ca8a04;">{gross_sum_value:.3f} <span style="font-size:14px; font-weight:600;">OMR</span></div></div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# --- 2. ATTENDANCE OPERATIONS MATRIX ---
-with tab_workforce:
-    st.subheader("Daily Field Roster Deployment Engine")
-    selected_roster_date = st.date_input("Target Operational Date Window", datetime.now(), key="roster_date_anchor")
+# 2. DAILY ATTENDANCE MATRIX
+with t_attendance:
+    st.subheader("Field Deployment Roster Logs")
+    target_date_context = st.date_input("Target Calendar Date Focus Frame", datetime.now(), key="work_date_context")
     
-    col_w_left, col_w_right = st.columns(2)
-    with col_w_left:
-        st.markdown('<div class="modern-dashboard-card">', unsafe_allow_html=True)
-        st.markdown("<h4>🔍 Query Master Roster Registry</h4>", unsafe_allow_html=True)
-        pool_query = st.text_input("Filter via Identity Code Sequence / Name", placeholder="Scan databases...")
+    col_w_l, col_w_r = st.columns(2)
+    with col_w_l:
+        st.markdown('<div class="executive-card-node">', unsafe_allow_html=True)
+        st.markdown("<h4>🔍 Query Master Workforce Pools</h4>", unsafe_allow_html=True)
+        search_filter_string = st.text_input("Filter via Identity Code / Worker Full Name", placeholder="Scan system tracks...")
         
-        if pool_query:
+        if search_filter_string:
             if not st.session_state['master_labor_pool']:
-                st.warning("Primary workforce directories possess zero cataloged metrics.")
+                st.warning("Master tracking database arrays contain zero current profiles.")
             else:
-                matched_pool = [x for x in st.session_state['master_labor_pool'] if pool_query.lower() in x['Name'].lower() or pool_query in x['Employee ID']]
-                if matched_pool:
-                    for individual in matched_pool:
-                        if st.button(f"Stage Deployment: {individual['Name']} ({individual['Employee ID']})", key=f"p_stg_{individual['Employee ID']}"):
-                            if any(e['Employee ID'] == individual['Employee ID'] for e in st.session_state['daily_active_roster']):
-                                st.error("Target employee unit already deployed inside today's open staging frame.")
+                matches = [w for w in st.session_state['master_labor_pool'] if search_filter_string.lower() in w['Name'].lower() or search_filter_string in w['Employee ID']]
+                if matches:
+                    for entry_item in matches:
+                        if st.button(f"Deploy Unit: {entry_item['Name']} ({entry_item['Employee ID']})", key=f"dpl_{entry_item['Employee ID']}"):
+                            if any(q['Employee ID'] == entry_item['Employee ID'] for q in st.session_state['daily_active_roster']):
+                                st.error("Target employee unit already active inside today's open staging frame queue.")
                             else:
                                 st.session_state['daily_active_roster'].append({
-                                    "Employee ID": individual["Employee ID"], "Name": individual["Name"],
-                                    "Company": individual["Company"], "Remarks": ""
+                                    "Employee ID": entry_item["Employee ID"], "Name": entry_item["Name"],
+                                    "Company": entry_item["Company"], "Remarks": ""
                                 })
-                                st.success(f"Staged {individual['Name']} successfully.")
+                                st.success(f"Staged {entry_item['Name']}.")
                                 st.rerun()
                 else:
-                    st.info("No matching individual entities discovered for target query criteria.")
+                    st.info("No structural personnel records correlate with query filters.")
         st.markdown('</div>', unsafe_allow_html=True)
 
-    with col_w_right:
-        st.markdown('<div class="modern-dashboard-card">', unsafe_allow_html=True)
-        st.markdown("<h4>➕ Provision New Corporate Personnel</h4>", unsafe_allow_html=True)
-        in_em_id = st.text_input("Define Unique Employee ID")
-        in_em_name = st.text_input("Legal Individual Full Name String")
-        in_em_comp = st.text_input("Assigned Subcontracting Enterprise / Vendor Name")
+    with col_w_r:
+        st.markdown('<div class="executive-card-node">', unsafe_allow_html=True)
+        st.markdown("<h4>➕ First-Time Individual Registration Flow</h4>", unsafe_allow_html=True)
+        sub_id = st.text_input("Assign Unique Employee ID")
+        sub_name = st.text_input("Legal Individual Full Name")
+        sub_comp = st.text_input("Corporate Vendor Affiliation / Company Entity")
         
-        if st.button("Commit Node Provision Flow", use_container_width=True):
-            if in_em_id and in_em_name and in_em_comp:
-                if any(p['Employee ID'] == in_em_id for p in st.session_state['master_labor_pool']):
-                    st.error("Structural conflict error. Designated ID code already holds valid master assignment profile.")
+        if st.button("Commit Profile Creation", use_container_width=True):
+            if sub_id and sub_name and sub_comp:
+                if any(k['Employee ID'] == sub_id for k in st.session_state['master_labor_pool']):
+                    st.error("Data tracking conflict. Assigned Employee ID code already holds valid master assignment profile.")
                 else:
-                    st.session_state['master_labor_pool'].append({"Employee ID": in_em_id, "Name": in_em_name, "Company": in_em_comp})
-                    st.session_state['daily_active_roster'].append({"Employee ID": in_em_id, "Name": in_em_name, "Company": in_em_comp, "Remarks": ""})
-                    st.success("New operational profile injected into live database tracks.")
+                    st.session_state['master_labor_pool'].append({"Employee ID": sub_id, "Name": sub_name, "Company": sub_comp})
+                    st.session_state['daily_active_roster'].append({"Employee ID": sub_id, "Name": sub_name, "Company": sub_comp, "Remarks": ""})
+                    st.success("New operational vector built successfully.")
                     st.rerun()
             else:
-                st.warning("All input containers are structural pre-requisites.")
+                st.warning("Execution paused. All data parameter inputs remain mandatory.")
         st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown("### 📋 Current Staged Deployment Queue Frame")
+    st.markdown("### 📋 Staged Attendance Matrix Deployment Queue")
     if not st.session_state['daily_active_roster']:
-        st.info("Deployment staging logs hold zero entries for this operational sequence.")
+        st.info("Staging vectors hold zero deployment entries presently.")
     else:
-        removal_index_target = None
-        for r_index, r_worker in enumerate(st.session_state['daily_active_roster']):
-            cl1, cl2, cl3, cl4, cl5 = st.columns([1.5, 2, 2, 3, 1])
-            cl1.write(f"**ID Code:** {r_worker['Employee ID']}")
-            cl2.write(f"**Legal Name:** {r_worker['Name']}")
-            cl3.write(f"**Vendor Entity:** {r_worker['Company']}")
-            st.session_state['daily_active_roster'][r_index]["Remarks"] = cl4.text_input("Operational Notes", key=f"f_rem_{r_index}", value=r_worker["Remarks"], label_visibility="collapsed")
-            if cl5.button("❌ Drop", key=f"f_drop_{r_index}"):
-                removal_index_target = r_index
+        index_drop_target = None
+        for i_idx, i_worker in enumerate(st.session_state['daily_active_roster']):
+            ln1, ln2, ln3, ln4, ln5 = st.columns([1.5, 2, 2, 3, 1])
+            ln1.write(f"**ID Code:** {i_worker['Employee ID']}")
+            ln2.write(f"**Name:** {i_worker['Name']}")
+            ln3.write(f"**Company:** {i_worker['Company']}")
+            st.session_state['daily_active_roster'][i_idx]["Remarks"] = ln4.text_input("Operational Notes", key=f"m_rem_{i_idx}", value=i_worker["Remarks"], label_visibility="collapsed")
+            if ln5.button("❌ Drop", key=f"m_drop_{i_idx}"):
+                index_drop_target = i_idx
                 
-        if removal_index_target is not None:
-            st.session_state['daily_active_roster'].pop(removal_index_target)
+        if index_drop_target is not None:
+            st.session_state['daily_active_roster'].pop(index_drop_target)
             st.rerun()
             
-        if st.button("💾 Finalize Shift Attendance Log Ledger", type="primary", use_container_width=True):
-            for active_item in st.session_state['daily_active_roster']:
+        if st.button("💾 Finalize & Commit Daily Attendance Sheets", type="primary", use_container_width=True):
+            for log_row in st.session_state['daily_active_roster']:
                 st.session_state['attendance_database'].append({
-                    "Date": str(selected_roster_date), "Employee ID": active_item["Employee ID"],
-                    "Name": active_item["Name"], "Company": active_item["Company"],
-                    "Status": "Present", "Remarks": active_item["Remarks"]
+                    "Date": str(target_date_context), "Employee ID": log_row["Employee ID"],
+                    "Name": log_row["Name"], "Company": log_row["Company"],
+                    "Status": "Present", "Remarks": log_row["Remarks"]
                 })
-            st.success("Daily attendance roster blocks verified and committed to persistent database streams.")
+            st.success("Log sheets archived securely inside core repositories.")
             st.session_state['daily_active_roster'] = []
             st.rerun()
 
-# --- 3. TAX INVOICE TRACKING REGISTRY PANEL ---
-with tab_invoices:
-    st.subheader("Commercial Sales & Tax Procurement Audit Registry")
+# 3. TAX INVOICES REGISTRY
+with t_invoices:
+    st.subheader("Commercial Transaction & Invoice Audit Controls")
     
-    st.markdown('<div class="modern-dashboard-card">', unsafe_allow_html=True)
-    st.markdown("<h4>📥 Archive Raw Tax Invoice Parameters</h4>", unsafe_allow_html=True)
-    in_col_1, in_col_2 = st.columns(2)
-    with in_col_1:
-        reg_inv_date = st.date_input("Document Legal Date of Issue", datetime.now(), key="invoice_calendar_date")
-        reg_inv_serial = st.text_input("Document Serial Number Focus (Invoice No.)", placeholder="e.g. A204306")
-    with in_col_2:
-        reg_inv_total = st.number_input("Invoice Total Gross Financial Valuation (OMR)", min_value=0.000, step=0.001, format="%.3f")
-        reg_inv_vat = st.number_input("Calculated Tax Value Component (5% VAT OMR)", min_value=0.000, step=0.001, format="%.3f")
+    st.markdown('<div class="executive-card-node">', unsafe_allow_html=True)
+    st.markdown("<h4>📥 Archive Tax Invoice Document Parameters</h4>", unsafe_allow_html=True)
+    iv_c1, iv_c2 = st.columns(2)
+    with iv_c1:
+        f_inv_date = st.date_input("Document Legal Date of Issue", datetime.now(), key="f_inv_date_cal")
+        f_inv_num = st.text_input("Document Serial Number Focus (Invoice No.)", placeholder="e.g. A204306")
+    with iv_c2:
+        f_inv_total = st.number_input("Invoice Total Gross Financial Valuation (OMR)", min_value=0.000, step=0.001, format="%.3f")
+        f_inv_vat = st.number_input("Calculated Tax Value Component (5% VAT OMR)", min_value=0.000, step=0.001, format="%.3f")
         
-    if st.button("🔒 Archive Document Metadata Into Secure Ledgers", type="primary"):
-        if reg_inv_serial and reg_inv_total > 0:
+    if st.button("🔒 Archive Transaction Metadata Into Secure Ledgers", type="primary"):
+        if f_inv_num and f_inv_total > 0:
             st.session_state['invoice_database'].append({
-                "Date": str(reg_inv_date),
-                "Invoice Number": reg_inv_serial,
-                "Total Amount": f"{reg_inv_total:.3f}",
-                "VAT Amount": f"{reg_inv_vat:.3f}",
-                "System Operational Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                "Date": str(f_inv_date),
+                "Invoice Number": f_inv_num,
+                "Total Amount": f"{f_inv_total:.3f}",
+                "VAT Amount": f"{f_inv_vat:.3f}",
+                "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             })
-            st.success(f"Commercial purchase document entry [{reg_inv_serial}] logged under corporate parameters successfully.")
+            st.success(f"Commercial purchase transaction line item [{f_inv_num}] logged under Al Rabhan Trading registries.")
             st.rerun()
         else:
-            st.error("Input metadata validation error. Please verify financial data parameters.")
+            st.error("Input validation exception. Please provide valid transaction parameters.")
     st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown("### 📋 Logged Commercial Invoices")
     if st.session_state['invoice_database']:
         st.dataframe(pd.DataFrame(st.session_state['invoice_database']), use_container_width=True)
     else:
-        st.info("Commercial transaction indices contain zero archived ledger line items.")
+        st.info("System ledger arrays hold zero commercial transaction files currently.")
 
-# --- 4. EXPORT AND REPORT GENERATION PANEL ---
-with tab_reports:
-    st.subheader("Granular Operational Report Compilers & Binary Downloads")
+# 4. CHRONOLOGICAL REPORTS EXPORT
+with t_reporting:
+    st.subheader("Chronological Filter Systems & Binary Ledger Compilation Panels")
     
-    st.markdown('<div class="modern-dashboard-card">', unsafe_allow_html=True)
-    chronological_scope = st.radio("Specify Target Aggregation Timeline Scope Focus:", ["View Complete History Logs", "Compile Target Monthly Matrix View", "Compile Target Yearly Matrix View"], horizontal=True)
+    st.markdown('<div class="executive-card-node">', unsafe_allow_html=True)
+    sorting_scope = st.radio("Specify Analytical Report Target Chronology Scope Focus:", ["View Complete History Logs", "Filter Target Monthly Matrix View", "Filter Target Yearly Matrix View"], horizontal=True)
     
-    assigned_m_code = datetime.now().strftime("%m")
-    assigned_y_code = datetime.now().strftime("%Y")
+    var_m = datetime.now().strftime("%m")
+    var_y = datetime.now().strftime("%Y")
     
-    if chronological_scope == "Compile Target Monthly Matrix View":
+    if sorting_scope == "Filter Target Monthly Matrix View":
         bx1, bx2 = st.columns(2)
-        assigned_m_code = bx1.selectbox("Filter Target Month Focus Block", [f"{n:02d}" for n in range(1, 13)], index=int(datetime.now().month)-1)
-        assigned_y_code = bx2.selectbox("Filter Target Year Focus Block", [str(y) for y in range(2025, 2032)], key="m_anchor_yr")
-    elif chronological_scope == "Compile Target Yearly Matrix View":
-        assigned_y_code = st.selectbox("Filter Target Year Focus Block", [str(y) for y in range(2025, 2032)], key="y_anchor_yr")
+        var_m = bx1.selectbox("Filter Target Month Focus Block", [f"{n:02d}" for n in range(1, 13)], index=int(datetime.now().month)-1)
+        var_y = bx2.selectbox("Filter Target Year Focus Block", [str(y) for y in range(2025, 2032)], key="rep_m_yr")
+    elif sorting_scope == "Filter Target Yearly Matrix View":
+        var_y = st.selectbox("Filter Target Year Focus Block", [str(y) for y in range(2025, 2032)], key="rep_y_yr")
     st.markdown('</div>', unsafe_allow_html=True)
 
-    c_output_left, c_output_right = st.columns(2)
+    col_out_l, col_out_r = st.columns(2)
     
-    with c_output_left:
+    with col_out_l:
         st.markdown("#### 📊 Filtered Workforce Shift Matrix Ledgers")
         if st.session_state['attendance_database']:
-            df_att_engine = pd.DataFrame(st.session_state['attendance_database'])
-            df_att_engine['D_Obj'] = pd.to_datetime(df_att_engine['Date'])
+            df_att_master = pd.DataFrame(st.session_state['attendance_database'])
+            df_att_master['D_Obj'] = pd.to_datetime(df_att_master['Date'])
             
-            if chronological_scope == "Compile Target Monthly Matrix View":
-                df_attendance_filtered = df_att_engine[(df_att_engine['D_Obj'].dt.strftime('%m') == assigned_m_code) & (df_att_engine['D_Obj'].dt.strftime('%Y') == assigned_y_code)]
-            elif chronological_scope == "Compile Target Yearly Matrix View":
-                df_attendance_filtered = df_att_engine[df_att_engine['D_Obj'].dt.strftime('%Y') == assigned_y_code]
+            if sorting_scope == "Filter Target Monthly Matrix View":
+                df_res_att = df_att_master[(df_att_master['D_Obj'].dt.strftime('%m') == var_m) & (df_att_master['D_Obj'].dt.strftime('%Y') == var_y)]
+            elif sorting_scope == "Filter Target Yearly Matrix View":
+                df_res_att = df_att_master[df_att_master['D_Obj'].dt.strftime('%Y') == var_y]
             else:
-                df_attendance_filtered = df_att_engine
+                df_res_att = df_att_master
                 
-            if not df_attendance_filtered.empty:
-                aggregated_shift_tally_sheet = df_attendance_filtered.groupby(["Employee ID", "Name", "Company"]).size().reset_index(name="Total Shifts Logged")
-                st.dataframe(aggregated_shift_tally_sheet, use_container_width=True)
+            if not df_res_att.empty:
+                tally_summary_att = df_res_att.groupby(["Employee ID", "Name", "Company"]).size().reset_index(name="Aggregated Total Shifts Worked")
+                st.dataframe(tally_summary_att, use_container_width=True)
                 
-                excel_binary_workforce = compile_excel_ledger(aggregated_shift_tally_sheet)
-                st.download_button(label="📥 Download Workforce Summary (.xlsx)", data=excel_binary_workforce, file_name=f"Workforce_Operations_Report_{assigned_y_code}_{assigned_m_code}.xlsx", mime="application/vnd.ms-excel", key="dl_workforce_btn")
+                bin_excel_workforce = generate_excel_stream(tally_summary_att)
+                st.download_button(label="📥 Download Workforce Summary (.xlsx)", data=bin_excel_workforce, file_name=f"Workforce_Operations_Report_{var_y}_{var_m}.xlsx", mime="application/vnd.ms-excel", key="down_att_excel")
             else:
-                st.info("No recorded deployment profiles found corresponding with target timeline anchors.")
+                st.info("No workforce operational data logs match targeted sorting frames.")
         else:
             st.info("Workforce shift databases hold zero data logs currently.")
 
-    with c_output_right:
+    with col_out_r:
         st.markdown("#### 🧾 Filtered Commercial Revenue Ledgers")
         if st.session_state['invoice_database']:
-            df_invoice_engine = pd.DataFrame(st.session_state['invoice_database'])
-            df_invoice_engine['D_Obj'] = pd.to_datetime(df_invoice_engine['Date'])
+            df_inv_master = pd.DataFrame(st.session_state['invoice_database'])
+            df_inv_master['D_Obj'] = pd.to_datetime(df_inv_master['Date'])
             
-            if chronological_scope == "Compile Target Monthly Matrix View":
-                df_invoices_filtered = df_invoice_engine[(df_invoice_engine['D_Obj'].dt.strftime('%m') == assigned_m_code) & (df_invoice_engine['D_Obj'].dt.strftime('%Y') == assigned_y_code)]
-            elif chronological_scope == "Compile Target Yearly Matrix View":
-                df_invoices_filtered = df_invoice_engine[df_invoice_engine['D_Obj'].dt.strftime('%Y') == assigned_y_code]
+            if sorting_scope == "Filter Target Monthly Matrix View":
+                df_res_inv = df_inv_master[(df_inv_master['D_Obj'].dt.strftime('%m') == var_m) & (df_inv_master['D_Obj'].dt.strftime('%Y') == var_y)]
+            elif sorting_scope == "Filter Target Yearly Matrix View":
+                df_res_inv = df_inv_master[df_inv_master['D_Obj'].dt.strftime('%Y') == var_y]
             else:
-                df_invoices_filtered = df_invoice_engine
+                df_res_inv = df_inv_master
                 
-            if not df_invoices_filtered.empty:
-                aggregated_invoice_tally_sheet = df_invoices_filtered[["Date", "Invoice Number", "Total Amount", "VAT Amount"]]
-                st.dataframe(aggregated_invoice_tally_sheet, use_container_width=True)
+            if not df_res_inv.empty:
+                tally_summary_inv = df_res_inv[["Date", "Invoice Number", "Total Amount", "VAT Amount"]]
+                st.dataframe(tally_summary_inv, use_container_width=True)
                 
-                excel_binary_financial = compile_excel_ledger(aggregated_invoice_tally_sheet)
-                st.download_button(label="📥 Download Commercial Ledger Report (.xlsx)", data=excel_binary_financial, file_name=f"Financial_Ledger_Report_{assigned_y_code}_{assigned_m_code}.xlsx", mime="application/vnd.ms-excel", key="dl_financial_btn")
+                bin_excel_financial = generate_excel_stream(tally_summary_inv)
+                st.download_button(label="📥 Download Commercial Ledger Report (.xlsx)", data=bin_excel_financial, file_name=f"Financial_Ledger_Report_{var_y}_{var_m}.xlsx", mime="application/vnd.ms-excel", key="down_inv_excel")
             else:
                 st.info("No corporate transaction line items map inside specified filter windows.")
         else:
