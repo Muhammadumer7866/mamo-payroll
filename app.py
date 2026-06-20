@@ -17,35 +17,21 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', sans-serif;
         color: #0f172a;
     }
-    
-    /* --- SYSTEM WIDE KEYFRAME ANIMATIONS (DYNAMIC MOVEMENT) --- */
+
+    /* --- SYSTEM WIDE KEYFRAME ANIMATIONS --- */
     @keyframes entranceSlideUp {
-        0% { opacity: 0; transform: translateY(50px); }
+        0% { opacity: 0; transform: translateY(30px); }
         100% { opacity: 1; transform: translateY(0); }
     }
-    @keyframes persistentPulseLogo {
-        0% { transform: translate(-50%, -50%) scale(1); opacity: 0.02; }
-        50% { transform: translate(-50%, -50%) scale(1.03); opacity: 0.05; }
-        100% { transform: translate(-50%, -50%) scale(1); opacity: 0.02; }
+    
+    /* PROFESSIONAL REAL-TIME TYPING SIMULATION EFFECTS */
+    @keyframes typingSequenceLine {
+        from { width: 0; }
+        to { width: 100%; }
     }
-
-    /* Giant Background Brand Watermark Overlay */
-    .premium-watermark-bg {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 10vw;
-        font-weight: 800;
-        color: #ca8a04;
-        opacity: 0.03;
-        z-index: 0;
-        pointer-events: none;
-        text-align: center;
-        letter-spacing: 12px;
-        white-space: nowrap;
-        user-select: none;
-        animation: persistentPulseLogo 10s ease-in-out infinite;
+    @keyframes blinkCursorSymbol {
+        from, to { border-color: transparent; }
+        50% { border-color: #eab308; }
     }
 
     /* --- PREMIUM SPLIT INTERFACE FRAMEWORK --- */
@@ -57,17 +43,17 @@ st.markdown("""
         box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
         border: 1px solid #e2e8f0;
         overflow: hidden;
-        margin-top: 30px;
-        animation: entranceSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+        margin-top: 20px;
+        animation: entranceSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     /* Left Corporate Interaction Form Panel */
     .split-panel-left {
         flex: 1;
-        padding: 60px 60px;
+        padding: 50px 60px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         background: #ffffff;
     }
 
@@ -84,82 +70,119 @@ st.markdown("""
         border-left: 1px solid #e2e8f0;
     }
     
-    /* --- REALISTIC BRAND LOGO SHAPES (Inspired by ChatGPT Image Jun 20, 2026, 02_56_40 PM.png) --- */
+    /* --- ENHANCED BOLD BRAND LOGO GRAPHICS (PROMINENT VIEWPORT) --- */
     .logo-container {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        margin-bottom: 25px;
+        margin-bottom: 35px;
     }
     
-    /* Dynamic Vector Towers Construction */
+    /* Dynamic Vector Towers Construction (Scaled Up) */
     .logo-graphic-box {
         display: flex;
         align-items: flex-end;
-        gap: 4px;
-        height: 65px;
-        margin-bottom: 12px;
-        padding-left: 10px;
+        gap: 6px;
+        height: 85px; /* Scaled up from 65px */
+        margin-bottom: 16px;
+        padding-left: 4px;
     }
     
     .tower-gold-left {
-        width: 14px;
-        height: 35px;
+        width: 18px;
+        height: 50px;
         background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
         clip-path: polygon(100% 0, 0 40%, 0 100%, 100% 100%);
-        border-radius: 1px;
+        border-radius: 2px;
     }
     
     .tower-dark-center {
-        width: 16px;
-        height: 60px;
-        background: linear-gradient(135deg, #334155 0%, #0f172a 100%);
+        width: 22px;
+        height: 80px;
+        background: linear-gradient(135deg, #475569 0%, #0f172a 100%);
         clip-path: polygon(50% 0, 0 15%, 0 100%, 100% 100%, 100% 15%);
-        border-radius: 1px;
+        border-radius: 2px;
     }
     
     .tower-gold-right {
-        width: 12px;
-        height: 45px;
+        width: 16px;
+        height: 62px;
         background: linear-gradient(135deg, #fef08a 0%, #eab308 100%);
         clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%);
-        border-radius: 1px;
+        border-radius: 2px;
     }
 
     .logo-text-title {
-        font-size: 24px;
+        font-size: 34px; /* Scaled up from 24px */
         font-weight: 800;
         color: #0f172a;
         letter-spacing: 2px;
         margin: 0;
         text-transform: uppercase;
+        line-height: 1.1;
     }
     
     .logo-text-subtitle {
-        font-size: 13px;
+        font-size: 18px; /* Scaled up from 13px */
         font-weight: 600;
         color: #ca8a04;
-        letter-spacing: 6px;
-        margin: 2px 0 0 0;
+        letter-spacing: 9px;
+        margin: 4px 0 0 0;
         text-transform: uppercase;
     }
     
     .logo-tagline {
-        font-size: 7px;
-        font-weight: 500;
+        font-size: 10px;
+        font-weight: 600;
         color: #64748b;
-        letter-spacing: 2px;
+        letter-spacing: 3px;
         text-transform: uppercase;
-        margin-top: 5px;
-        border-top: 1px solid #e2e8f0;
-        padding-top: 4px;
+        margin-top: 10px;
+        border-top: 2px solid #f1f5f9;
+        padding-top: 8px;
         width: 100%;
-        max-width: 220px;
+        max-width: 280px;
     }
     
+    /* --- TYPING ANIMATION CONTAINER ARCHITECTURE --- */
+    .typing-hero-container {
+        max-width: 520px;
+        margin-bottom: 25px;
+    }
+
+    .typing-line-prime {
+        font-size: 38px;
+        font-weight: 800;
+        line-height: 1.3;
+        color: #ffffff;
+        letter-spacing: -0.5px;
+        overflow: hidden;
+        white-space: nowrap;
+        border-right: 3px solid #eab308;
+        display: block;
+        width: 0;
+    }
+
+    /* Incremental sequential delays for natural typing feel */
+    .tpl-1 {
+        animation: typingSequenceLine 1.5s steps(30, end) 0.5s forwards,
+                   blinkCursorSymbol 0.75s step-end 2 forwards;
+    }
+    .tpl-2 {
+        animation: typingSequenceLine 1.5s steps(30, end) 2.2s forwards,
+                   blinkCursorSymbol 0.75s step-end 2 forwards;
+    }
+    .tpl-3 {
+        font-size: 38px;
+        font-weight: 800;
+        color: #eab308; /* Accent color highlight line */
+        animation: typingSequenceLine 1.2s steps(25, end) 3.9s forwards;
+        border-right: none;
+    }
+
     /* Branding Gold Accent Elements */
     .gold-brand-line {
-        width: 60px;
+        width: 70px;
         height: 4px;
         background: linear-gradient(90deg, #eab308 0%, #ca8a04 100%);
         border-radius: 2px;
@@ -180,33 +203,44 @@ st.markdown("""
         margin-bottom: 20px;
     }
 
-    /* Modern Post-Login Dashboard Component Architecture */
+    /* Form Fields Alignment Adjustments */
+    .login-form-wrapper {
+        margin-top: 15px;
+        width: 100%;
+        max-width: 420px;
+    }
+
+    /* Dashboard Layout Tweaks */
     .executive-card-node {
         background: #ffffff;
         border: 1px solid #e2e8f0;
         border-radius: 16px;
         padding: 24px;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        z-index: 1;
-    }
-    .executive-card-node:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
-        border-color: #eab308;
     }
     
     .giant-stat-value {
         font-size: 2.5rem;
         font-weight: 800;
         color: #0f172a;
-        letter-spacing: -1px;
     }
     
     div[data-testid="stForm"] {
         border: none !important;
         padding: 0 !important;
+    }
+    
+    /* Clean custom overrides for streamlit inputs */
+    div.stTextInput > div > div > input {
+        background-color: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        color: #0f172a !important;
+        border-radius: 10px !important;
+        padding: 12px 16px !important;
+    }
+    div.stTextInput > div > div > input:focus {
+        border-color: #ca8a04 !important;
+        box-shadow: 0 0 0 1px #ca8a04 !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -225,9 +259,10 @@ if 'invoice_database' not in st.session_state:
 
 # --- MULTI-TENANT SPLIT SECURE GATEWAY ---
 if not st.session_state['logged_in']:
+    # HTML Layout framework creates columns layout perfectly
     st.markdown("""
         <div class="ultimate-split-wrapper">
-            <!-- Left Wing (Now features the corporate logo matching the image blueprint) -->
+            <!-- Left Wing Content (Branding Logo & Structural Form Header) -->
             <div class="split-panel-left">
                 <div class="logo-container">
                     <div class="logo-graphic-box">
@@ -239,16 +274,26 @@ if not st.session_state['logged_in']:
                     <div class="logo-text-subtitle">Trading</div>
                     <div class="logo-tagline">Construction | Quality | Trust</div>
                 </div>
-                <h2 style="color: #0f172a; font-weight: 800; font-size: 28px; margin-bottom: 6px; letter-spacing: -0.5px;">Welcome Back</h2>
-                <p style="color: #64748b; font-size: 13px; margin-bottom: 35px;">Please authenticate administrative level keys to open the operations panel.</p>
+                
+                <h2 style="color: #0f172a; font-weight: 800; font-size: 28px; margin: 0 0 4px 0; letter-spacing: -0.5px;">Welcome Back</h2>
+                <p style="color: #64748b; font-size: 13px; margin: 0 0 25px 0;">Please authenticate administrative level keys to open the operations panel.</p>
+                
+                <!-- Placeholder container target for Streamlit Form Insertion via negative absolute positioning sandbox -->
+                <div id="form-insertion-anchor" style="min-height: 260px;"></div>
             </div>
-            <!-- Right Wing -->
+            
+            <!-- Right Wing Content (With Sequential Typing Animation) -->
             <div class="split-panel-right">
                 <div>
                     <span class="gold-pill-accent">Oman Enterprise Infrastructure</span>
-                    <h1 style="color: #ffffff; font-size: 40px; font-weight: 800; line-height: 1.2; margin-bottom: 20px; letter-spacing: -0.5px;">
-                        Effortlessly manage your workforce and corporate financials.
-                    </h1>
+                    
+                    <!-- Dynamic Simulated Line-By-Line Typing Engine -->
+                    <div class="typing-hero-container">
+                        <span class="typing-line-prime tpl-1">Effortlessly manage</span>
+                        <span class="typing-line-prime tpl-2">your workforce and</span>
+                        <span class="typing-line-prime tpl-3">corporate financials.</span>
+                    </div>
+                    
                     <div class="gold-brand-line"></div>
                     <p style="color: #94a3b8; font-size: 15px; line-height: 1.6; margin-bottom: 35px; max-width: 480px;">
                         Consolidated cloud tracking console custom engineered for real-time field operations, active shift logs control, and Omani Tax Invoice registry archiving.
@@ -262,14 +307,15 @@ if not st.session_state['logged_in']:
         </div>
     """, unsafe_allow_html=True)
 
-    # Inputs Overlay perfectly positioned under the graphic logo block
+    # Streamlit Inputs injected straight beneath "Welcome Back" with crisp structural orientation
     with st.container():
         col_form_landing, col_void_space = st.columns([1, 1.1])
         with col_form_landing:
-            st.markdown('<div style="position: relative; margin-top: -460px; padding: 0 60px; max-width: 500px;">', unsafe_allow_html=True)
+            # Shift inputs layout directly overlaying inside Left Wing panel cleanly without breaking page flow
+            st.markdown('<div class="login-form-wrapper" style="position: relative; margin-top: -320px; padding-left: 60px; z-index: 999;">', unsafe_allow_html=True)
             gate_id = st.text_input("Corporate ID / Email Address", placeholder="e.g. admin@construction.om")
             gate_key = st.text_input("Security Access Key", type="password", placeholder="••••••••••••")
-            st.markdown('<div style="margin-top: 25px;">', unsafe_allow_html=True)
+            st.markdown('<div style="margin-top: 20px;">', unsafe_allow_html=True)
             if st.button("Log In to System", type="primary", use_container_width=True):
                 if gate_id == "admin@construction.om" and gate_key == "Oman#Secure2026":
                     st.session_state['logged_in'] = True
@@ -278,9 +324,6 @@ if not st.session_state['logged_in']:
                     st.error("Access Refused. Security parameters failed evaluation.")
             st.markdown('</div></div>', unsafe_allow_html=True)
     st.stop()
-
-# --- ACTIVE PERSISTENT BACKGROUND WATERMARK ---
-st.markdown('<div class="premium-watermark-bg">AL RABHAN TRADING</div>', unsafe_allow_html=True)
 
 # --- MAIN POST-LOGIN INTERSIDEBAR NAVIGATION HEADER ---
 st.markdown("""
