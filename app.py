@@ -22,16 +22,6 @@ st.markdown("""
         padding: 10px 20px;
     }
 
-    /* Style for the Right Premium Card */
-    .premium-card-right {
-        background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-        padding: 40px;
-        border-radius: 20px;
-        color: #ffffff !important;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        margin-top: 15px;
-    }
-
     /* Input Fields Styling */
     div.stTextInput > div > div > input {
         background-color: #ffffff !important;
@@ -59,7 +49,7 @@ if 'invoice_database' not in st.session_state:
 if not st.session_state['logged_in']:
     st.markdown('<div style="margin-top: 30px;">', unsafe_allow_html=True)
     
-    # Simple and robust 2-Column layout
+    # Robust 2-Column native layout
     col_left, col_right = st.columns([1.1, 1], gap="large")
     
     with col_left:
@@ -93,9 +83,9 @@ if not st.session_state['logged_in']:
         st.markdown('</div></div>', unsafe_allow_html=True)
         
     with col_right:
-        # Safe HTML block container with standard embedded clean content
+        # Fully Unified Single Block Template for entire right card layout
         st.markdown("""
-            <div class="premium-card-right">
+            <div style="background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); padding: 40px; border-radius: 20px; color: #ffffff; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); margin-top: 15px; min-height: 500px;">
                 <div style="background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.3); color: #fef08a; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 25px; width: fit-content;">
                     Oman Enterprise Infrastructure
                 </div>
@@ -110,7 +100,7 @@ if not st.session_state['logged_in']:
                 </div>
                 <div style="width: 60px; height: 4px; background: linear-gradient(90deg, #eab308 0%, #ca8a04 100%); border-radius: 2px; margin-bottom: 25px;"></div>
                 
-                <p style='color: #cbd5e1; font-size: 14px; line-height: 1.6; margin-bottom: 30px; max-width: 460px;'>
+                <p style="color: #cbd5e1; font-size: 14px; line-height: 1.6; margin-bottom: 30px; max-width: 460px;">
                     Consolidated cloud tracking console custom engineered for real-time field operations, active shift logs control, and Omani Tax Invoice registry archiving.
                 </p>
                 
