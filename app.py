@@ -1,239 +1,317 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
+import io
 
-# Page Configuration
-st.set_page_config(page_title="Workforce Tracking Portal", layout="wide")
+# Page Configuration for Premium Layout
+st.set_page_config(page_title="Al Rabhan Trading - Enterprise Portal", layout="wide", initial_sidebar_state="expanded")
 
-# --- CUSTOM CORPORATE THEME (CSS) ---
+# --- ADVANCED PREMIUM CORPORATE THEME (CSS) ---
 st.markdown("""
     <style>
+    /* Full App Deep Dark Luxury Background */
     .stApp {
-        background-color: #11141a;
+        background: radial-gradient(circle at 50% 50%, #141923 0%, #0b0d13 100%);
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #e2e8f0;
     }
-    .login-box {
-        background: linear-gradient(145deg, #1e222b, #151922);
-        padding: 40px;
-        border-radius: 15px;
-        border: 1px solid #2d3545;
-        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
-        margin-top: 50px;
-    }
-    .main-title {
-        color: #ffffff;
-        font-weight: 700;
-        letter-spacing: 1px;
-        text-align: center;
-        border-bottom: 2px solid #00E5FF;
-        padding-bottom: 15px;
+    
+    /* Executive Glassmorphism Containers */
+    .premium-card {
+        background: rgba(30, 41, 59, 0.45);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 24px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         margin-bottom: 25px;
     }
-    .metric-card {
-        background-color: #1e222b;
-        padding: 20px;
-        border-radius: 10px;
-        border-left: 5px solid #00E5FF;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    
+    /* Login Box Cinematic Design */
+    .login-container {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(0, 229, 255, 0.2);
+        box-shadow: 0px 0px 40px rgba(0, 229, 255, 0.15);
+        padding: 45px;
+        border-radius: 24px;
+        margin-top: 10%;
     }
-    .section-box {
-        background-color: #1e222b;
-        padding: 20px;
-        border-radius: 8px;
-        border: 1px solid #2d3545;
-        margin-bottom: 20px;
+    
+    /* Glowing Neon Sub-headers */
+    .gold-glow {
+        color: #FFD700;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        font-weight: 600;
+    }
+    .cyan-glow {
+        color: #00E5FF;
+        text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+        font-weight: 600;
+    }
+    
+    /* Elegant Clean Metrics */
+    .metric-val {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-top: 5px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- SECURE LOGIN SYSTEM ---
+# --- SECURE SESSION MANAGERS ---
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
+if 'master_labor_pool' not in st.session_state:
+    st.session_state['master_labor_pool'] = []
+if 'attendance_database' not in st.session_state:
+    st.session_state['attendance_database'] = []
+if 'daily_active_roster' not in st.session_state:
+    st.session_state['daily_active_roster'] = []
+if 'invoice_database' not in st.session_state:
+    st.session_state['invoice_database'] = []
 
+# --- CINEMATIC LOGIN GATEWAY ---
 if not st.session_state['logged_in']:
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        st.markdown('<div class="login-box">', unsafe_allow_html=True)
-        st.markdown('<h2 style="text-align: center; color: #00E5FF; margin-bottom: 5px;">Al-Rimal & Rubhan</h2>', unsafe_allow_html=True)
-        st.markdown('<p style="text-align: center; color: #8a99ad; font-size: 14px; margin-bottom: 30px;">PARTNER PORTAL — OMAN FIRM</p>', unsafe_allow_html=True)
+    _, central_col, _ = st.columns([1, 1.8, 1])
+    with central_col:
+        st.markdown('<div class="login-container">', unsafe_allow_html=True)
+        st.markdown('<h1 style="text-align: center; color: #ffffff; font-size: 28px; margin-bottom: 5px; letter-spacing:1px;">AL RABHAN TRADING</h1>', unsafe_allow_html=True)
+        st.markdown('<p style="text-align: center; color: #00E5FF; font-size: 12px; letter-spacing: 3px; margin-bottom: 35px;">SULTANATE OF OMAN • ENTERPRISE ERP</p>', unsafe_allow_html=True)
         
-        username = st.text_input("Corporate ID / Email")
-        password = st.text_input("Access Key", type="password")
+        user_id = st.text_input("Corporate ID / Email Address")
+        user_key = st.text_input("Security Access Key", type="password")
         
         st.markdown('<br>', unsafe_allow_html=True)
-        if st.button("Secure Login", use_container_width=True):
-            if username == "admin@construction.om" and password == "Mufms6858@#":
+        if st.button("Authenticate Session", use_container_width=True):
+            if user_id == "admin@construction.om" and user_key == "Oman#Secure2026":
                 st.session_state['logged_in'] = True
                 st.rerun()
             else:
-                st.error("Authentication Failed. Invalid credentials.")
+                st.error("Access Denied. Cryptographic keys or ID verified as mismatch.")
         st.markdown('</div>', unsafe_allow_html=True)
     st.stop()
 
-# --- DATABASE PERSISTENCE INITIALIZATION ---
-if 'master_labor_pool' not in st.session_state:
-    st.session_state['master_labor_pool'] = [
-        {"Employee ID": "92476849", "Name": "Mohammad Shahid", "Company": "Rubhan. T"},
-        {"Employee ID": "109748895", "Name": "M.Usman", "Company": "Rubhan. T"},
-        {"Employee ID": "136299814", "Name": "Jahanzeb Afzal", "Company": "Rubhan. T"},
-        {"Employee ID": "79705332", "Name": "Abdul khaliq", "Company": "Rimal. AL"},
-    ]
+# --- HELPER DOWNLOAD FUNCTION ---
+def convert_df_to_excel(df):
+    output = io.BytesIO()
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Report')
+    return output.getvalue()
 
-# Historical saved database entries
-if 'attendance_database' not in st.session_state:
-    st.session_state['attendance_database'] = []
+# --- PREMIUM HEADER & NAVIGATION ---
+st.markdown('<div style="text-align:center; padding: 20px 0;"><h1 style="color:#ffffff; margin-bottom:0; font-weight:800; font-size:36px; letter-spacing: 1.5px;">🏢 AL RABHAN TRADING OPERATIONS SYSTEM</h1><p style="color:#8a99ad; font-size:14px; letter-spacing:2px; margin-top:5px;">MANAGEMENT, WORKFORCE & INVOICE CONTROL HUB — OMAN</p></div>', unsafe_allow_html=True)
 
-# Current session workspace
-if 'daily_active_roster' not in st.session_state:
-    st.session_state['daily_active_roster'] = []
+tab_home, tab_attendance, tab_invoices, tab_analytics = st.tabs([
+    "🏠 Corporate Home", 
+    "📝 Daily Attendance Entry", 
+    "🧾 Tax Invoices Registry", 
+    "📊 Executive Reports & Analytics"
+])
 
-# --- MAIN APP INTERFACE ---
-st.markdown('<h1 class="main-title">💼 Workers Attendance Report & TRACKING SYSTEM</h1>', unsafe_allow_html=True)
+# --- TAB 1: CORPORATE HOME PAGE ---
+with tab_home:
+    st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+    st.markdown("### <span class='cyan-glow'>Welcome back, Administrator</span>", unsafe_allow_html=True)
+    st.write("Al Rabhan Trading centralized ecosystem tracks cross-border operations, active industrial field workforce metrics, and procurement financial logs seamlessly.")
+    
+    col_h1, col_h2, col_h3 = st.columns(3)
+    with col_h1:
+        st.markdown(f'<div style="background:rgba(0,229,255,0.05); padding:20px; border-radius:12px; border-left:4px solid #00E5FF;"><h4>Total Field Workforce</h4><div class="metric-val">{len(st.session_state["master_labor_pool"])} Registered</div></div>', unsafe_allow_html=True)
+    with col_h2:
+        st.markdown(f'<div style="background:rgba(255,215,0,0.05); padding:20px; border-radius:12px; border-left:4px solid #FFD700;"><h4>Invoices Logged</h4><div class="metric-val">{len(st.session_state["invoice_database"])} Records</div></div>', unsafe_allow_html=True)
+    with col_h3:
+        total_omr = sum(float(inv['Total Amount']) for inv in st.session_state['invoice_database']) if st.session_state['invoice_database'] else 0.0
+        st.markdown(f'<div style="background:rgba(46,204,113,0.05); padding:20px; border-radius:12px; border-left:4px solid #2ecc71;"><h4>Total Gross Volume</h4><div class="metric-val">{total_omr:.3f} OMR</div></div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-tab1, tab2, tab3 = st.tabs(["📝 Daily Attendance Entry", "📊 Executive Analytics Dashboard", "📅 Month-End Attendance Report"])
-
-with tab1:
-    st.subheader("Daily Roster Management")
-    sheet_date = st.date_input("Select Sheet Date", datetime.now())
+# --- TAB 2: ATTENDANCE ENTRY ---
+with tab_attendance:
+    st.subheader("Daily Roster Control")
+    sheet_date = st.date_input("Select Active Sheet Date", datetime.now(), key="att_date")
     
     col_left, col_right = st.columns(2)
-    
-    # PANEL 1: SEARCH & AUTO-FILL PREVIOUS LABOR
     with col_left:
-        st.markdown('<div class="section-box">', unsafe_allow_html=True)
-        st.markdown("<h4 style='color: #00E5FF; margin-top:0;'>🔍 Add Worker from Previous Records</h4>", unsafe_allow_html=True)
-        
-        search_query = st.text_input("Search by Name or ID Number", placeholder="Type name or ID and hit Enter...")
+        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+        st.markdown("<h4>🔍 Add Worker from Master Registry</h4>", unsafe_allow_html=True)
+        search_query = st.text_input("Query by Full Name or Unique ID", placeholder="Search fields...")
         
         if search_query:
-            # Filter master database matching criteria
-            matches = [w for w in st.session_state['master_labor_pool'] if search_query.lower() in w['Name'].lower() or search_query in w['Employee ID']]
-            
-            if matches:
-                st.markdown("<p style='color: #2ecc71; font-size: 13px;'>Matches found:</p>", unsafe_allow_html=True)
-                for matched_worker in matches:
-                    if st.button(f"Add {matched_worker['Name']} ({matched_worker['Employee ID']})", key=f"match_{matched_worker['Employee ID']}"):
-                        if any(w['Employee ID'] == matched_worker['Employee ID'] for w in st.session_state['daily_active_roster']):
-                            st.warning("Worker is already added to today's active roster list.")
-                        else:
-                            st.session_state['daily_active_roster'].append({
-                                "Employee ID": matched_worker["Employee ID"],
-                                "Name": matched_worker["Name"],
-                                "Company": matched_worker["Company"],
-                                "Remarks": ""
-                            })
-                            st.success(f"Added {matched_worker['Name']} to today's list.")
-                            st.rerun()
+            if not st.session_state['master_labor_pool']:
+                st.warning("The primary infrastructure database contains no personnel records.")
             else:
-                st.error("No worker matching this criteria found in historical records.")
+                matches = [w for w in st.session_state['master_labor_pool'] if search_query.lower() in w['Name'].lower() or search_query in w['Employee ID']]
+                if matches:
+                    for matched_worker in matches:
+                        if st.button(f"Deploy {matched_worker['Name']} ({matched_worker['Employee ID']})", key=f"match_{matched_worker['Employee ID']}"):
+                            if any(w['Employee ID'] == matched_worker['Employee ID'] for w in st.session_state['daily_active_roster']):
+                                st.warning("Target worker record is already active inside today's roster frame.")
+                            else:
+                                st.session_state['daily_active_roster'].append({
+                                    "Employee ID": matched_worker["Employee ID"], "Name": matched_worker["Name"],
+                                    "Company": matched_worker["Company"], "Remarks": ""
+                                })
+                                st.success(f"Successfully staged {matched_worker['Name']}.")
+                                st.rerun()
+                else:
+                    st.error("No record matches found.")
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # PANEL 2: ADD BRAND NEW LABOR
     with col_right:
-        st.markdown('<div class="section-box">', unsafe_allow_html=True)
-        st.markdown("<h4 style='color: #2ecc71; margin-top:0;'>➕ Register Brand New Labor</h4>", unsafe_allow_html=True)
+        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+        st.markdown("<h4>➕ First-Time Personnel Registration</h4>", unsafe_allow_html=True)
+        new_id = st.text_input("New Employee ID Number")
+        new_name = st.text_input("Worker Legal Full Name")
+        new_comp = st.text_input("Subcontractor/Company Affiliation")
         
-        new_id = st.text_input("New Employee ID", placeholder="e.g. 55667788")
-        new_name = st.text_input("Full Name", placeholder="e.g. Zahid Ahmed")
-        new_comp = st.text_input("Company Name", placeholder="e.g. Rubhan. T")
-        
-        if st.button("Register & Add to Sheet", use_container_width=True):
+        if st.button("Execute Registration Flow", use_container_width=True):
             if new_id and new_name and new_comp:
                 if any(w['Employee ID'] == new_id for w in st.session_state['master_labor_pool']):
-                    st.error("Registration failed. This Employee ID already exists in the system database.")
+                    st.error("System violation. Unique Employee ID already claims ownership inside records.")
                 else:
                     st.session_state['master_labor_pool'].append({"Employee ID": new_id, "Name": new_name, "Company": new_comp})
                     st.session_state['daily_active_roster'].append({"Employee ID": new_id, "Name": new_name, "Company": new_comp, "Remarks": ""})
-                    st.success("New worker successfully registered and deployed to active roster.")
+                    st.success("New personnel successfully provisioned.")
                     st.rerun()
             else:
-                st.warning("Please fill out all missing worker validation data blocks.")
+                st.warning("All input blocks are non-optional.")
         st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown("<hr style='border: 1px solid #2d3545;'>", unsafe_allow_html=True)
-    
-    # DISPLAY AREA WITH REMOVE OPTION
-    st.markdown('### 📋 Current Active Roster List')
-    
+    st.markdown("### 📋 Staged Field Deployments")
     if not st.session_state['daily_active_roster']:
-        st.info("Today's roster sheet is empty. Add active field labor using the search or registration blocks above.")
+        st.info("No active personnel staged for deployment today.")
     else:
-        h_id, h_name, h_comp, h_status, h_rem, h_action = st.columns([1, 2, 1.5, 1, 2, 1])
-        h_id.markdown("**ID**")
-        h_name.markdown("**Name**")
-        h_comp.markdown("**Company**")
-        h_status.markdown("**Status**")
-        h_rem.markdown("**Remarks**")
-        h_action.markdown("**Action**")
-        
         to_remove = None
         for idx, worker in enumerate(st.session_state['daily_active_roster']):
-            col_id, col_name, col_comp, col_status, col_rem, col_action = st.columns([1, 2, 1.5, 1, 2, 1])
-            with col_id:
-                st.write(worker["Employee ID"])
-            with col_name:
-                st.write(worker["Name"])
-            with col_comp:
-                st.write(worker["Company"])
-            with col_status:
-                st.markdown("<span style='color:#2ecc71; font-weight:bold;'>✔ Present</span>", unsafe_allow_html=True)
-            with col_rem:
-                st.session_state['daily_active_roster'][idx]["Remarks"] = st.text_input(
-                    "", key=f"rem_{worker['Employee ID']}_{idx}", 
-                    value=worker["Remarks"], placeholder="Remarks (Optional)", label_visibility="collapsed"
-                )
-            with col_action:
-                if st.button("❌ Remove", key=f"del_{worker['Employee ID']}_{idx}"):
-                    to_remove = idx
-                    
+            c_id, c_name, c_comp, c_rem, c_act = st.columns([1, 2, 1.5, 3, 1])
+            c_id.write(worker["Employee ID"])
+            c_name.write(worker["Name"])
+            c_comp.write(worker["Company"])
+            st.session_state['daily_active_roster'][idx]["Remarks"] = c_rem.text_input("Remarks Log", key=f"rem_{idx}", value=worker["Remarks"], label_visibility="collapsed")
+            if c_act.button("❌ Remove", key=f"del_{idx}"):
+                to_remove = idx
+                
         if to_remove is not None:
             st.session_state['daily_active_roster'].pop(to_remove)
             st.rerun()
-                
-        st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("💾 Finalize & Lock Daily Attendance Report", type="primary", use_container_width=True):
-            # Save the currently prepared roster to persistent history log
+            
+        if st.button("💾 Finalize & Commit Daily Attendance Logs", type="primary", use_container_width=True):
             for item in st.session_state['daily_active_roster']:
                 st.session_state['attendance_database'].append({
-                    "Date": str(sheet_date),
-                    "Employee ID": item["Employee ID"],
-                    "Name": item["Name"],
-                    "Company": item["Company"],
-                    "Status": "Present",
-                    "Remarks": item["Remarks"]
+                    "Date": str(sheet_date), "Employee ID": item["Employee ID"],
+                    "Name": item["Name"], "Company": item["Company"],
+                    "Status": "Present", "Remarks": item["Remarks"]
                 })
-            st.success(f"Successfully committed logs for {sheet_date}. Data flushed to database registries.")
-            st.session_state['daily_active_roster'] = []  # Clear workspace for next data session
+            st.success("Session closed. Daily data committed to corporate logs.")
+            st.session_state['daily_active_roster'] = []
             st.rerun()
 
-with tab2:
-    st.subheader("Oman Operations Overview")
+# --- TAB 3: TAX INVOICES REGISTRY ---
+with tab_invoices:
+    st.subheader("Procurement & Sales Invoices Control")
     
-    # Filter today's entry out of database log for display metrics
-    today_str = str(sheet_date)
-    today_records = [r for r in st.session_state['attendance_database'] if r["Date"] == today_str]
-    
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown(f'<div class="metric-card"><h4 style="color:#8a99ad;margin:0;">Master Pool Size</h4><h2 style="color:#fff;margin:5px 0;">{len(st.session_state["master_labor_pool"])} Registered Workers</h2></div>', unsafe_allow_html=True)
-    with c2:
-        st.markdown(f'<div class="metric-card" style="border-left-color:#2ecc71;"><h4 style="color:#8a99ad;margin:0;">Workers Present on {today_str}</h4><h2 style="color:#2ecc71;margin:5px 0;">{len(today_records)} Active Personnel</h2></div>', unsafe_allow_html=True)
+    st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+    st.markdown("<h4>📥 Add New Tax Invoice Entry</h4>", unsafe_allow_html=True)
+    inv_col1, inv_col2 = st.columns(2)
+    with inv_col1:
+        inv_date = st.date_input("Invoice Issue Date", datetime.now())
+        inv_num = st.text_input("Invoice Number (e.g. A204306)")
+    with inv_col2:
+        inv_total = st.number_input("Total Invoice Amount (Gross OMR)", min_value=0.000, format="%.3f")
+        inv_vat = st.number_input("VAT Component Amount (5% OMR)", min_value=0.000, format="%.3f")
         
-    st.markdown("<br>### 📅 Daily Historical Attendance Logs", unsafe_allow_html=True)
-    if st.session_state['attendance_database']:
-        df_logs = pd.DataFrame(st.session_state['attendance_database'])
-        st.dataframe(df_logs, use_container_width=True)
-    else:
-        st.info("No saved data streams found in the historical system registries.")
-
-with tab3:
-    st.subheader("Monthly Attendance Aggregation Report")
-    st.write("Aggregated calculation showing total shift metrics for individual employees inside the active operational period:")
+    if st.button("🔒 Securely Log Invoice Record", type="primary"):
+        if inv_num and inv_total > 0:
+            st.session_state['invoice_database'].append({
+                "Date": str(inv_date),
+                "Invoice Number": inv_num,
+                "Total Amount": f"{inv_total:.3f}",
+                "VAT Amount": f"{inv_vat:.3f}",
+                "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            })
+            st.success(f"Invoice {inv_num} registered successfully under Al Rabhan Trading registries.")
+            st.rerun()
+        else:
+            st.error("Validation error. Provide valid non-zero values.")
+    st.markdown('</div>', unsafe_allow_html=True)
     
-    if st.session_state['attendance_database']:
-        df_all = pd.DataFrame(st.session_state['attendance_database'])
-        # Group data to count total work days for each person
-        summary_df = df_all.groupby(["Employee ID", "Name", "Company"]).size().reset_index(name="Total Days Worked")
-        st.dataframe(summary_df, use_container_width=True)
+    st.markdown("### 📋 Logged Commercial Invoices")
+    if st.session_state['invoice_database']:
+        df_inv = pd.DataFrame(st.session_state['invoice_database'])
+        st.dataframe(df_inv, use_container_width=True)
     else:
-        st.info("System aggregation matrices are blank. Total day tallies will populate as soon as records are submitted.")
+        st.info("No invoice metrics have been archived inside system nodes yet.")
+
+# --- TAB 4: EXECUTIVE REPORTS & ANALYTICS ---
+with tab_analytics:
+    st.subheader("Global Filter, Metrics Consolidation & Export Panels")
+    
+    # Global Search / Filter Block
+    st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+    filter_type = st.radio("Choose Reporting Timeline View Filter:", ["All Records", "Monthly Aggregation View", "Yearly Aggregation View"], horizontal=True)
+    
+    target_month = datetime.now().strftime("%m")
+    target_year = datetime.now().strftime("%Y")
+    
+    if filter_type == "Monthly Aggregation View":
+        c_m, c_y = st.columns(2)
+        target_month = c_m.selectbox("Select Target Month", [f"{i:02d}" for i in range(1, 13)], index=int(datetime.now().month)-1)
+        target_year = c_y.selectbox("Select Target Year", [str(y) for y in range(2025, 2030)], key="m_year")
+    elif filter_type == "Yearly Aggregation View":
+        target_year = st.selectbox("Select Target Year", [str(y) for y in range(2025, 2030)], key="y_year")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # PROCESS & DISPLAY FILTERS
+    col_rep1, col_rep2 = st.columns(2)
+    
+    with col_rep1:
+        st.markdown("### 📊 Filtered Attendance Metrics")
+        if st.session_state['attendance_database']:
+            df_att_master = pd.DataFrame(st.session_state['attendance_database'])
+            df_att_master['ParsedDate'] = pd.to_datetime(df_att_master['Date'])
+            
+            # Apply Filter Logic
+            if filter_type == "Monthly Aggregation View":
+                filtered_att = df_att_master[(df_att_master['ParsedDate'].dt.strftime('%m') == target_month) & (df_att_master['ParsedDate'].dt.strftime('%Y') == target_year)]
+            elif filter_type == "Yearly Aggregation View":
+                filtered_att = df_att_master[df_att_master['ParsedDate'].dt.strftime('%Y') == target_year]
+            else:
+                filtered_att = df_att_master
+                
+            if not filtered_att.empty:
+                summary_att = filtered_att.groupby(["Employee ID", "Name", "Company"]).size().reset_index(name="Total Shifts Worked")
+                st.dataframe(summary_att, use_container_width=True)
+                
+                # Excel Download Logic
+                xlsx_data = convert_df_to_excel(summary_att)
+                st.download_button(label="📥 Download Attendance Report (Excel)", data=xlsx_data, file_name=f"Attendance_Report_{target_year}_{filter_type.replace(' ', '')}.xlsx", mime="application/vnd.ms-excel")
+            else:
+                st.info("No matching records found inside the specified timeline criteria.")
+        else:
+            st.info("Attendance databases are blank.")
+
+    with col_rep2:
+        st.markdown("### 💰 Filtered Invoice Balance Ledger")
+        if st.session_state['invoice_database']:
+            df_inv_master = pd.DataFrame(st.session_state['invoice_database'])
+            df_inv_master['ParsedDate'] = pd.to_datetime(df_inv_master['Date'])
+            
+            if filter_type == "Monthly Aggregation View":
+                filtered_inv = df_inv_master[(df_inv_master['ParsedDate'].dt.strftime('%m') == target_month) & (df_inv_master['ParsedDate'].dt.strftime('%Y') == target_year)]
+            elif filter_type == "Yearly Aggregation View":
+                filtered_inv = df_inv_master[df_inv_master['ParsedDate'].dt.strftime('%Y') == target_year]
+            else:
+                filtered_inv = df_inv_master
+                
+            if not filtered_inv.empty:
+                display_inv = filtered_inv[["Date", "Invoice Number", "Total Amount", "VAT Amount"]]
+                st.dataframe(display_inv, use_container_width=True)
+                
+                # Excel Download Logic
+                xlsx_inv_data = convert_df_to_excel(display_inv)
+                st.download_button(label="📥 Download Invoice Ledger (Excel)", data=xlsx_inv_data, file_name=f"Invoice_Ledger_{target_year}_{filter_type.replace(' ', '')}.xlsx", mime="application/vnd.ms-excel")
+            else:
+                st.info("No invoice transactions verified for this matching timeline context.")
+        else:
+            st.info("No financial invoice streams available.")
