@@ -30,13 +30,13 @@ if not st.session_state.auth_token_verified:
 else:
     # Top Bar Header Actions
     head_col1, head_col2 = st.columns([8, 2])
-    head_col1.markdown("<h1 style='color: #5ab4ff;'>🏗️ AL RABHAN TRADING - Operations Panel</h1>", unsafe_allow_html=True)
+    head_col1.markdown("<h1 style='color: #5ab4ff;'>🏗️ AL RABHAN TRADING - Operations Control Center</h1>", unsafe_allow_html=True)
     if head_col2.button("Terminate Session", type="primary", use_container_width=True):
         st.session_state.auth_token_verified = False
         st.rerun()
         
     st.markdown("---")
-    tab1, tab2, tab3 = st.tabs(["📝 Attendance Table Ledger", "📄 Invoices Ledger", "📊 Month-End Report Hub"])
+    tab1, tab2, tab3 = st.tabs(["📝 Attendance Grid Ledger", "📄 Invoices Grid Ledger", "📊 Monthly & Yearly Report Hub"])
     
     # ---------------- TAB 1: ATTENDANCE MANAGEMENT ----------------
     with tab1:
@@ -52,7 +52,6 @@ else:
             col_a, col_b, col_c = st.columns(3)
             q_date = col_a.text_input("Date (DD/MM/YYYY)", value="21/06/2026")
             
-            # Pre-populate strings if matched
             w_name = matched_worker.iloc[0]["Name"] if not matched_worker.empty else ""
             w_comp = matched_worker.iloc[0]["Company"] if not matched_worker.empty else ""
             w_scop = matched_worker.iloc[0]["Scope"] if not matched_worker.empty else ""
@@ -76,7 +75,7 @@ else:
                     st.success(f"Log updated successfully for {q_name}!")
                     st.rerun()
 
-        # Section B: Separate New Registration Module
+        # Section B: New Registration Module
         with st.expander("🆕 Register Brand New Worker onto Master Database"):
             with st.form("master_reg_form", clear_on_submit=True):
                 r_id = st.text_input("Assign Unique Employee ID *")
@@ -93,7 +92,7 @@ else:
 
         st.markdown("---")
         
-        # Section C: Data Table View with Delete & Filters
+        # Section C: Data Table View with Inline Row Deletion
         st.markdown("#### 🔍 Active Spreadsheet Ledger")
         f1, f2 = st.columns(2)
         filter_date = f1.selectbox("Filter Grid Date Range:", ["All Data Ledger", "21/06/2026", "20/06/2026"])
@@ -105,13 +104,14 @@ else:
         if text_search_w.strip() != "":
             df_w_filtered = df_w_filtered[df_w_filtered["Name"].str.contains(text_search_w, case=False) | df_w_filtered["Employee ID"].str.contains(text_search_w, case=False)]
             
-        st.dataframe(df_w_filtered, use_container_width=True)
-        
-        # Micro Deletion Node
-        del_idx_w = st.number_input("Enter row index integer to delete item:", min_value=0, max_value=len(st.session_state.workforce_matrix)-1, step=1, key="del_w_idx")
-        if st.button("🗑️ Wipe Selected Row from Table"):
-            st.session_state.workforce_matrix = st.session_state.workforce_matrix.drop(del_idx_w).reset_index(drop=True)
-            st.rerun()
+        # Displaying with exact Row-by-Row Delete Option
+        for idx, row in df_w_filtered.iterrows():
+            g_col1, g_col2 = st.columns([12, 1])
+            g_col1.info(f"📅 **{row['Date']}** | **ID:** {row['Employee ID']} | **Name:** {row['Name']} | **Company:** {row['Company']} | **Scope:** {row['Scope']} | **Status:** {row['Status']}")
+            if g_col2.button("🗑️", key=f"del_w_row_{idx}", help="Wipe this specific worker attendance log"):
+                st.session_state.workforce_matrix = st.session_state.workforce_matrix.drop(idx).reset_index(drop=True)
+                st.success("Entry removed successfully.")
+                st.rerun()
 
     # ---------------- TAB 2: FINANCIAL LOGS ----------------
     with tab2:
@@ -141,13 +141,22 @@ else:
                     st.rerun()
                     
         st.markdown("---")
-        st.dataframe(st.session_state.invoice_matrix, use_container_width=True)
-
-    # ---------------- TAB 3: EXECUTIVE MONTH-END REPORT HUB ----------------
-    with tab3:
-        st.markdown("### 📊 Automated Month-End Insights & Metrics")
         
-        # Calculate Attendance Metrics per Employee
+        # Displaying Invoice Table rows with inline Delete button
+        for idx, row in st.session_state.invoice_matrix.iterrows():
+            g_col1, g_col2 = st.columns([12, 1])
+            g_col1.warning(f"🧾 **{row['Date']}** | **Ref:** {row['Invoice No']} | **Vendor:** {row['Vendor']} | **Base:** {row['Amount']:.3f} OMR | **VAT:** {row['VAT']:.3f} OMR | **Total:** {row['Total']:.3f} OMR | **Type:** {row['Type']}")
+            if g_col2.button("🗑️", key=f"del_i_row_{idx}", help="Wipe this specific financial invoice"):
+                st.session_state.invoice_matrix = st.session_state.invoice_matrix.drop(idx).reset_index(drop=True)
+                st.success("Invoice wiped successfully.")
+                st.rerun()
+
+    # ---------------- TAB 3: EXECUTIVE REFORTS (LABOUR & INVOICE MONHTLY/YEARLY) ----------------
+    with tab3:
+        st.markdown("### 📊 Automated Month-End & Yearly Analytics Dashboard")
+        
+        # 1. LABOUR SUMMARY (Days, Holidays, Absents calculation)
+        st.markdown("#### 👷 Labor Operational Attendance Summary (Monthly/Yearly Calculation)")
         df_att = st.session_state.workforce_matrix.copy()
         
         if not df_att.empty:
@@ -175,14 +184,12 @@ else:
                 })
                 
             summary_df = pd.DataFrame(summary_records)
-            st.markdown("#### 👷 Labor Operational Attendance Summary Matrix")
             st.dataframe(summary_df, use_container_width=True)
             
-            # Download Action for Excel/Word
             st.download_button(
-                label="📥 Export Monthly Labor Report (Spreadsheet Format)",
+                label="📥 Export Monthly Labor Attendance Report (Spreadsheet Format)",
                 data=summary_df.to_csv(index=False).encode('utf-8'),
-                file_name='Monthly_Labor_Report.csv',
+                file_name='Monthly_Labor_Attendance_Report.csv',
                 mime='text/csv'
             )
         else:
@@ -190,10 +197,11 @@ else:
             
         st.markdown("---")
         
-        # Calculate Financial Summaries
+        # 2. INVOICE EXPORT (Monthly/Yearly Summaries)
+        st.markdown("#### 💰 Financial Invoices Ledger Breakdown")
         df_inv = st.session_state.invoice_matrix.copy()
+        
         if not df_inv.empty:
-            st.markdown("#### 💰 Financial Ledger Executive Breakdown")
             total_base = df_inv["Amount"].sum()
             total_vat = df_inv["VAT"].sum()
             total_net = df_inv["Total"].sum()
@@ -202,5 +210,15 @@ else:
             met_col1.metric("Total Taxable Base Spend", f"{total_base:.3f} OMR")
             met_col2.metric("Accumulated VAT Asset (5%)", f"{total_vat:.3f} OMR")
             met_col3.metric("Total Consolidated Cost", f"{total_net:.3f} OMR")
+            
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.dataframe(df_inv, use_container_width=True)
+            
+            st.download_button(
+                label="📥 Export Monthly/Yearly Financial Invoice Report (Spreadsheet Format)",
+                data=df_inv.to_csv(index=False).encode('utf-8'),
+                file_name='Monthly_Financial_Invoice_Report.csv',
+                mime='text/csv'
+            )
         else:
             st.info("No receipts archived for processing.")
