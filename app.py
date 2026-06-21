@@ -70,23 +70,23 @@ if 'logged_in' not in st.session_state:
 
 if 'workforce_db' not in st.session_state:
     st.session_state.workforce_db = pd.DataFrame([
-        {"Employee ID": "92476849", "Name": "Mohammad Shahid", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "-", "Time Out": "-", "PPE": "-", "Status": "N/S"},
-        {"Employee ID": "109748895", "Name": "M.Usman", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "-", "Time Out": "-", "PPE": "-", "Status": "N/S"},
-        {"Employee ID": "136299814", "Name": "Jahanzeb Afzal", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "79705332", "Name": "Abdul khaliq", "Company": "Rimal. AL", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "91385467", "Name": "Murtuza", "Company": "Ahmed. AL", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "136025677", "Name": "USAMA IJAZ", "Company": "Sahool Wadi Trading", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "135028261", "Name": "M.Usama", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "134607323", "Name": "Shahid Ahmad", "Company": "Abu Hisham Al Riyami Trading", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "129149239", "Name": "ANWAR AHMAD", "Company": "Abu Sultan Al Hajri Trading Entities LLC", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "128565626", "Name": "AKRAMUL HAQUE", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "99092783", "Name": "IJAZ AHMAD", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "100018149", "Name": "JAVED BOOTA", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "137686123", "Name": "AZID ALI", "Company": "Millennium Building Trading & Contracting LLC", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "135028223", "Name": "MUHAMMAD NAVEED", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "136138983", "Name": "GHULAM MOHI UD DIN", "Company": "AlSafa Distinguished Project", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "131430865", "Name": "MUHAMMAD WASEEM", "Company": "Al-Ahram AlMutajaddida LLC", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-        {"Employee ID": "126755181", "Name": "AHSAN ALI", "Company": "Rizwan Ali Trading & Contracting LLC", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"}
+        {"Date": "20/06/2026", "Employee ID": "92476849", "Name": "Mohammad Shahid", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "-", "Time Out": "-", "Status": "N/S"},
+        {"Date": "20/06/2026", "Employee ID": "109748895", "Name": "M.Usman", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "-", "Time Out": "-", "Status": "N/S"},
+        {"Date": "20/06/2026", "Employee ID": "136299814", "Name": "Jahanzeb Afzal", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "79705332", "Name": "Abdul khaliq", "Company": "Rimal. AL", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "91385467", "Name": "Murtuza", "Company": "Ahmed. AL", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "136025677", "Name": "USAMA IJAZ", "Company": "Sahool Wadi Trading", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "135028261", "Name": "M.Usama", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "134607323", "Name": "Shahid Ahmad", "Company": "Abu Hisham Al Riyami Trading", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "129149239", "Name": "ANWAR AHMAD", "Company": "Abu Sultan Al Hajri Trading Entities LLC", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "128565626", "Name": "AKRAMUL HAQUE", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "99092783", "Name": "IJAZ AHMAD", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "100018149", "Name": "JAVED BOOTA", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "137686123", "Name": "AZID ALI", "Company": "Millennium Building Trading & Contracting LLC", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "135028223", "Name": "MUHAMMAD NAVEED", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "136138983", "Name": "GHULAM MOHI UD DIN", "Company": "AlSafa Distinguished Project", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "131430865", "Name": "MUHAMMAD WASEEM", "Company": "Al-Ahram AlMutajaddida LLC", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"},
+        {"Date": "20/06/2026", "Employee ID": "126755181", "Name": "AHSAN ALI", "Company": "Rizwan Ali Trading & Contracting LLC", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "Status": "Present"}
     ])
 
 if 'invoice_db' not in st.session_state:
@@ -204,17 +204,15 @@ else:
     with tab1:
         st.subheader("📊 Real-Time Operations Overview Matrix")
         
-        # Exact current operational metrics calculation
         total_workers = len(st.session_state.workforce_db)
         present_workers = len(st.session_state.workforce_db[st.session_state.workforce_db["Status"] == "Present"])
         total_docs = len(st.session_state.invoice_db)
         total_financial_volume = st.session_state.invoice_db["Gross Total (OMR)"].sum()
         
-        # STICKY DATES INJECTED HERE IN SUB-HEADERS
-        st.info(f"📅 **Current Active Logging Session Date:** {datetime.now().strftime('%d/%m/%Y')}")
+        st.info("📅 Target Audit Scope Focus: 20/06/2026")
         
         m1, m2, m3 = st.columns(3)
-        m1.metric(label="ACTIVE REGISTERED WORKFORCE", value=f"{total_workers} Units", delta=f"{present_workers} Active Today")
+        m1.metric(label="TOTAL RECORDED ENTRIES", value=f"{total_workers} Units", delta=f"{present_workers} On-Site")
         m2.metric(label="ARCHIVED TAX DOCUMENTS", value=f"{total_docs} Invoices")
         m3.metric(label="GROSS FINANCIAL VOLUME", value=f"{total_financial_volume:.3f} OMR")
         
@@ -223,7 +221,7 @@ else:
         col_a, col_b = st.columns(2)
         with col_a:
             st.markdown("#### Live Field Attendance Ledger")
-            st.dataframe(st.session_state.workforce_db[["Employee ID", "Name", "Company", "Status"]], use_container_width=True, hide_index=True)
+            st.dataframe(st.session_state.workforce_db[["Date", "Employee ID", "Name", "Company", "Status"]], use_container_width=True, hide_index=True)
         with col_b:
             st.markdown("#### Recent Transacted Invoices & Slips")
             st.dataframe(st.session_state.invoice_db[["Invoice/Receipt No", "Vendor/Supplier", "Gross Total (OMR)", "Type"]], use_container_width=True, hide_index=True)
@@ -231,35 +229,64 @@ else:
     # --- TAB 2: DAILY ATTENDANCE MATRIX ---
     with tab2:
         st.subheader("📝 Daily Attendance Matrix Logging Panel")
-        st.info(f"📆 **Roster Sheet Target Period:** {datetime.now().strftime('%d/%m/%Y')}")
         
-        with st.expander("➕ Add New Field Worker Entry", expanded=False):
-            with st.form("add_worker_real_form", clear_on_submit=True):
-                c1, c2, c3 = st.columns(3)
-                emp_id = c1.text_input("Employee ID / Card Code *")
-                emp_name = c2.text_input("Worker Full Name *")
-                emp_company = c3.text_input("Subcontractor/Company Entity", value="Rubhan. T")
-                
-                c4, c5, c6 = st.columns(3)
-                emp_scope = c4.selectbox("Scope of Work", ["Civil", "Mechanical", "Electrical", "Supervision", "Logistics"])
-                emp_status = c5.selectbox("Duty Status", ["Present", "N/S (No Shift)", "Absent"])
-                emp_ppe = c6.checkbox("Full PPE Compliant (Yes/No)", value=True)
-                
-                if st.form_submit_button("Commit Entry to Field Database"):
-                    if emp_id.strip() == "" or emp_name.strip() == "":
-                        st.error("Validation Error: Employee ID and Full Name are required fields.")
-                    else:
-                        new_worker = {
-                            "Employee ID": emp_id, "Name": emp_name, "Company": emp_company, "Scope": emp_scope,
-                            "Time In": "7:00 AM" if emp_status == "Present" else "-",
-                            "Time Out": "5:00 PM" if emp_status == "Present" else "-",
-                            "PPE": "Verified" if emp_ppe and emp_status == "Present" else "-",
-                            "Status": emp_status
-                        }
-                        st.session_state.workforce_db = pd.concat([st.session_state.workforce_db, pd.DataFrame([new_worker])], ignore_index=True)
-                        st.success(f"Success: Record for {emp_name} linked successfully.")
-                        st.rerun()
+        st.markdown("#### ➕ Quick Log / Worker Smart Registration")
+        search_id = st.text_input("Enter Worker Employee ID (or scan card code) to initiate autocomplete lookup:")
+        
+        matched_name = ""
+        matched_company = "Rubhan. T"
+        matched_scope = "Civil"
+        
+        if search_id.strip() != "":
+            history_match = st.session_state.workforce_db[st.session_state.workforce_db["Employee ID"] == search_id.strip()]
+            if not history_match.empty:
+                matched_name = history_match.iloc[-1]["Name"]
+                matched_company = history_match.iloc[-1]["Company"]
+                matched_scope = history_match.iloc[-1]["Scope"]
+                st.toast(f"🎯 Auto-Fill Triggered: Found database record for {matched_name}!", icon="✅")
 
+        with st.form("add_worker_real_form", clear_on_submit=True):
+            c1, c2, c3 = st.columns(3)
+            target_date = c1.text_input("Log Entry Target Date *", value="20/06/2026")
+            final_id = c2.text_input("Employee ID Verified *", value=search_id)
+            final_name = c3.text_input("Worker Full Name *", value=matched_name)
+            
+            c4, c5, c6 = st.columns(3)
+            final_company = c4.text_input("Subcontractor/Company Entity", value=matched_company)
+            final_scope = c5.selectbox("Scope of Work", ["Civil", "Mechanical", "Electrical", "Supervision", "Logistics"], index=["Civil", "Mechanical", "Electrical", "Supervision", "Logistics"].index(matched_scope) if matched_scope in ["Civil", "Mechanical", "Electrical", "Supervision", "Logistics"] else 0)
+            final_status = c6.selectbox("Duty Status Shift", ["Present", "N/S (No Shift)", "Absent"])
+            
+            if st.form_submit_button("Commit Entry & Sync Ledger Records"):
+                if final_id.strip() == "" or final_name.strip() == "":
+                    st.error("Validation Guard: Employee ID and Full Name metrics required.")
+                else:
+                    new_worker = {
+                        "Date": target_date,
+                        "Employee ID": final_id.strip(),
+                        "Name": final_name.strip(),
+                        "Company": final_company.strip(),
+                        "Scope": final_scope,
+                        "Time In": "7:00 AM" if final_status == "Present" else "-",
+                        "Time Out": "5:00 PM" if final_status == "Present" else "-",
+                        "Status": final_status
+                    }
+                    st.session_state.workforce_db = pd.concat([st.session_state.workforce_db, pd.DataFrame([new_worker])], ignore_index=True)
+                    st.success(f"Success: Record synchronized cleanly.")
+                    st.rerun()
+
+        # --- NEW: REMOVE/DELETE ENTRY TOOL FOR WORKERS ---
+        st.markdown("#### 🗑️ Remove / Fix Wrong Attendance Entries")
+        if not st.session_state.workforce_db.empty:
+            worker_list = st.session_state.workforce_db.apply(lambda r: f"{r['Date']} - ID: {r['Employee ID']} - {r['Name']}", axis=1).tolist()
+            selected_worker_str = st.selectbox("Select the wrong entry to completely remove:", worker_list, key="delete_worker_select")
+            
+            if st.button("❌ Remove Worker Entry", type="secondary"):
+                selected_index = worker_list.index(selected_worker_str)
+                st.session_state.workforce_db = st.session_state.workforce_db.drop(st.session_state.workforce_db.index[selected_index]).reset_index(drop=True)
+                st.success("Selected worker entry completely wiped from memory.")
+                st.rerun()
+        
+        st.markdown("#### Consolidated Continuous Roster Ledger View")
         st.dataframe(st.session_state.workforce_db, use_container_width=True, hide_index=True)
 
     # --- TAB 3: TAX INVOICES REGISTRY ---
@@ -270,7 +297,7 @@ else:
             with st.form("add_invoice_real_form", clear_on_submit=True):
                 i1, i2 = st.columns(2)
                 v_no = i1.text_input("Invoice/Receipt Number *")
-                v_date = i2.text_input("Transaction Date (DD/MM/YYYY)", value=datetime.now().strftime("%d/%m/%Y"))
+                v_date = i2.text_input("Transaction Date (DD/MM/YYYY)", value="20/06/2026")
                 v_supplier = i1.text_input("Vendor / Supplier Name *")
                 v_desc = i2.text_area("Detailed Material / Expense Description")
                 
@@ -294,6 +321,18 @@ else:
                         st.session_state.invoice_db = pd.concat([st.session_state.invoice_db, pd.DataFrame([new_inv])], ignore_index=True)
                         st.success("Success: Expense parameters computed and committed.")
                         st.rerun()
+
+        # --- NEW: REMOVE/DELETE ENTRY TOOL FOR INVOICES ---
+        st.markdown("#### 🗑️ Remove / Fix Wrong Invoice Entries")
+        if not st.session_state.invoice_db.empty:
+            invoice_list = st.session_state.invoice_db.apply(lambda r: f"No: {r['Invoice/Receipt No']} - {r['Vendor/Supplier']} ({r['Gross Total (OMR)']} OMR)", axis=1).tolist()
+            selected_invoice_str = st.selectbox("Select the wrong invoice record to delete:", invoice_list, key="delete_invoice_select")
+            
+            if st.button("🗑️ Delete Selected Invoice", type="secondary"):
+                selected_inv_index = invoice_list.index(selected_invoice_str)
+                st.session_state.invoice_db = st.session_state.invoice_db.drop(st.session_state.invoice_db.index[selected_inv_index]).reset_index(drop=True)
+                st.success("Selected invoice record removed successfully.")
+                st.rerun()
 
         st.dataframe(st.session_state.invoice_db, use_container_width=True, hide_index=True)
 
