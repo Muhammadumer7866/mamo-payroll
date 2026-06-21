@@ -1,32 +1,78 @@
-/* Custom App Background Styling */
+/* ==========================================================================
+   AL RABHAN TRADING - HARDENED PRODUCTION CSS SHIELD
+   ========================================================================== */
+
+/* Main Application Layout with Dark Theme Background */
 .stApp {
-    background-size: 35% !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-    background-attachment: fixed !important;
+    background-color: #1e1e24 !important;
+    color: #ffffff !important;
 }
 
-/* Containers Layout */
-.stDataFrame, .stTable, .stTabs, div[data-testid="stForm"], div[data-testid="stExpander"] {
-    background-color: rgba(255, 255, 255, 0.04) !important;
-    border-radius: 12px;
-    padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    margin-bottom: 20px;
+/* Base64 Logo Watermark Background Styling */
+@media (min-width: 900px) {
+    .stApp::after {
+        content: "";
+        position: fixed;
+        top: 0; 
+        left: 0;
+        width: 100vw; 
+        height: 100vh;
+        background-size: 350px !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+        opacity: 0.05 !important; /* Subtle watermark layout */
+        z-index: -10;
+        pointer-events: none;
+    }
 }
 
-/* Bold Labels styling */
+/* Custom Containers & Glassmorphism Forms (Zero Data Leakage Hooks) */
+div[data-testid="stForm"], 
+.stDataFrame, 
+div[data-testid="stExpander"],
+.stTabs {
+    background-color: #2a2a35 !important;
+    border-radius: 12px !important;
+    padding: 22px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    margin-bottom: 20px !important;
+}
+
+/* Input Fields Accent Styling */
+div[data-baseweb="input"], 
+div[data-baseweb="select"] {
+    background-color: #1e1e24 !important;
+    border-radius: 6px !important;
+    color: #ffffff !important;
+}
+
+/* Bold Labels Color Control */
 label p {
     font-weight: bold !important;
-    font-size: 15px !important;
+    font-size: 14px !important;
     color: #4a90e2 !important;
+    letter-spacing: 0.5px;
 }
 
-/* Danger/Delete Section Styling */
-div.delete-box {
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 5px solid #ff4b4b;
-    background-color: rgba(255, 75, 75, 0.05);
-    margin-top: 15px;
+/* Row Action Interface & Info InfoBlocks */
+div[data-testid="stNotification"] {
+    background-color: rgba(74, 144, 226, 0.1) !important;
+    border-left: 5px solid #4a90e2 !important;
+    color: #ffffff !important;
+    border-radius: 6px;
 }
+
+/* Specific Row Removal Alert Boxes */
+.remove-container-alert {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ff4b4b;
+    background-color: rgba(255, 75, 75, 0.05);
+    margin-bottom: 15px;
+}
+
+/* Hide Default Streamlit Branding Footers/Headers (Security Hardening) */
+footer { visibility: hidden !important; }
+header { visibility: hidden !important; }
+#MainMenu { visibility: hidden !important; }
