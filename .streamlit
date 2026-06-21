@@ -1,0 +1,3 @@
+# Hardened Secrets Configuration for Al Rabhan Trading
+ADMIN_USER = "admin@construction.om"
+SECURE_KEY_HASH = "6ce8e390c29759d57a9cf719bf3000b91e92025345718dfd0e3ecf5228519e49"
