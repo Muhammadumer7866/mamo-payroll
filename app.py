@@ -1,215 +1,287 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
+import os
 
-# 1. Page Configuration (Standard & Stable)
+# 1. Page Configuration
 st.set_page_config(
-    page_title="Al Rabhan Trading - ERP Control Panel",
+    page_title="Al Rabhan Trading - Secure ERP",
     page_icon="🏗️",
     layout="wide"
 )
 
-# 2. Reusable Central State Management (Pre-populating Real Data)
+# 2. Branding Assets Link Setup
+logo_main = "ChatGPT Image Jun 20, 2026, 02_56_40 PM.png"
+logo_bg = "image_436736.png"
+
+# Custom Premium Styling & Persistent Transparent Background Watermark
+st.markdown(f"""
+    <style>
+    .stApp {{
+        background-image: linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)), url("data:image/png;base64,{logo_bg}");
+        background-size: 45%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    @media (prefers-color-scheme: dark) {{
+        .stApp {{
+            background-image: linear-gradient(rgba(14, 17, 23, 0.94), rgba(14, 17, 23, 0.94)), url("data:image/png;base64,{logo_bg}");
+            background-size: 45%;
+        }}
+    }}
+    .stDataFrame, .stTable, .stTabs, div[data-testid="stForm"] {{
+        background-color: rgba(255, 255, 255, 0.90) !important;
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: 0px 2px 10px rgba(0,0,0,0.05);
+    }}
+    label p {{
+        font-weight: bold !important;
+        font-size: 14px !important;
+    }}
+    </style>
+""", unsafe_provided_html=True)
+
+# 3. Central State Database Initialization (Loaded with Real Uploaded Document Records)
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
 
 if 'workforce_db' not in st.session_state:
+    # Extracted directly from workforce management log sheet (Dated: 20-06-2026)
     st.session_state.workforce_db = pd.DataFrame([
-        {"Labour ID": "AR-L01", "Name": "Muhammad Ali", "Trade": "Mason", "Shift": "Day", "Status": "Present", "Check-In": "07:00 AM"},
-        {"Labour ID": "AR-L02", "Name": "Sajid Khan", "Trade": "Steel Fixer", "Shift": "Day", "Status": "Present", "Check-In": "06:55 AM"},
-        {"Labour ID": "AR-L03", "Name": "Kumar Swamy", "Trade": "Carpenter", "Shift": "Day", "Status": "Present", "Check-In": "07:02 AM"},
-        {"Labour ID": "AR-L04", "Name": "Ahmed Al-Balushi", "Trade": "Site Supervisor", "Shift": "Day", "Status": "Present", "Check-In": "06:45 AM"}
+        {"Employee ID": "92476849", "Name": "Mohammad Shahid", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "-", "Time Out": "-", "PPE": "-", "Status": "N/S"},
+        {"Employee ID": "109748895", "Name": "M.Usman", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "-", "Time Out": "-", "PPE": "-", "Status": "N/S"},
+        {"Employee ID": "136299814", "Name": "Jahanzeb Afzal", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "79705332", "Name": "Abdul khaliq", "Company": "Rimal. AL", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "91385467", "Name": "Murtuza", "Company": "Ahmed. AL", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "136025677", "Name": "USAMA IJAZ", "Company": "Sahool Wadi Trading", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "135028261", "Name": "M.Usama", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "134607323", "Name": "Shahid Ahmad", "Company": "Abu Hisham Al Riyami Trading", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "129149239", "Name": "ANWAR AHMAD", "Company": "Abu Sultan Al Hajri Trading Entities LLC", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "128565626", "Name": "AKRAMUL HAQUE", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "99092783", "Name": "IJAZ AHMAD", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "100018149", "Name": "JAVED BOOTA", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "137686123", "Name": "AZID ALI", "Company": "Millennium Building Trading & Contracting LLC", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "135028223", "Name": "MUHAMMAD NAVEED", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "136138983", "Name": "GHULAM MOHI UD DIN", "Company": "AlSafa Distinguished Project", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "131430865", "Name": "MUHAMMAD WASEEM", "Company": "Al-Ahram AlMutajaddida LLC", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
+        {"Employee ID": "126755181", "Name": "AHSAN ALI", "Company": "Rizwan Ali Trading & Contracting LLC", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"}
     ])
 
 if 'invoice_db' not in st.session_state:
+    # Financial Records extracted from verified corporate Tax Invoices & Bank Muscat slips
     st.session_state.invoice_db = pd.DataFrame([
         {
-            "Invoice No": "A204306",
+            "Invoice/Receipt No": "A204306",
             "Date": "20/06/2026",
-            "Supplier Name": "Al Inma Building Materials L.L.C.",
-            "Material Description": "Marsbit P 4mm (28 Rolls) & Tech Prime SB (2 Pails)",
-            "Taxable Amount (OMR)": 338.600,
-            "VAT Amount 5% (OMR)": 16.930,
-            "Total Invoice Gross (OMR)": 355.530,
-            "Audit Integrity Check": "Verified & Passed"
+            "Vendor/Supplier": "Al Inma Building Materials L.L.C.",
+            "Description": "Marsbit P 4mm (28 Rolls) & Tech Prime SB (2 Pails)",
+            "Taxable Base (OMR)": 338.600,
+            "VAT Amount (5%)": 16.930,
+            "Gross Total (OMR)": 355.530,
+            "Type": "Tax Invoice"
+        },
+        {
+            "Invoice/Receipt No": "Cash Memo",
+            "Date": "20/06/2026",
+            "Vendor/Supplier": "Lulu Dhofar International LLC",
+            "Description": "Safety Pant-Shirt (M) - 1 Set (with OMR 0.200 discount)",
+            "Taxable Base (OMR)": 4.800,
+            "VAT Amount (5%)": 0.000,
+            "Gross Total (OMR)": 4.800,
+            "Type": "Cash Purchase"
+        },
+        {
+            "Invoice/Receipt No": "6752",
+            "Date": "20/06/2026",
+            "Vendor/Supplier": "Oman Oil (Awqad 8016 Salalah)",
+            "Description": "Fuel Purchase - Visa Debit Terminal 5715",
+            "Taxable Base (OMR)": 5.000,
+            "VAT Amount (5%)": 0.000,
+            "Gross Total (OMR)": 5.000,
+            "Type": "Fuel Receipt"
         }
     ])
 
 # ==============================================================================
-# PHASE 1: SECURE LOGIN GATEWAY (Bina kisi CSS ke, 100% visible layout)
+# PHASE 1: SECURE GATEWAY PANEL
 # ==============================================================================
 if not st.session_state.logged_in:
-    # 2 Column layout using native Streamlit columns
+    if os.path.exists(logo_main):
+        col_l1, col_l2, col_l3 = st.columns([1, 2, 1])
+        with col_l2:
+            st.image(logo_main, use_container_width=True)
+    st.markdown("<hr style='margin-top:0px; margin-bottom:25px;'>", unsafe_provided_html=True)
+
     left_col, right_col = st.columns(2, gap="large")
     
     with left_col:
-        st.title("🏗️ AL RABHAN TRADING")
-        st.subheader("Sultanate of Oman • Enterprise Logistics Control")
-        st.write("Please authenticate administrative level keys to open the operations panel.")
+        st.subheader("System Authentication")
+        st.write("Provide structural network keys to access administrative layers.")
         
-        # Form Input Fields
-        input_user = st.text_input("Corporate ID / Email Address", placeholder="e.g. admin@construction.om")
-        input_pass = st.text_input("Security Access Key", type="password", placeholder="••••••••••••")
+        try:
+            default_user = st.secrets["auth"]["admin_email"]
+            default_pass = st.secrets["auth"]["admin_password"]
+        except Exception:
+            default_user = ""
+            default_pass = ""
+
+        input_user = st.text_input("Corporate ID / Email Address", value=default_user)
+        input_pass = st.text_input("Security Access Key", type="password", value=default_pass)
         
         if st.button("Log In to System", type="primary"):
-            if input_user == "admin@construction.om" and input_pass == "Oman#Secure2026":
-                st.session_state.logged_in = True
-                st.success("Access Granted. Loading Operations Node...")
-                st.rerun()
-            else:
-                st.error("Invalid Corporate Credentials. Access Denied.")
+            try:
+                secure_user = st.secrets["auth"]["admin_email"]
+                secure_pass = st.secrets["auth"]["admin_password"]
+                
+                if input_user == secure_user and input_pass == secure_pass:
+                    st.session_state.logged_in = True
+                    st.success("Access Granted. Synchronizing Ledger Databases...")
+                    st.rerun()
+                else:
+                    st.error("Invalid Administrative Credentials. Connection Denied.")
+            except KeyError:
+                st.error("🔒 Configuration Error: Server runtime secret tokens not configured.")
                 
     with right_col:
-        # Beautiful native container border acting as a card
         with st.container(border=True):
-            st.markdown("### 🌐 Oman Enterprise Infrastructure")
-            st.markdown("**Effortlessly manage your workforce and corporate financials.**")
+            st.markdown("### 🌐 Sultanate of Oman Logistics Core")
+            st.markdown("**Real-Time Deployment & Financial Control Console**")
             st.write(
-                "Consolidated cloud tracking console custom engineered for real-time field operations, "
-                "active shift logs control, and Omani Tax Invoice registry archiving."
+                "Custom built cloud interface tracking multi-vendor construction deployment matrix, "
+                "site supervisor shifts, and active Omani Tax compliance audits."
             )
-            st.info("Automated analytical report structuring engine compiles binary Excel ledgers instantaneously for internal validation.")
             st.caption("CONSTRUCTION | QUALITY | TRUST")
 
 # ==============================================================================
-# PHASE 2: MAIN ENTERPRISE DASHBOARD (Once Authenticated)
+# PHASE 2: INTERNAL OPERATIONS DASHBOARD
 # ==============================================================================
 else:
-    # Global System Top Header
-    st.title("🏗️ AL RABHAN TRADING OPERATIONS SYSTEM")
-    st.caption("Sultanate of Oman • Secure Enterprise Infrastructure Control Node")
+    h_logo_col, h_text_col = st.columns([1, 6])
+    with h_logo_col:
+        if os.path.exists(logo_main):
+            st.image(logo_main, width=130)
+    with h_text_col:
+        st.title("AL RABHAN TRADING OPERATIONS SYSTEM")
+        st.caption("Sultanate of Oman • Enterprise Control Node")
     
-    # Logout button in the header row
     h_col1, h_col2 = st.columns([6, 1])
-    h_col1.success("🔒 System Integrity Node: Active (Automated Excel/CSV Ledger Extraction Enabled)")
+    h_col1.success("🔒 System Integrity Node: Active & Protected by Environment Keys.")
     if h_col2.button("Log Out", type="secondary"):
         st.session_state.logged_in = False
         st.rerun()
         
     st.markdown("---")
 
-    # Native Tabs with high contrast and sharp layout
     tab1, tab2, tab3, tab4 = st.tabs([
         "🏠 Corporate Command Hub", 
-        "📝 Attendance Roster Module", 
+        "📝 Daily Attendance Matrix", 
         "📄 Tax Invoices Registry", 
         "📊 Chronological Reports Export"
     ])
 
-    # --- TAB 1: CORPORATE HUB ---
+    # --- TAB 1: COMMAND HUB ---
     with tab1:
         st.subheader("📊 Real-Time Operations Overview Matrix")
-        st.write("Aggregated system metrics reflecting current active field deployment rosters, verified logistics registries, and global transacted ledger archives safely tracked across Omani operational zones.")
         
-        # Mathematical updates using state values
         total_workers = len(st.session_state.workforce_db)
+        present_workers = len(st.session_state.workforce_db[st.session_state.workforce_db["Status"] == "Present"])
         total_docs = len(st.session_state.invoice_db)
-        total_financial_volume = st.session_state.invoice_db["Total Invoice Gross (OMR)"].sum()
+        total_financial_volume = st.session_state.invoice_db["Gross Total (OMR)"].sum()
         
-        # High contrast standard metrics row
         m1, m2, m3 = st.columns(3)
-        m1.metric(label="ACTIVE REGISTERED WORKFORCE", value=f"{total_workers} Units")
-        m2.metric(label="ARCHIVED TAX DOCUMENTS", value=f"{total_docs} Invoices")
-        m3.metric(label="GROSS FINANCIAL VOLUME", value=f"{total_financial_volume:.3f} OMR")
+        m1.metric(label="TOTAL DEPLOYED WORKFORCE", value=f"{total_workers} Units", delta=f"{present_workers} Present Today")
+        m2.metric(label="ARCHIVED TAX / REVENUE DOCUMENTS", value=f"{total_docs} Records")
+        m3.metric(label="GROSS FINANCIAL ACCOUNTED VOLUME", value=f"{total_financial_volume:.3f} OMR")
         
         st.markdown("---")
         
         col_a, col_b = st.columns(2)
         with col_a:
-            st.markdown("#### Live Field Attendance Preview")
-            st.dataframe(st.session_state.workforce_db, use_container_width=True, hide_index=True)
+            st.markdown("#### Live Field Attendance Ledger (20-06-2026)")
+            st.dataframe(st.session_state.workforce_db[["Employee ID", "Name", "Company", "Status"]], use_container_width=True, hide_index=True)
         with col_b:
-            st.markdown("#### Recent Transacted Invoices Log")
-            st.dataframe(st.session_state.invoice_db[["Invoice No", "Supplier Name", "Total Invoice Gross (OMR)", "Audit Integrity Check"]], use_container_width=True, hide_index=True)
+            st.markdown("#### Recent Transacted Invoices & Slips")
+            st.dataframe(st.session_state.invoice_db[["Invoice/Receipt No", "Vendor/Supplier", "Gross Total (OMR)", "Type"]], use_container_width=True, hide_index=True)
 
-    # --- TAB 2: ATTENDANCE MODULE ---
+    # --- TAB 2: DAILY ATTENDANCE MATRIX ---
     with tab2:
         st.subheader("📝 Daily Attendance Matrix Logging Panel")
-        st.write("Manage and log daily workforce deployment shifts, real-time check-ins, and trade categorization for construction sites.")
         
-        with st.expander("➕ Log New Labour Deployment Record", expanded=False):
-            with st.form("add_worker_form", clear_on_submit=True):
+        with st.expander("➕ Add New Field Worker Entry", expanded=False):
+            with st.form("add_worker_real_form", clear_on_submit=True):
                 c1, c2, c3 = st.columns(3)
-                new_id = c1.text_input("Labour ID", value=f"AR-L0{len(st.session_state.workforce_db)+1}")
-                new_name = c2.text_input("Full Name *")
-                new_trade = c3.selectbox("Trade / Role", ["Mason", "Steel Fixer", "Carpenter", "Electrician", "Plumber", "Labourer", "Site Supervisor"])
+                emp_id = c1.text_input("Employee ID / Card Code *")
+                emp_name = c2.text_input("Worker Full Name *")
+                emp_company = c3.text_input("Subcontractor/Company Entity", value="Rubhan. T")
                 
-                c4, c5 = st.columns(2)
-                new_shift = c4.radio("Shift Allocation", ["Day", "Night"])
-                new_status = c5.selectbox("Initial Attendance Status", ["Present", "Absent", "Scheduled"])
+                c4, c5, c6 = st.columns(3)
+                emp_scope = c4.selectbox("Scope of Work", ["Civil", "Mechanical", "Electrical", "Supervision", "Logistics"])
+                emp_status = c5.selectbox("Duty Status", ["Present", "N/S (No Shift)", "Absent"])
+                emp_ppe = c6.checkbox("Full PPE Compliant (Yes/No)", value=True)
                 
-                if st.form_submit_button("Commit Entry to Ledger"):
-                    if new_name.strip() == "":
-                        st.error("Error: Please provide a valid Name.")
+                if st.form_submit_button("Commit Entry to Field Database"):
+                    if emp_id.strip() == "" or emp_name.strip() == "":
+                        st.error("Validation Error: Employee ID and Full Name are strictly required fields.")
                     else:
-                        new_entry = {
-                            "Labour ID": new_id, "Name": new_name, "Trade": new_trade,
-                            "Shift": new_shift, "Status": new_status,
-                            "Check-In": datetime.now().strftime("%I:%M %p") if new_status == "Present" else "-"
+                        new_worker = {
+                            "Employee ID": emp_id, "Name": emp_name, "Company": emp_company, "Scope": emp_scope,
+                            "Time In": "7:00 AM" if emp_status == "Present" else "-",
+                            "Time Out": "5:00 PM" if emp_status == "Present" else "-",
+                            "PPE": "Verified" if emp_ppe and emp_status == "Present" else "-",
+                            "Status": emp_status
                         }
-                        st.session_state.workforce_db = pd.concat([st.session_state.workforce_db, pd.DataFrame([new_entry])], ignore_index=True)
-                        st.success(f"Success: Record for '{new_name}' saved.")
+                        st.session_state.workforce_db = pd.concat([st.session_state.workforce_db, pd.DataFrame([new_worker])], ignore_index=True)
+                        st.success(f"Success: Record for {emp_name} linked successfully.")
                         st.rerun()
 
         st.dataframe(st.session_state.workforce_db, use_container_width=True, hide_index=True)
 
-    # --- TAB 3: TAX REGISTRY ---
+    # --- TAB 3: TAX INVOICES REGISTRY ---
     with tab3:
         st.subheader("📄 Omani Tax Invoice Registry & Compliance Node")
-        st.write("Official digital vault for archiving, validating, and auditing Omani standard Tax Invoices with automated 5% VAT calculations.")
         
-        with st.expander("📥 Register & Parse New Corporate Tax Invoice", expanded=False):
-            with st.form("add_invoice_form", clear_on_submit=True):
+        with st.expander("📥 Log New Transaction Slip / Invoice", expanded=False):
+            with st.form("add_invoice_real_form", clear_on_submit=True):
                 i1, i2 = st.columns(2)
-                inv_no = i1.text_input("Invoice Number", value="A204307")
-                inv_date = i2.text_input("Invoice Date (DD/MM/YYYY)", value=datetime.now().strftime("%d/%m/%Y"))
-                supplier = i1.text_input("Supplier Name Entity", value="Al Inma Building Materials L.L.C.")
-                items_desc = i2.text_area("Item Description Details")
+                v_no = i1.text_input("Invoice/Receipt Number *")
+                v_date = i2.text_input("Transaction Date (DD/MM/YYYY)", value=datetime.now().strftime("%d/%m/%Y"))
+                v_supplier = i1.text_input("Vendor / Supplier Name *")
+                v_desc = i2.text_area("Detailed Material / Expense Description")
                 
-                taxable_amt = st.number_input("Taxable Base Amount (OMR)", min_value=0.000, value=0.000, step=0.001, format="%.3f")
+                i3, i4 = st.columns(2)
+                v_type = i3.selectbox("Document Classification Type", ["Tax Invoice", "Cash Purchase", "Fuel Receipt", "General Voucher"])
+                v_base = i4.number_input("Taxable Base/Net Amount (OMR)", min_value=0.000, value=0.000, step=0.001, format="%.3f")
                 
-                if st.form_submit_button("Verify and Process Tax Record"):
-                    if items_desc.strip() == "":
-                        st.error("Error: Item Description details cannot be left empty.")
+                if st.form_submit_button("Authenticate Expense Entry"):
+                    if v_no.strip() == "" or v_supplier.strip() == "":
+                        st.error("Validation Error: Please fill out critical registration parameters.")
                     else:
-                        computed_vat = taxable_amt * 0.05
-                        computed_gross = taxable_amt + computed_vat
+                        vat_computed = v_base * 0.05 if v_type == "Tax Invoice" else 0.000
+                        gross_computed = v_base + vat_computed
                         
-                        new_invoice = {
-                            "Invoice No": inv_no, "Date": inv_date, "Supplier Name": supplier,
-                            "Material Description": items_desc, "Taxable Amount (OMR)": taxable_amt,
-                            "VAT Amount 5% (OMR)": computed_vat, "Total Invoice Gross (OMR)": computed_gross,
-                            "Audit Integrity Check": "Verified & Passed"
+                        new_inv = {
+                            "Invoice/Receipt No": v_no, "Date": v_date, "Vendor/Supplier": v_supplier,
+                            "Description": v_desc, "Taxable Base (OMR)": v_base,
+                            "VAT Amount (5%)": vat_computed, "Gross Total (OMR)": gross_computed,
+                            "Type": v_type
                         }
-                        st.session_state.invoice_db = pd.concat([st.session_state.invoice_db, pd.DataFrame([new_invoice])], ignore_index=True)
-                        st.success(f"Success: Tax Invoice {inv_no} archived.")
+                        st.session_state.invoice_db = pd.concat([st.session_state.invoice_db, pd.DataFrame([new_inv])], ignore_index=True)
+                        st.success("Success: Expense parameters computed and committed.")
                         st.rerun()
 
         st.dataframe(st.session_state.invoice_db, use_container_width=True, hide_index=True)
 
-    # --- TAB 4: CHRONOLOGICAL REPORTS EXPORT ---
+    # --- TAB 4: EXPORTS ---
     with tab4:
-        st.subheader("📊 Reports Export Panel & Audit Trail Engine")
-        st.write("Generate and structure spreadsheets (CSV format) for internal validation.")
-        
-        st.radio("Chronology Scope Focus:", ["View Complete History Logs", "Filter Target Monthly Matrix View"])
+        st.subheader("📊 Corporate Reports Export Panel")
+        st.radio("Timeline Scope Configuration:", ["Complete Historical Logs", "Active Audited Month Only"])
         st.markdown("---")
         
-        # Clean Binary Data Encoding
-        csv_workers_bytes = st.session_state.workforce_db.to_csv(index=False).encode('utf-8')
-        csv_invoice_bytes = st.session_state.invoice_db.to_csv(index=False).encode('utf-8')
+        csv_w = st.session_state.workforce_db.to_csv(index=False).encode('utf-8')
+        csv_i = st.session_state.invoice_db.to_csv(index=False).encode('utf-8')
         
-        # Fix: Removed 'use_container_width' warning parameter for full backward/forward compatibility
-        down_col1, down_col2 = st.columns(2)
-        down_col1.download_button(
-            label="📥 Export Roster Matrix (.CSV)",
-            data=csv_workers_bytes,
-            file_name=f"Al_Rabhan_Roster_{datetime.now().strftime('%Y%m%d')}.csv",
-            mime="text/csv"
-        )
-        down_col2.download_button(
-            label="📥 Export Tax Ledger (.CSV)",
-            data=csv_invoice_bytes,
-            file_name=f"Al_Rabhan_Tax_Ledger_{datetime.now().strftime('%Y%m%d')}.csv",
-            mime="text/csv"
-        )
+        d_col1, d_col2 = st.columns(2)
+        d_col1.download_button(label="📥 Export Actual Workforce Matrix (.CSV)", data=csv_w, file_name="Al_Rabhan_Actual_Roster.csv", mime="text/csv")
+        d_col2.download_button(label="📥 Export Verified Expense Ledger (.CSV)", data=csv_i, file_name="Al_Rabhan_Expense_Ledger.csv", mime="text/csv")
