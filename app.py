@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import os
+import base64
 
 # 1. Page Configuration
 st.set_page_config(
@@ -14,41 +15,65 @@ st.set_page_config(
 logo_main = "ChatGPT Image Jun 20, 2026, 02_56_40 PM.png"
 logo_bg = "image_436736.png"
 
-# Custom Premium Styling & Persistent Transparent Background Watermark
-st.markdown(f"""
-    <style>
-    .stApp {{
-        background-image: linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)), url("data:image/png;base64,{logo_bg}");
-        background-size: 45%;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }}
-    @media (prefers-color-scheme: dark) {{
-        .stApp {{
-            background-image: linear-gradient(rgba(14, 17, 23, 0.94), rgba(14, 17, 23, 0.94)), url("data:image/png;base64,{logo_bg}");
-            background-size: 45%;
-        }}
-    }}
-    .stDataFrame, .stTable, .stTabs, div[data-testid="stForm"] {{
-        background-color: rgba(255, 255, 255, 0.90) !important;
-        border-radius: 8px;
-        padding: 12px;
-        box-shadow: 0px 2px 10px rgba(0,0,0,0.05);
-    }}
-    label p {{
-        font-weight: bold !important;
-        font-size: 14px !important;
-    }}
-    </style>
-""", unsafe_provided_html=True)
+# Function to safely convert image to base64 for CSS background injection
+def get_base64_image(image_path):
+    if os.path.exists(image_path):
+        with open(image_path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode()
+    return ""
 
-# 3. Central State Database Initialization (Loaded with Real Uploaded Document Records)
+bg_base64 = get_base64_image(logo_bg)
+
+# 3. Custom Premium Styling & Persistent Transparent Background Watermark (CRASH FIX)
+# `unsafe_provided_html` ko badal kar standard `unsafe_allow_html=True` kar diya hai
+if bg_base64:
+    st.markdown(f"""
+        <style>
+        .stApp {{
+            background-image: linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)), url("data:image/png;base64,{bg_base64}");
+            background-size: 45%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+        @media (prefers-color-scheme: dark) {{
+            .stApp {{
+                background-image: linear-gradient(rgba(14, 17, 23, 0.94), rgba(14, 17, 23, 0.94)), url("data:image/png;base64,{bg_base64}");
+                background-size: 45%;
+            }}
+        }}
+        .stDataFrame, .stTable, .stTabs, div[data-testid="stForm"] {{
+            background-color: rgba(255, 255, 255, 0.90) !important;
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 0px 2px 10px rgba(0,0,0,0.05);
+        }}
+        label p {{
+            font-weight: bold !important;
+            font-size: 14px !important;
+        }}
+        </style>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+        <style>
+        .stDataFrame, .stTable, .stTabs, div[data-testid="stForm"] {
+            background-color: rgba(255, 255, 255, 0.90) !important;
+            border-radius: 8px;
+            padding: 12px;
+        }
+        label p {
+            font-weight: bold !important;
+            font-size: 14px !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+# 4. Central State Database Initialization
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
 
 if 'workforce_db' not in st.session_state:
-    # Extracted directly from workforce management log sheet (Dated: 20-06-2026)
     st.session_state.workforce_db = pd.DataFrame([
         {"Employee ID": "92476849", "Name": "Mohammad Shahid", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "-", "Time Out": "-", "PPE": "-", "Status": "N/S"},
         {"Employee ID": "109748895", "Name": "M.Usman", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "-", "Time Out": "-", "PPE": "-", "Status": "N/S"},
@@ -70,7 +95,6 @@ if 'workforce_db' not in st.session_state:
     ])
 
 if 'invoice_db' not in st.session_state:
-    # Financial Records extracted from verified corporate Tax Invoices & Bank Muscat slips
     st.session_state.invoice_db = pd.DataFrame([
         {
             "Invoice/Receipt No": "A204306",
@@ -112,7 +136,7 @@ if not st.session_state.logged_in:
         col_l1, col_l2, col_l3 = st.columns([1, 2, 1])
         with col_l2:
             st.image(logo_main, use_container_width=True)
-    st.markdown("<hr style='margin-top:0px; margin-bottom:25px;'>", unsafe_provided_html=True)
+    st.markdown("<hr style='margin-top:0px; margin-bottom:25px;'>", unsafe_allow_html=True)
 
     left_col, right_col = st.columns(2, gap="large")
     
@@ -178,7 +202,7 @@ else:
         "🏠 Corporate Command Hub", 
         "📝 Daily Attendance Matrix", 
         "📄 Tax Invoices Registry", 
-        "📊 Chronological Reports Export"
+        "📊 Corporate Reports Export"
     ])
 
     # --- TAB 1: COMMAND HUB ---
@@ -199,7 +223,7 @@ else:
         
         col_a, col_b = st.columns(2)
         with col_a:
-            st.markdown("#### Live Field Attendance Ledger (20-06-2026)")
+            st.markdown("#### Live Field Attendance Ledger")
             st.dataframe(st.session_state.workforce_db[["Employee ID", "Name", "Company", "Status"]], use_container_width=True, hide_index=True)
         with col_b:
             st.markdown("#### Recent Transacted Invoices & Slips")
@@ -223,7 +247,7 @@ else:
                 
                 if st.form_submit_button("Commit Entry to Field Database"):
                     if emp_id.strip() == "" or emp_name.strip() == "":
-                        st.error("Validation Error: Employee ID and Full Name are strictly required fields.")
+                        st.error("Validation Error: Employee ID and Full Name are required fields.")
                     else:
                         new_worker = {
                             "Employee ID": emp_id, "Name": emp_name, "Company": emp_company, "Scope": emp_scope,
