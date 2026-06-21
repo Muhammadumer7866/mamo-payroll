@@ -11,8 +11,7 @@ def verify_session_handshake(username, password):
     # Strict Hardcoded Fallback Credentials (Zero external file dependency)
     SECURE_USER = "admin@construction.om"
     # SHA-256 Hash of 'Oman#Secure2026'
-    SECURE_HASH = "6ce8e390c29759d57a9cf719bf3000b91e92025345718dfd0e3ecf5228519e49"
-    
+SECURE_HASH = "6ce8e390c29759d57a9cf719bf3000b91e92025345718dfd0e3ecf5228519e49"    
     input_hash = hash_verified_credentials(password)
     return username.strip() == SECURE_USER and input_hash == SECURE_HASH
 
