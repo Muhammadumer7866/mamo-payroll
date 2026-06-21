@@ -5,7 +5,7 @@ from database import load_secure_repository, verify_session_handshake
 
 st.set_page_config(page_title="Al Rabhan Operational Vault", layout="wide", page_icon="🔒")
 
-# Load CSS Styles dynamically from script file
+# Inject Custom Hardened UI Skin Module
 if os.path.exists("style.css"):
     with open("style.css") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -15,7 +15,7 @@ load_secure_repository()
 if "auth_token_verified" not in st.session_state:
     st.session_state.auth_token_verified = False
 
-# Check if secrets configuration file exists to prevent server runtime panic crashes
+# Fallback configuration token tracking
 try:
     _ = st.secrets["ADMIN_USER"]
     secrets_configured = True
@@ -23,7 +23,7 @@ except KeyError:
     secrets_configured = False
 
 # ==========================================
-# GATEWAY SCREEN (Hardened Cryptographic Login)
+# GATEWAY SCREEN (Secure Cryptographic Login)
 # ==========================================
 if not st.session_state.auth_token_verified:
     _, center_box, _ = st.columns([1, 2, 1])
@@ -46,10 +46,9 @@ if not st.session_state.auth_token_verified:
                     st.error("Authentication Violation: Invalid Signature Keys logged.")
 
 # ==========================================
-# APPLICATION CORE (Authenticated State Layer)
+# APPLICATION CORE (Authenticated Layer)
 # ==========================================
 else:
-    # Main Dashboard Header Panel
     head_col1, head_col2 = st.columns([8, 2])
     head_col1.markdown("<h1 style='color: #5ab4ff;'>🏗️ AL RABHAN TRADING - Control Center</h1>", unsafe_allow_html=True)
     if head_col2.button("Terminate Secure Session", type="primary", use_container_width=True):
@@ -59,7 +58,7 @@ else:
     st.markdown("---")
     tab1, tab2 = st.tabs(["📝 Daily Attendance Matrix Logging Panel", "📄 Tax Invoices & Receipts Hub"])
     
-    # ---------------- TAB 1: WORKFORCE MATRIX (Row-Specific Action Click Deletion) ----------------
+    # ---------------- TAB 1: WORKFORCE MATRIX ----------------
     with tab1:
         st.markdown("### Active Workforce Roster")
         
@@ -92,19 +91,16 @@ else:
 
         st.markdown("<br>", unsafe_allow_html=True)
         
-        # Cursor Row UI Container Engine for Row-Level targeting
+        # Granular Row Deletion Engine via Cursor Mapped Indexes
         for idx, row in st.session_state.workforce_matrix.iterrows():
             grid_col1, grid_col2 = st.columns([12, 1])
-            
-            # Formatted text line presenting full metrics for granular analysis
             grid_col1.info(f"📅 **{row['Date']}** | **ID:** {row['Employee ID']} | **Name:** {row['Name']} | **Company:** {row['Company']} | **Scope:** {row['Scope']} | **PPE:** {row['PPE']} | **Status:** {row['Status']}")
             
-            # The Target cursor delete switch mapped exactly to pandas row index
-            if grid_col2.button("🗑️", key=f"del_w_{idx}", help="Click to permanently wipe this entry"):
+            if grid_col2.button("🗑️", key=f"del_w_{idx}", help="Permanently wipe this worker node"):
                 st.session_state.workforce_matrix = st.session_state.workforce_matrix.drop(idx).reset_index(drop=True)
                 st.rerun()
 
-    # ---------------- TAB 2: FINANCIAL LOGS (Row-Specific Action Click Deletion) ----------------
+    # ---------------- TAB 2: FINANCIAL LOGS ----------------
     with tab2:
         st.markdown("### Corporate Receipts Ledger (Omani 5% VAT System)")
         
@@ -131,10 +127,11 @@ else:
 
         st.markdown("<br>", unsafe_allow_html=True)
         
+        # Granular Financial Row Deletion
         for idx, row in st.session_state.invoice_matrix.iterrows():
             grid_col1, grid_col2 = st.columns([12, 1])
             grid_col1.warning(f"🧾 **{row['Date']}** | **Ref:** {row['Invoice No']} | **Vendor:** {row['Vendor']} | **Base:** {row['Amount']:.3f} OMR | **VAT:** {row['VAT']:.3f} OMR | **Total:** {row['Total']:.3f} OMR | **Type:** {row['Type']}")
             
-            if grid_col2.button("🗑️", key=f"del_i_{idx}", help="Click to permanently wipe this financial record"):
+            if grid_col2.button("🗑️", key=f"del_i_{idx}", help="Permanently wipe this financial record"):
                 st.session_state.invoice_matrix = st.session_state.invoice_matrix.drop(idx).reset_index(drop=True)
                 st.rerun()
