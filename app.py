@@ -30,7 +30,6 @@ if not st.session_state.auth_token_verified:
             submit_btn = st.form_submit_button("Log In to System", type="primary")
             
             if submit_btn:
-                # Directly calling memory-mapped verification mechanism
                 if verify_session_handshake(input_user, input_pass):
                     st.session_state.auth_token_verified = True
                     st.rerun()
