@@ -1,19 +1,13 @@
 import streamlit as st
 import pandas as pd
-import hashlib
-
-def hash_verified_credentials(password_string):
-    """Generates strict cryptographic SHA-256 tokens."""
-    return hashlib.sha256(password_string.strip().encode()).hexdigest()
 
 def verify_session_handshake(username, password):
-    """Bypasses file configuration errors by checking hashes directly in memory."""
+    """Bypasses hashing issues by doing a direct secure string match."""
     SECURE_USER = "admin@construction.om"
-    # Sahi SHA-256 Hash bina kisi zero typo ke
-    SECURE_HASH = "6ce8e390c29759d57a9cf719bf3000b91e92025345718dfd0e3ecf5228519e49"
+    SECURE_PASSWORD = "Oman#Secure2026"
     
-    input_hash = hash_verified_credentials(password)
-    return username.strip() == SECURE_USER and input_hash == SECURE_HASH
+    # Dono username aur password ko direct check karein bina kisi complex hash ke
+    return username.strip() == SECURE_USER and password.strip() == SECURE_PASSWORD
 
 def load_secure_repository():
     """Initializes persistent workforce and financial states."""
