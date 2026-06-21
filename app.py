@@ -11,63 +11,60 @@ st.set_page_config(
     layout="wide"
 )
 
-# 2. Branding Assets Link Setup
-logo_main = "ChatGPT Image Jun 20, 2026, 02_56_40 PM.png"
-logo_bg = "image_436736.png"
+# 2. Base64 Image Conversion Functions (CRITICAL FIX FOR STREAMLIT)
+def get_base64_img(img_path):
+    """Safely reads a local image file and converts it to Base64 for CSS/HTML rendering."""
+    if os.path.exists(img_path):
+        with open(img_path, "rb") as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
+    return None
 
-# Function to safely convert image to base64 for CSS background injection
-def get_base64_image(image_path):
-    if os.path.exists(image_path):
-        with open(image_path, "rb") as img_file:
-            return base64.b64encode(img_file.read()).decode()
-    return ""
+# Target filenames inside your repository folder
+logo_main_file = "ChatGPT Image Jun 20, 2026, 02_56_40 PM.png"
+logo_bg_file = "image_436736.png"
 
-bg_base64 = get_base64_image(logo_bg)
+# Convert assets to base64 strings
+main_logo_b64 = get_base64_img(logo_main_file)
+bg_logo_b64 = get_base64_img(logo_bg_file)
 
-# 3. Custom Premium Styling & Persistent Transparent Background Watermark (CRASH FIX)
-# `unsafe_provided_html` ko badal kar standard `unsafe_allow_html=True` kar diya hai
-if bg_base64:
+# 3. Dynamic Styling Engine (Watermark & Responsive Layout Layer)
+if bg_logo_b64:
+    # If the watermark file exists, overlay it seamlessly into the application root
     st.markdown(f"""
         <style>
         .stApp {{
-            background-image: linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)), url("data:image/png;base64,{bg_base64}");
-            background-size: 45%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.93)), url("data:image/png;base64,{bg_logo_b64}");
+            background-size: 50%;
             background-position: center center;
             background-repeat: no-repeat;
             background-attachment: fixed;
         }}
         @media (prefers-color-scheme: dark) {{
             .stApp {{
-                background-image: linear-gradient(rgba(14, 17, 23, 0.94), rgba(14, 17, 23, 0.94)), url("data:image/png;base64,{bg_base64}");
-                background-size: 45%;
+                background-image: linear-gradient(rgba(14, 17, 23, 0.93), rgba(14, 17, 23, 0.93)), url("data:image/png;base64,{bg_logo_b64}");
+                background-size: 50%;
             }}
         }}
-        .stDataFrame, .stTable, .stTabs, div[data-testid="stForm"] {{
-            background-color: rgba(255, 255, 255, 0.90) !important;
-            border-radius: 8px;
-            padding: 12px;
-            box-shadow: 0px 2px 10px rgba(0,0,0,0.05);
+        .stDataFrame, .stTable, .stTabs, div[data-testid="stForm"], div[data-testid="stExpander"] {{
+            background-color: rgba(255, 255, 255, 0.08) !important;
+            border-radius: 12px;
+            padding: 15px;
         }}
         label p {{
             font-weight: bold !important;
-            font-size: 14px !important;
+            font-size: 15px !important;
         }}
         </style>
     """, unsafe_allow_html=True)
 else:
+    # Fallback styling if file is temporarily building/missing
     st.markdown("""
         <style>
-        .stDataFrame, .stTable, .stTabs, div[data-testid="stForm"] {
-            background-color: rgba(255, 255, 255, 0.90) !important;
-            border-radius: 8px;
-            padding: 12px;
-        }
-        label p {
-            font-weight: bold !important;
-            font-size: 14px !important;
-        }
+        label p { font-weight: bold !important; font-size: 15px !important; }
         </style>
     """, unsafe_allow_html=True)
+
 
 # 4. Central State Database Initialization
 if 'logged_in' not in st.session_state:
@@ -129,20 +126,27 @@ if 'invoice_db' not in st.session_state:
     ])
 
 # ==============================================================================
-# PHASE 1: SECURE GATEWAY PANEL
+# PHASE 1: SECURE AUTHENTICATION GATEWAY
 # ==============================================================================
 if not st.session_state.logged_in:
-    if os.path.exists(logo_main):
-        col_l1, col_l2, col_l3 = st.columns([1, 2, 1])
-        with col_l2:
-            st.image(logo_main, use_container_width=True)
-    st.markdown("<hr style='margin-top:0px; margin-bottom:25px;'>", unsafe_allow_html=True)
+    # Renders the bold header branding explicitly using parsed Base64 blocks
+    if main_logo_b64:
+        st.markdown(
+            f'<div style="text-align: center; margin-bottom: 20px;">'
+            f'<img src="data:image/png;base64,{main_logo_b64}" style="width: 480px; max-width: 90%; font-weight: bold;">'
+            f'</div>', 
+            unsafe_allow_html=True
+        )
+    else:
+        st.title("🏗️ AL RABHAN TRADING")
+    
+    st.markdown("<hr style='margin-top:0px; margin-bottom:30px;'>", unsafe_allow_html=True)
 
     left_col, right_col = st.columns(2, gap="large")
     
     with left_col:
         st.subheader("System Authentication")
-        st.write("Provide structural network keys to access administrative layers.")
+        st.write("Provide administrative network keys to access logistical databases.")
         
         try:
             default_user = st.secrets["auth"]["admin_email"]
@@ -182,10 +186,10 @@ if not st.session_state.logged_in:
 # PHASE 2: INTERNAL OPERATIONS DASHBOARD
 # ==============================================================================
 else:
-    h_logo_col, h_text_col = st.columns([1, 6])
+    h_logo_col, h_text_col = st.columns([1.5, 6])
     with h_logo_col:
-        if os.path.exists(logo_main):
-            st.image(logo_main, width=130)
+        if main_logo_b64:
+            st.markdown(f'<img src="data:image/png;base64,{main_logo_b64}" style="width: 150px;">', unsafe_allow_html=True)
     with h_text_col:
         st.title("AL RABHAN TRADING OPERATIONS SYSTEM")
         st.caption("Sultanate of Oman • Enterprise Control Node")
