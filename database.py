@@ -7,30 +7,24 @@ def hash_verified_credentials(password_string):
     return hashlib.sha256(password_string.strip().encode()).hexdigest()
 
 def verify_session_handshake(username, password):
-    """Cryptographic validation using internal Streamlit secure secrets framework."""
-    try:
-        env_user = st.secrets["ADMIN_USER"].strip()
-        env_hash = st.secrets["SECURE_KEY_HASH"].strip()
-        
-        input_hash = hash_verified_credentials(password)
-        return username.strip() == env_user and input_hash == env_hash
-    except KeyError:
-        return False
+    """Bypasses file configuration errors by checking hashes directly in memory."""
+    # Strict Hardcoded Fallback Credentials (Zero external file dependency)
+    SECURE_USER = "admin@construction.om"
+    # SHA-256 Hash of 'Oman#Secure2026'
+    SECURE_HASH = "6ce8e390c29759d57a9cf719bf3000b91e92025345718dfd0e3ecf5228519e49"
+    
+    input_hash = hash_verified_credentials(password)
+    return username.strip() == SECURE_USER and input_hash == SECURE_HASH
 
 def load_secure_repository():
-    """Initializes internal states with authenticated workforce and financial data."""
+    """Initializes persistent workforce and financial states."""
     if 'workforce_matrix' not in st.session_state:
         st.session_state.workforce_matrix = pd.DataFrame([
             {"Date": "20/06/2026", "Employee ID": "92476849", "Name": "Mohammad Shahid", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "-", "Time Out": "-", "PPE": "-", "Status": "N/S"},
             {"Date": "20/06/2026", "Employee ID": "109748895", "Name": "M.Usman", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "-", "Time Out": "-", "PPE": "-", "Status": "N/S"},
             {"Date": "20/06/2026", "Employee ID": "136299814", "Name": "Jahanzeb Afzal", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
             {"Date": "20/06/2026", "Employee ID": "79705332", "Name": "Abdul khaliq", "Company": "Rimal. AL", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-            {"Date": "20/06/2026", "Employee ID": "91385467", "Name": "Murtuza", "Company": "Ahmed. AL", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-            {"Date": "21/06/2026", "Employee ID": "136025677", "Name": "USAMA IJAZ", "Company": "Sahool Wadi Trading", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-            {"Date": "21/06/2026", "Employee ID": "135028261", "Name": "M.Usama", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-            {"Date": "21/06/2026", "Employee ID": "134607323", "Name": "Shahid Ahmad", "Company": "Abu Hisham Al Riyami Trading", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-            {"Date": "21/06/2026", "Employee ID": "129149239", "Name": "ANWAR AHMAD", "Company": "Abu Sultan Al Hajri Trading Entities LLC", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"},
-            {"Date": "21/06/2026", "Employee ID": "128565626", "Name": "AKRAMUL HAQUE", "Company": "Rubhan. T", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"}
+            {"Date": "20/06/2026", "Employee ID": "91385467", "Name": "Murtuza", "Company": "Ahmed. AL", "Scope": "Civil", "Time In": "7:00 AM", "Time Out": "5:00 PM", "PPE": "Verified", "Status": "Present"}
         ])
         
     if 'invoice_matrix' not in st.session_state:
