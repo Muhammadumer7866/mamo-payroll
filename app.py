@@ -11,9 +11,8 @@ st.set_page_config(
     layout="wide"
 )
 
-# 2. Base64 Image Conversion Functions (SAFELY MANAGED)
+# 2. Base64 Image Conversion Functions
 def get_base64_img(img_path):
-    """Safely reads a local image file and converts it to Base64 for CSS rendering."""
     if os.path.exists(img_path):
         try:
             with open(img_path, "rb") as f:
@@ -23,15 +22,13 @@ def get_base64_img(img_path):
             return None
     return None
 
-# Exact filenames inside your repository
 logo_main_file = "ChatGPT Image Jun 20, 2026, 02_56_40 PM.png"
 logo_bg_file = "image_436736.png"
 
-# Convert assets to base64 strings safely
 main_logo_b64 = get_base64_img(logo_main_file)
 bg_logo_b64 = get_base64_img(logo_bg_file)
 
-# 3. Dynamic Styling Engine (Watermark Layer with Strict Fallbacks)
+# 3. Dynamic Styling Engine
 if bg_logo_b64:
     st.markdown(f"""
         <style>
@@ -108,7 +105,7 @@ if 'invoice_db' not in st.session_state:
             "Invoice/Receipt No": "Cash Memo",
             "Date": "20/06/2026",
             "Vendor/Supplier": "Lulu Dhofar International LLC",
-            "Description": "Safety Pant-Shirt (M) - 1 Set (with OMR 0.200 discount)",
+            "Description": "Safety Pant-Shirt (M) - 1 Set",
             "Taxable Base (OMR)": 4.800,
             "VAT Amount (5%)": 0.000,
             "Gross Total (OMR)": 4.800,
@@ -118,7 +115,7 @@ if 'invoice_db' not in st.session_state:
             "Invoice/Receipt No": "6752",
             "Date": "20/06/2026",
             "Vendor/Supplier": "Oman Oil (Awqad 8016 Salalah)",
-            "Description": "Fuel Purchase - Visa Debit Terminal 5715",
+            "Description": "Fuel Purchase - Visa Debit",
             "Taxable Base (OMR)": 5.000,
             "VAT Amount (5%)": 0.000,
             "Gross Total (OMR)": 5.000,
@@ -130,11 +127,10 @@ if 'invoice_db' not in st.session_state:
 # PHASE 1: SECURE AUTHENTICATION GATEWAY
 # ==============================================================================
 if not st.session_state.logged_in:
-    # Renders the bold header branding explicitly using parsed Base64 blocks
     if main_logo_b64:
         st.markdown(
             f'<div style="text-align: center; margin-bottom: 20px;">'
-            f'<img src="data:image/png;base64,{main_logo_b64}" style="width: 440px; max-width: 90%; font-weight: bold;">'
+            f'<img src="data:image/png;base64,{main_logo_b64}" style="width: 440px; max-width: 90%;">'
             f'</div>', 
             unsafe_allow_html=True
         )
@@ -149,7 +145,6 @@ if not st.session_state.logged_in:
         st.subheader("System Authentication")
         st.write("Provide administrative network keys to access logistical databases.")
         
-        # Hardcoded verification fallback logic if deployment secret mapping isn't responding
         try:
             secret_user = st.secrets["auth"]["admin_email"]
             secret_pass = st.secrets["auth"]["admin_password"]
@@ -166,7 +161,7 @@ if not st.session_state.logged_in:
                 st.success("Access Granted. Synchronizing Ledger Databases...")
                 st.rerun()
             else:
-                st.error("Invalid Administrative Credentials. Connection Denied.")
+                st.error("Invalid Administrative Credentials.")
                 
     with right_col:
         with st.container(border=True):
@@ -209,15 +204,19 @@ else:
     with tab1:
         st.subheader("📊 Real-Time Operations Overview Matrix")
         
+        # Exact current operational metrics calculation
         total_workers = len(st.session_state.workforce_db)
         present_workers = len(st.session_state.workforce_db[st.session_state.workforce_db["Status"] == "Present"])
         total_docs = len(st.session_state.invoice_db)
         total_financial_volume = st.session_state.invoice_db["Gross Total (OMR)"].sum()
         
+        # STICKY DATES INJECTED HERE IN SUB-HEADERS
+        st.info(f"📅 **Current Active Logging Session Date:** {datetime.now().strftime('%d/%m/%Y')}")
+        
         m1, m2, m3 = st.columns(3)
-        m1.metric(label="TOTAL DEPLOYED WORKFORCE", value=f"{total_workers} Units", delta=f"{present_workers} Present Today")
-        m2.metric(label="ARCHIVED TAX / REVENUE DOCUMENTS", value=f"{total_docs} Records")
-        m3.metric(label="GROSS FINANCIAL ACCOUNTED VOLUME", value=f"{total_financial_volume:.3f} OMR")
+        m1.metric(label="ACTIVE REGISTERED WORKFORCE", value=f"{total_workers} Units", delta=f"{present_workers} Active Today")
+        m2.metric(label="ARCHIVED TAX DOCUMENTS", value=f"{total_docs} Invoices")
+        m3.metric(label="GROSS FINANCIAL VOLUME", value=f"{total_financial_volume:.3f} OMR")
         
         st.markdown("---")
         
@@ -232,6 +231,7 @@ else:
     # --- TAB 2: DAILY ATTENDANCE MATRIX ---
     with tab2:
         st.subheader("📝 Daily Attendance Matrix Logging Panel")
+        st.info(f"📆 **Roster Sheet Target Period:** {datetime.now().strftime('%d/%m/%Y')}")
         
         with st.expander("➕ Add New Field Worker Entry", expanded=False):
             with st.form("add_worker_real_form", clear_on_submit=True):
