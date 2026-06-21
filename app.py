@@ -5,7 +5,6 @@ from database import load_secure_repository, verify_session_handshake
 
 st.set_page_config(page_title="Al Rabhan Operational Vault", layout="wide", page_icon="🔒")
 
-# UI Custom Layout Clean style
 st.markdown("""
     <style>
     .block-container {padding-top: 2rem; padding-bottom: 2rem;}
@@ -32,7 +31,6 @@ if not st.session_state.auth_token_verified:
                 else:
                     st.error("Authentication Violation: Invalid Keys logged.")
 else:
-    # Header Control
     head_col1, head_col2 = st.columns([8, 2])
     head_col1.markdown("<h2 style='color: #5ab4ff;'>🏗️ AL RABHAN TRADING - Sheet Ledger Panel</h2>", unsafe_allow_html=True)
     if head_col2.button("Log Out Session", type="primary", use_container_width=True):
@@ -42,24 +40,23 @@ else:
     st.markdown("---")
     tab1, tab2, tab3 = st.tabs(["📝 Attendance Sheet View", "📄 Invoices Sheet View", "📊 Reports Summary Engine"])
     
-    # ---------------- TAB 1: ATTENDANCE REAL SPREADSHEET ----------------
+    # ---------------- TAB 1: ATTENDANCE REAL SPREADSHEET (PPE ADDED) ----------------
     with tab1:
         st.markdown("### 📊 Labour Attendance Spreadsheet Grid")
         
-        # Fast input entries bar
         st.markdown("##### ⚡ Quick Input Lookup Row")
         quick_id = st.text_input("Type Employee ID & press Enter to Auto-populate matching details:", key="att_quick_search")
         matched_worker = st.session_state.master_workers[st.session_state.master_workers["Employee ID"] == quick_id.strip()]
         
         c_date = st.text_input("Set Current Date for Entry:", value="21/06/2026")
         
-        # Interactive single-row table builder for clean presentation
         new_row_template = {
             "Date": c_date,
             "Employee ID": quick_id.strip() if quick_id.strip() != "" else "",
             "Name": matched_worker.iloc[0]["Name"] if not matched_worker.empty else "",
             "Company": matched_worker.iloc[0]["Company"] if not matched_worker.empty else "Al Rubhan Trading",
             "Scope": matched_worker.iloc[0]["Scope"] if not matched_worker.empty else "Civil",
+            "Full PPE": "Yes",
             "Status": "Present"
         }
         
@@ -73,9 +70,7 @@ else:
             st.rerun()
             
         st.markdown("---")
-        
-        # Main Sheet display area with dynamic built-in rows deletion 
-        st.markdown("##### 🔍 Main Attendance Sheet (To delete an entry: click the row header block and press 'Delete' key on keyboard)")
+        st.markdown("##### 🔍 Main Attendance Sheet (To delete an entry: click row block header and press 'Delete' key)")
         
         f1, f2 = st.columns(2)
         f_date = f1.selectbox("Filter Date View:", ["All Records", "21/06/2026", "20/06/2026"])
@@ -87,7 +82,6 @@ else:
         if f_search.strip() != "":
             view_w_df = view_w_df[view_w_df["Name"].str.contains(f_search, case=False) | view_w_df["Employee ID"].str.contains(f_search, case=False)]
             
-        # REAL SPREADSHEET VIEW WITH ROW ADD/REMOVE CAPABILITY
         final_edited_w = st.data_editor(view_w_df, num_rows="dynamic", use_container_width=True, key="main_sheet_workforce")
         if len(final_edited_w) != len(view_w_df):
             st.session_state.workforce_matrix = final_edited_w
@@ -105,7 +99,6 @@ else:
         
         if st.button("💾 Append Invoice Row to Sheet", type="primary"):
             row_data = edited_inv_input.iloc[0].to_dict()
-            # Calculate VAT on the fly if needed
             if row_data["Type"] == "Tax Invoice" and row_data["VAT"] == 0:
                 row_data["VAT"] = row_data["Amount"] * 0.05
             row_data["Total"] = row_data["Amount"] + row_data["VAT"]
@@ -126,7 +119,6 @@ else:
     with tab3:
         st.markdown("### 📊 Automated Calculations & Report Compilations")
         
-        # Labor metrics accumulation logic
         st.markdown("#### 👷 Master Worker Summary (Calculates Present Days / Holidays dynamically)")
         df_att = st.session_state.workforce_matrix.copy()
         
@@ -152,7 +144,6 @@ else:
             
         st.markdown("---")
         
-        # Financial summary metrics accumulation logic
         st.markdown("#### 💰 Financial Invoices Combined Summary Ledger")
         df_inv = st.session_state.invoice_matrix.copy()
         
